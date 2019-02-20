@@ -15,6 +15,7 @@ import org.spongepowered.api.block.BlockSnapshot;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.block.BlockTypes;
+import org.spongepowered.api.data.Transaction;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.mutable.entity.GameModeData;
 import org.spongepowered.api.data.type.HandTypes;
@@ -35,12 +36,15 @@ import org.spongepowered.api.event.filter.cause.Root;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.event.item.inventory.ChangeInventoryEvent;
+import org.spongepowered.api.event.item.inventory.ClickInventoryEvent;
 import org.spongepowered.api.event.item.inventory.DropItemEvent;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.item.inventory.ItemStackComparators;
+import org.spongepowered.api.item.inventory.ItemStackSnapshot;
+import org.spongepowered.api.item.inventory.Slot;
 import org.spongepowered.api.item.inventory.equipment.EquipmentTypes;
 import org.spongepowered.api.item.inventory.transaction.SlotTransaction;
 import org.spongepowered.api.plugin.Dependency;
@@ -70,7 +74,7 @@ dependencies = {@Dependency(id = "pixelmon")})
 public class PixelCandy 
 {
 	public static final String NAME = "bexPack";
-	public static final String VERSION = "1.1.8b";
+	public static final String VERSION = "1.1.8c";
 	public static final String AUTHOR = "Bexxkie";
 	public static final String DESC = "This does a bunch of shit...";
 	@Inject
@@ -92,7 +96,7 @@ public class PixelCandy
 	/* hat testing (keep false)*/	public static Boolean ride = false;
 	public static UUID bex = UUID.fromString("7c4958de-7a27-4b58-ac97-947142459d76");
 
-	
+
 	@Listener
 	public void onServerStart(GameInitializationEvent e)
 	{
@@ -165,15 +169,14 @@ public class PixelCandy
 		if(curseMap.containsKey(p)) {
 			HashMap<Entity, Integer> ls = curseMap.get(p);
 			try {
-				try {
-					for(Entity ent:ls.keySet())
-					{
+				for(Entity ent:ls.keySet())
+				{
 
-						ent.remove();
-						ls.remove(ent);
-					}
-				}catch(ConcurrentModificationException ex) {}	
-			}catch(NullPointerException ex) {}
+					ent.remove();
+					ls.remove(ent);
+				}
+			}catch(ConcurrentModificationException |NullPointerException ex) {}	
+
 		}
 		//
 		//bMap clear
@@ -656,6 +659,30 @@ public class PixelCandy
 			}
 		}
 	}
+	/**
+	 * if a player somehow picks up an item that they shouldnt it will be deleted
+	 * @param e 
+	 */
+	@Listener
+	public void itemDoublecheck(ClickInventoryEvent e,@Root Player p)
+	{
+		try {
+			ItemStackSnapshot _im = e.getTransactions().get(0).getOriginal();
+			Slot s = e.getTransactions().get(0).getSlot();
+			//System.out.println(_im);
+			//Transaction<ItemStackSnapshot> _tr =e.getCursorTransaction();
+			//ItemStack _im = _tr.getFinal().createStack();
+			//ItemStack i =_im.createStack();
+			Text _in = _im.get(Keys.DISPLAY_NAME).get();
+			Boolean isRain = _in.equals(Text.of("bex.item.rain"));
+			if(isRain==true)
+			{
+				e.setCancelled(true);
+				s.set(ItemStack.of(ItemTypes.AIR));
+			}
+		}catch(NoSuchElementException | NullPointerException ex) {}
+
+	}
 
 	/**
 	 * for the entityHat
@@ -717,9 +744,9 @@ public class PixelCandy
 				double d = a.getPosition().distance(b.getPosition());
 				Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE)
 						.append(Text.builder("Distance ").color(TextColors.BLUE)
-						.append(Text.builder(d+" ").color(TextColors.YELLOW)
-						.append(Text.builder("seconds.").color(TextColors.RED)
-						.build()).build()).build()).build();
+								.append(Text.builder(d+" ").color(TextColors.YELLOW)
+										.append(Text.builder("seconds.").color(TextColors.RED)
+												.build()).build()).build()).build();
 				p.sendMessage(msg);
 				return;
 			}
@@ -881,7 +908,7 @@ public class PixelCandy
 
 				}
 			}
-			
+
 			Location loc = p.getLocation();
 			Entity e1 = ent;
 			Entity e2 = p.getWorld().createEntity(EntityTypes.RABBIT, p.getLocation().getPosition());
@@ -912,7 +939,7 @@ public class PixelCandy
 			le.add(e1);
 			bunnyMap.remove(p);
 			bunnyMap.put(p, le);
-		*/
+			 */
 		}
 
 	}
