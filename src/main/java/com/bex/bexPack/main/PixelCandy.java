@@ -16,11 +16,8 @@ import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.block.BlockTypes;
 import org.spongepowered.api.data.key.Keys;
-import org.spongepowered.api.data.manipulator.mutable.PotionEffectData;
 import org.spongepowered.api.data.manipulator.mutable.entity.GameModeData;
 import org.spongepowered.api.data.type.HandTypes;
-import org.spongepowered.api.effect.potion.PotionEffect;
-import org.spongepowered.api.effect.potion.PotionEffectTypes;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntityTypes;
 import org.spongepowered.api.entity.FallingBlock;
@@ -73,29 +70,29 @@ dependencies = {@Dependency(id = "pixelmon")})
 public class PixelCandy 
 {
 	public static final String NAME = "bexPack";
-	public static final String VERSION = "1.1.8";
+	public static final String VERSION = "1.1.8b";
 	public static final String AUTHOR = "Bexxkie";
 	public static final String DESC = "This does a bunch of shit...";
 	@Inject
 	private PluginContainer pluginContainer;
-	//private Logger logger;
 	public static PixelCandy INSTANCE;
-	public static HashMap<Player,Integer> rainTime = new HashMap<Player,Integer>();
-	public static HashMap<Player,Boolean> pFly = new HashMap<Player,Boolean>();
-	public static HashMap<Player,List<Entity>> bunnyMap = new HashMap<Player, List<Entity>>();
-	public static HashMap<Player,Entity> bunnyMap2 = new HashMap<Player, Entity>();
-	public static List<Player> pList = new ArrayList<Player>();
-	public static List<Entity> blockMap = new ArrayList<Entity>();
-	public static List<Player> bMapTog = new ArrayList<Player>();
-	public static HashMap<Player,HashMap<Entity,Integer>> curseMap = new HashMap<Player,HashMap<Entity,Integer>>();
-	public static HashMap<Player,ItemStack> ItemRainMap = new HashMap<Player,ItemStack>();
-	public static HashMap<Player,Integer> Cooldowns = new HashMap<Player, Integer>();
-	public static HashMap<Player,HashMap<Integer,Location>> rulerMap = new HashMap<Player,HashMap<Integer,Location>>();
-	Task.Builder tb = Task.builder();
-	public static Boolean ride = false;
+	/* Player, timeToRain      */		public static HashMap<Player,Integer> rainTime = new HashMap<Player,Integer>();
+	/* Player, flightEnabled   */		public static HashMap<Player,Boolean> pFly = new HashMap<Player,Boolean>();
+	/* depricated              */	  //public static HashMap<Player,List<Entity>> bunnyMap = new HashMap<Player, List<Entity>>();
+	/* Player, entityAsHat     */		public static HashMap<Player,Entity> bunnyMap2 = new HashMap<Player, Entity>();
+	/* onlinePlayers 		   */		public static List<Player> pList = new ArrayList<Player>();
+	/* entityItemRain          */		public static List<Entity> blockMap = new ArrayList<Entity>();
+	/* entityHat  Toggle       */		public static List<Player> bMapTog = new ArrayList<Player>();
+	/* player, entity,time     */		public static HashMap<Player,HashMap<Entity,Integer>> curseMap = new HashMap<Player,HashMap<Entity,Integer>>();
+	/* Player, itemToRain      */		public static HashMap<Player,ItemStack> ItemRainMap = new HashMap<Player,ItemStack>();
+	/* cooldown by player	   */		public static HashMap<Player,Integer> Cooldowns = new HashMap<Player, Integer>();
+	@SuppressWarnings("rawtypes")
+	/* player, target, loc 	   */					public static HashMap<Player,HashMap<Integer,Location>> rulerMap = new HashMap<Player,HashMap<Integer,Location>>();
+	/* for repeating tasks     */	Task.Builder tb = Task.builder();
+	/* hat testing (keep false)*/	public static Boolean ride = false;
 	public static UUID bex = UUID.fromString("7c4958de-7a27-4b58-ac97-947142459d76");
 
-
+	
 	@Listener
 	public void onServerStart(GameInitializationEvent e)
 	{
@@ -105,20 +102,22 @@ public class PixelCandy
 	@Listener
 	public void onServerStarted(GameStartedServerEvent e) 
 	{
+		//init the repeating tasks.
 		repeatingTask();
 	}
 
 	@Listener
 	public void playerJoinEvent(ClientConnectionEvent.Join e)
 	{
+		//add player to onlineplayers list (can also use isOnline())
 		Player p = e.getTargetEntity();
 		pList.add(p);
-
 	}
 
 	@Listener
 	public void playerLeaveEvent(ClientConnectionEvent.Disconnect e)
 	{
+		//Cleanup anything that needs to be. remove players from list, clean up entities and shit
 		Player p = e.getTargetEntity();
 		if(pList.contains(p)) 
 		{
@@ -184,7 +183,7 @@ public class PixelCandy
 	/**
 	 * 
 	 * Unusual Candy
-	 * @return
+	 * @return unusualCandy as itemStack (pixelmon- rare candy)
 	 */
 
 	public static ItemStack getCandy()
@@ -200,7 +199,7 @@ public class PixelCandy
 	/**
 	 * 
 	 * Rare Candy
-	 * @return
+	 * @return rareCandy as itemStack (pixelmon- rare candy)
 	 */
 	public static ItemStack getCandyRare()
 	{
@@ -209,8 +208,9 @@ public class PixelCandy
 	}
 
 	/**
+	 * 
 	 * Incubator
-	 * @return
+	 * @return incubator as itemStack (pixelmon- lucky egg)
 	 */
 	public static ItemStack getIncubator()
 	{
@@ -223,15 +223,22 @@ public class PixelCandy
 		egg.offer(Keys.ITEM_LORE,lore);
 		return egg;	
 	}
-
+	/**
+	 * 
+	 * ruler
+	 * @return ruler as itemStack (clock)
+	 */
 	public static ItemStack getRuler()
 	{
 		ItemStack ruler = ItemStack.of(ItemTypes.CLOCK);
 		ruler.offer(Keys.DISPLAY_NAME,Text.of("ruler"));
 		return ruler;
 	}
-
-
+	/**
+	 * 
+	 * flightSuit
+	 * @return flightSuit as itemStack (elytra)
+	 */
 	public static ItemStack getElytra()
 	{
 		ItemStack elytra = ItemStack.of(ItemTypes.ELYTRA);
@@ -516,6 +523,12 @@ public class PixelCandy
 		}).name("bp-playerListener_t.5s").submit(this);
 	}
 
+	/**
+	 * 
+	 * @param min integer must be smaller than max
+	 * @param max integer must be larger than min
+	 * @return random int between min/max
+	 */
 	private static int rNum(int min, int max) 
 	{
 
@@ -526,7 +539,11 @@ public class PixelCandy
 		Random r = new Random();
 		return r.nextInt((max - min) + 1) + min;
 	}
-
+	/**
+	 * 
+	 * used for itemRain and stuff
+	 * @param p player
+	 */
 	public void spawnItem(Player p)
 	{
 		Boolean isItem = ItemRainMap.containsKey(p);
@@ -559,7 +576,12 @@ public class PixelCandy
 		}
 
 	}
-
+	/**
+	 * 
+	 * player use on entity (usually an animal or something)
+	 * @param e Entity clicked on
+	 * @param p player executed event
+	 */
 	@Listener
 	public void useCandyEvent(InteractEntityEvent.Secondary.MainHand e, @Root Player p)
 	{
@@ -596,10 +618,14 @@ public class PixelCandy
 		}
 	}
 
-
-	public boolean isSneaking(Player player) 
+	/**
+	 * check of the player is sneaking
+	 * @param p player
+	 * @return bool is the player sneaking
+	 */
+	public boolean isSneaking(Player p) 
 	{
-		return player.get(Keys.IS_SNEAKING).orElse(false);
+		return p.get(Keys.IS_SNEAKING).orElse(false);
 	}
 	@Listener
 	public void entityCollide(CollideEntityEvent.Impact e, @Root Player p)
@@ -611,9 +637,12 @@ public class PixelCandy
 			e.setCancelled(true);
 		}
 	}
-
+	/**
+	 * 
+	 * @param e pickupItemEvent
+	 */
 	@Listener
-	public void itemPickupEvent(ChangeInventoryEvent.Pickup e,@Root Player p)
+	public void itemPickupEvent(ChangeInventoryEvent.Pickup e)
 	{
 		for (SlotTransaction _tr : e.getTransactions())
 		{
@@ -628,6 +657,11 @@ public class PixelCandy
 		}
 	}
 
+	/**
+	 * for the entityHat
+	 * @param e moveEvent
+	 * @param p Player (only calls moveEvent if source is a player)
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Listener
 	public void moveEvent(MoveEntityEvent e, @Root Player p)
@@ -654,7 +688,13 @@ public class PixelCandy
 			ent.setLocation(loc);
 		}
 	}
-	
+	//TODO finish up the ruler and test it. (watch with name 'ruler')
+	/**
+	 * 
+	 * this is for the ruler
+	 * @param e blockClicked
+	 * @param p Player (only calls if the source is a player)
+	 */
 	@SuppressWarnings({ "rawtypes" })
 	@Listener
 	public void blockClickEvent(InteractBlockEvent.Secondary.MainHand  e, @Root Player p)
@@ -688,13 +728,16 @@ public class PixelCandy
 		l.put(0, loc);
 		rulerMap.put(p, l);
 	}
-
-
-	@SuppressWarnings("rawtypes")
+	/**
+	 * 
+	 * this is part of the entityHats stuff
+	 * @param e interactEvent
+	 * @param p Player (only calls if the source is a player)
+	 */
 	@Listener
 	public void entityUseEvent(InteractEntityEvent.Secondary.MainHand e, @Root Player p)
 	{
-		System.out.println(e.getTargetEntity());
+		//System.out.println(e.getTargetEntity());
 		if(!bMapTog.contains(p)) 
 		{
 			return;
@@ -776,6 +819,7 @@ public class PixelCandy
 			//
 			//Old style, entity passengers
 			//
+			/*
 			if(bunnyMap.containsKey(p)) 
 			{
 
@@ -837,6 +881,7 @@ public class PixelCandy
 
 				}
 			}
+			
 			Location loc = p.getLocation();
 			Entity e1 = ent;
 			Entity e2 = p.getWorld().createEntity(EntityTypes.RABBIT, p.getLocation().getPosition());
@@ -867,9 +912,15 @@ public class PixelCandy
 			le.add(e1);
 			bunnyMap.remove(p);
 			bunnyMap.put(p, le);
+		*/
 		}
 
 	}
+	/**
+	 * this is to make cake and healers drop when broken
+	 * @param e blockBreak
+	 * @param p Player (only calls if the source is a player)
+	 */
 	@Listener
 	public void blockBreakEvent(ChangeBlockEvent.Break e, @Root Player p)
 	{

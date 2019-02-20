@@ -1,8 +1,5 @@
 package com.bex.bexPack.commands;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -11,11 +8,8 @@ import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandExecutor;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.data.key.Keys;
-import org.spongepowered.api.data.manipulator.mutable.PotionEffectData;
 import org.spongepowered.api.data.type.ParrotVariant;
 import org.spongepowered.api.data.type.ParrotVariants;
-import org.spongepowered.api.effect.potion.PotionEffect;
-import org.spongepowered.api.effect.potion.PotionEffectTypes;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntityTypes;
 import org.spongepowered.api.entity.living.player.Player;
@@ -73,6 +67,7 @@ public class ParrotHatCommand
 								//
 								//old,passenger
 								//
+								/*
 								if(PixelCandy.bunnyMap.containsKey(p))
 								{
 									List<Entity> el = PixelCandy.bunnyMap.get(p);
@@ -93,7 +88,8 @@ public class ParrotHatCommand
 									}
 									PixelCandy.bunnyMap.remove(p);
 									return CommandResult.success();
-								}
+							
+								}*/
 							}
 							if(rt<1||rt>5)
 							{
@@ -121,6 +117,7 @@ public class ParrotHatCommand
 							//
 							//old
 							//
+							/*
 							if(PixelCandy.ride==true&&PixelCandy.bunnyMap.containsKey(p))
 							{
 								List<Entity> el = PixelCandy.bunnyMap.get(p);
@@ -133,20 +130,21 @@ public class ParrotHatCommand
 									.duration(Integer.MAX_VALUE)
 									.amplifier(5)
 									.build();
-
+							*/
 							Location loc = p.getLocation();
 							Entity e = p.getWorld().createEntity(EntityTypes.PARROT, p.getLocation().getPosition());
-							Entity e2 = p.getWorld().createEntity(EntityTypes.PARROT, p.getLocation().getPosition());
+							//Entity e2 = p.getWorld().createEntity(EntityTypes.PARROT, p.getLocation().getPosition());
 
-							PotionEffectData effects = e2.getOrCreate(PotionEffectData.class).get();
+							//PotionEffectData effects = e2.getOrCreate(PotionEffectData.class).get();
 							ParrotVariant t = getType(rt);
-							effects.addElement(pt);
-							e2.offer(Keys.AGE,Integer.MIN_VALUE);
-							e2.offer(effects);
-							e2.offer(Keys.INVULNERABLE,true);
+							//effects.addElement(pt);
+							//e2.offer(Keys.AGE,Integer.MIN_VALUE);
+							//e2.offer(effects);
+							//e2.offer(Keys.INVULNERABLE,true);
 							e.offer(Keys.PARROT_VARIANT,t);
 							e.offer(Keys.INVULNERABLE,true);
 							loc.spawnEntity(e);
+							
 							//
 							//new
 							//
@@ -159,6 +157,7 @@ public class ParrotHatCommand
 							//
 							//old
 							//
+							/*
 							if(PixelCandy.ride==true)
 							{
 								loc.spawnEntity(e2);
@@ -170,6 +169,7 @@ public class ParrotHatCommand
 								PixelCandy.bunnyMap.remove(p);
 								PixelCandy.bunnyMap.put(p,le);
 							}
+							*/
 						}
 					}
 					else
