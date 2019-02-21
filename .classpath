@@ -4,8 +4,8 @@
 	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8/"/>
 	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
-	<classpathentry kind="lib" path="F:/My Projects/Minecraft/Mods/spongeforge-1.12.2-2768-7.1.4.jar"/>
-	<classpathentry kind="lib" path="F:/My Projects/Minecraft/Mods/forge-1.12.2-14.23.4.2752-universal.jar"/>
-	<classpathentry kind="lib" path="F:/My Projects/Minecraft/Mods/Pixelmon-1.12.2-7.0.1-universal.jar" sourcepath="F:/My Projects/Minecraft/Mods/Pixelmon-1.12.2-7.0.1-universal.jar.src.zip"/>
+	<classpathentry kind="lib" path="C:/pixelmonJARs/Pixelmon-1.12.2-7.0.1-universal.jar" sourcepath="F:/My Projects/Minecraft/Mods/Pixelmon-1.12.2-7.0.1-universal.jar.src.zip"/>
+	<classpathentry kind="lib" path="C:/pixelmonJARs/forge-1.12.2-14.23.5.2768-universal.jar"/>
+	<classpathentry kind="lib" path="C:/pixelmonJARs/spongeforge-1.12.2-2768-7.1.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

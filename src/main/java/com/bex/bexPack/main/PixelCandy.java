@@ -18,6 +18,7 @@ import org.spongepowered.api.block.BlockTypes;
 import org.spongepowered.api.data.Transaction;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.mutable.entity.GameModeData;
+import org.spongepowered.api.data.type.HandType;
 import org.spongepowered.api.data.type.HandTypes;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntityTypes;
@@ -59,8 +60,10 @@ import org.spongepowered.api.world.extent.Extent;
 
 import com.bex.bexPack.commands.BaseCommand;
 import com.google.inject.Inject;
+import com.pixelmonmod.pixelmon.api.events.PokeballImpactEvent;
 import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
 import com.pixelmonmod.pixelmon.entities.pixelmon.stats.Level;
+import com.pixelmonmod.pixelmon.entities.pokeballs.EntityEmptyPokeball;
 
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -91,7 +94,7 @@ public class PixelCandy
 	/* Player, itemToRain      */		public static HashMap<Player,ItemStack> ItemRainMap = new HashMap<Player,ItemStack>();
 	/* cooldown by player	   */		public static HashMap<Player,Integer> Cooldowns = new HashMap<Player, Integer>();
 	@SuppressWarnings("rawtypes")
-	/* player, target, loc 	   */					public static HashMap<Player,HashMap<Integer,Location>> rulerMap = new HashMap<Player,HashMap<Integer,Location>>();
+	/* player, target, loc 	   */		public static HashMap<Player,Location> rulerMap = new HashMap<Player, Location>();
 	/* for repeating tasks     */	Task.Builder tb = Task.builder();
 	/* hat testing (keep false)*/	public static Boolean ride = false;
 	public static UUID bex = UUID.fromString("7c4958de-7a27-4b58-ac97-947142459d76");
@@ -641,23 +644,25 @@ public class PixelCandy
 		}
 	}
 	/**
-	 * 
+	 * this shit should be for stoping the itemRain item from being picked up by players. 
 	 * @param e pickupItemEvent
 	 */
 	@Listener
 	public void itemPickupEvent(ChangeInventoryEvent.Pickup e)
 	{
-		for (SlotTransaction _tr : e.getTransactions())
-		{
-			ItemStack _im = _tr.getFinal().createStack();
-
-			Text _in = _im.get(Keys.DISPLAY_NAME).get();
-			Boolean isRain = _in.equals(Text.of("bex.item.rain"));
-			if(isRain==true)
+		try {
+			for (SlotTransaction _tr : e.getTransactions())
 			{
-				e.setCancelled(true);
+				ItemStack _im = _tr.getFinal().createStack();
+
+				Text _in = _im.get(Keys.DISPLAY_NAME).get();
+				Boolean isRain = _in.equals(Text.of("bex.item.rain"));
+				if(isRain==true)
+				{
+					e.setCancelled(true);
+				}
 			}
-		}
+		}catch(NoSuchElementException | NullPointerException ex) {}
 	}
 	/**
 	 * if a player somehow picks up an item that they shouldnt it will be deleted
@@ -685,7 +690,7 @@ public class PixelCandy
 	}
 
 	/**
-	 * for the entityHat
+	 * this is for updating the location of the entityHat 
 	 * @param e moveEvent
 	 * @param p Player (only calls moveEvent if source is a player)
 	 */
@@ -726,34 +731,44 @@ public class PixelCandy
 	@Listener
 	public void blockClickEvent(InteractBlockEvent.Secondary.MainHand  e, @Root Player p)
 	{
-		Location loc = e.getTargetBlock().getLocation().get();
-		HashMap<Integer,Location> l= new HashMap<Integer,Location>();
-		if(rulerMap.containsKey(p))
+		//may need a try catch, dunno.
+		
+		//make sure the dude has the ruler before shit
+		ItemStack _i=p.getItemInHand(HandTypes.MAIN_HAND).get();
+		int isRuler = ItemStackComparators.ITEM_DATA_IGNORE_DAMAGE.compare(getRuler(),_i);
+		if(isRuler!=0)
 		{
-			l = rulerMap.get(p);
-			if(l.containsKey(1))
-			{
-				l.clear();
-				return;
-			}
-			if(l.containsKey(0))
-			{
-				//getDistance
-				Location a = l.get(0);
-				Location b = l.get(1);
-				double d = a.getPosition().distance(b.getPosition());
-				Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE)
-						.append(Text.builder("Distance ").color(TextColors.BLUE)
-								.append(Text.builder(d+" ").color(TextColors.YELLOW)
-										.append(Text.builder("seconds.").color(TextColors.RED)
-												.build()).build()).build()).build();
-				p.sendMessage(msg);
-				return;
-			}
-
+			// does not have a ruler, return
+			return;
 		}
-		l.put(0, loc);
-		rulerMap.put(p, l);
+		
+		//get targetBlock location
+		Location loc = e.getTargetBlock().getLocation().get();
+		if(rulerMap.containsKey(p)) 
+		{
+			//doshit
+			//the player already has a location stored, so this SHOULD be the second click, 
+			Location _a = rulerMap.get(p);
+			Location _b = loc;
+			Double _d = _a.getPosition().distance(_b.getPosition());
+			//convert to int for block count
+			int d = _d.intValue();
+			
+			//send distance to player
+			Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE)
+					.append(Text.builder("Distance ").color(TextColors.BLUE)
+					.append(Text.builder(d+" ").color(TextColors.YELLOW)
+					.append(Text.builder("seconds.").color(TextColors.RED)
+					.build()).build()).build()).build();
+			//send the message remove the player from rulerMap and return
+			p.sendMessage(msg);
+			rulerMap.remove(p);
+			return;
+		}
+		//assume this is the first click.
+		//add to ruler map, maybe put a marker or something so the player knows it took
+		rulerMap.put(p,loc);
+		
 	}
 	/**
 	 * 
@@ -975,6 +990,7 @@ public class PixelCandy
 			p.getInventory().offer(im);
 		}
 	}
+
 
 	@Listener
 	public void itemDropEvent(DropItemEvent.Destruct e)
