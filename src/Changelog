@@ -67,8 +67,14 @@
 ------------------------------------------
 
 -------------------------------------------------------------------------
- Ver: 1.1.8b
- 	- inDev pending changes
+ Ver: 1.1.9
+ 	- updated Eventhandlers
+ 	- removed commands
+ 		- /pcan bunnyHat
+ 		- /pcan parrotHat
+ 	- added commands
+ 		- /pcan hat <type> [1-5] 
+ 	-		- type = bunny, parrot
  	-
  	-
  	

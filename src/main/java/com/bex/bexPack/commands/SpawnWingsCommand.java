@@ -12,6 +12,7 @@ import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.text.Text;
 
 import com.bex.bexPack.main.PixelCandy;
+import com.bex.bexPack.util.Getters;
 
 public class SpawnWingsCommand 
 {
@@ -34,7 +35,7 @@ public class SpawnWingsCommand
 					}
 					if(src.hasPermission("bex.candies.spawn")||isBex==true)
 					{
-						ItemStack wing = PixelCandy.getElytra();
+						ItemStack wing = Getters.getElytra();
 						Player pt = args.<Player>getOne("player").get();
 						pt.getInventory().offer(wing);
 						//if(src instanceof Player) 

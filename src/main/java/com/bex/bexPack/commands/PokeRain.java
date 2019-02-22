@@ -22,6 +22,7 @@ import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.Location;
 
 import com.bex.bexPack.main.PixelCandy;
+import com.bex.bexPack.util.RandomNum;
 
 @SuppressWarnings("unused")
 public class PokeRain 
@@ -73,7 +74,7 @@ public class PokeRain
 							
 							Location loc = pt.getLocation();
 							Entity ent = pt.getWorld().createEntity(EntityTypes.RABBIT, pt.getLocation().getPosition());
-							int tp = rNum(1, 6);
+							int tp = RandomNum.rNum(1, 6);
 							RabbitType t = getType(tp);
 							//RabbitType t = RabbitTypes.KILLER;
 							ent.offer(Keys.RABBIT_TYPE, t);
@@ -81,7 +82,7 @@ public class PokeRain
 							ent.offer(Keys.INVULNERABLE,true);
 							elist.put(ent,10);
 							PixelCandy.curseMap.put(pt,elist);
-							loc=loc.add(rNum(-3,3),rNum(2,8),rNum(-3,3));
+							loc=loc.add(RandomNum.rNum(-3,3),RandomNum.rNum(2,8),RandomNum.rNum(-3,3));
 							loc.spawnEntity(ent);
 							ent.setLocation(loc);
 						}
@@ -115,14 +116,5 @@ public class PokeRain
 		return RabbitTypes.BROWN;	
 
 
-	}
-	private static int rNum(int min, int max) {
-
-		if (min >= max) {
-			throw new IllegalArgumentException("max must be greater than min");
-		}
-
-		Random r = new Random();
-		return r.nextInt((max - min) + 1) + min;
 	}
 }

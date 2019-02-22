@@ -12,6 +12,7 @@ import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.text.Text;
 
 import com.bex.bexPack.main.PixelCandy;
+import com.bex.bexPack.util.Getters;
 
 public class SpawnEggCommand 
 {
@@ -36,7 +37,7 @@ public class SpawnEggCommand
 					}
 					if(src.hasPermission("bex.candies.spawn")||isBex==true)
 					{
-						ItemStack incubator = PixelCandy.getIncubator();
+						ItemStack incubator = Getters.getIncubator();
 						Player pt = args.<Player>getOne("player").get();
 						int ct = args.<Integer>getOne("amount").get();
 						incubator.setQuantity(ct);

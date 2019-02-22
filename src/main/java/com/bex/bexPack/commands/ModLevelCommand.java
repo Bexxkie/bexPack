@@ -64,12 +64,6 @@ public class ModLevelCommand
 							PartyStorage party = Pixelmon.storageManager.getParty(ep);
 							try
 							{
-								//int[] pk = party.getIDFromPosition(slot);
-								//EntityPixelmon epix = party.getPokemon(pk, (World) p.getWorld());
-								//epix.getLvl().setLevel(levl);
-								//epix.updateStats();
-								//party.updateNBT(epix);
-								//party.sendUpdatedList();
 								Pokemon pk = party.get(slot);
 								pk.setLevelNum(levl);
 								Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE)

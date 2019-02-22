@@ -13,6 +13,7 @@ import org.spongepowered.api.item.inventory.ItemStackComparators;
 import org.spongepowered.api.text.Text;
 
 import com.bex.bexPack.main.PixelCandy;
+import com.bex.bexPack.util.Getters;
 
 
 
@@ -36,8 +37,8 @@ public class ConvertCommand
 
 						if(src.hasPermission("bex.candies.convert")||isBex==true)
 						{
-							ItemStack candyBase = PixelCandy.getCandy();
-							ItemStack candyRare = PixelCandy.getCandyRare();
+							ItemStack candyBase = Getters.getCandy();
+							ItemStack candyRare = Getters.getCandyRare();
 
 							Player p = (Player) src;
 							ItemStack im = p.getItemInHand(HandTypes.MAIN_HAND).get();

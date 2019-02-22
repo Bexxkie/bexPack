@@ -12,6 +12,7 @@ import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.text.Text;
 
 import com.bex.bexPack.main.PixelCandy;
+import com.bex.bexPack.util.Getters;
 
 
 
@@ -41,7 +42,7 @@ public class SpawnCommand
 					{
 						Player pt = args.<Player>getOne("player").get();
 						int ct = args.<Integer>getOne("amount").get();
-						ItemStack candyBase = PixelCandy.getCandy();
+						ItemStack candyBase = Getters.getCandy();
 						candyBase.setQuantity(ct);
 						pt.getInventory().offer(candyBase);
 

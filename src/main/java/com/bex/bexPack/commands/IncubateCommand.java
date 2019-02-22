@@ -13,7 +13,9 @@ import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.item.inventory.ItemStackComparators;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
+
 import com.bex.bexPack.main.PixelCandy;
+import com.bex.bexPack.util.Getters;
 import com.pixelmonmod.pixelmon.Pixelmon;
 //import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
 //import com.pixelmonmod.pixelmon.storage.PixelmonStorage;
@@ -49,7 +51,7 @@ public class IncubateCommand
 							Player p = (Player) src;
 							int slot = args.<Integer>getOne("slot").get();
 							ItemStack i = p.getItemInHand(HandTypes.MAIN_HAND).get();
-							ItemStack egg = PixelCandy.getIncubator();
+							ItemStack egg = Getters.getIncubator();
 							int b = ItemStackComparators.IGNORE_SIZE.compare(i, egg);
 							if(slot<=0||slot>6)
 							{
