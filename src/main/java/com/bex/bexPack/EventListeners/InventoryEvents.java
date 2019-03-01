@@ -59,7 +59,7 @@ public class InventoryEvents
 				e.setCancelled(true);
 				s.set(ItemStack.of(ItemTypes.AIR));
 			}
-		}catch(NoSuchElementException | NullPointerException ex) {}
+		}catch(NoSuchElementException | NullPointerException | IndexOutOfBoundsException ex) {}
 
 	}
 	

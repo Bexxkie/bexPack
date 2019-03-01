@@ -29,6 +29,7 @@ import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 import org.spongepowered.api.world.extent.Extent;
 
+import com.bex.bexPack.EventListeners.AlcoholEvents;
 import com.bex.bexPack.EventListeners.EntityEvents;
 import com.bex.bexPack.EventListeners.InventoryEvents;
 import com.bex.bexPack.EventListeners.LeaveJoinEvents;
@@ -48,8 +49,8 @@ dependencies = {@Dependency(id = "pixelmon")})
 public class PixelCandy 
 {
 	public static final String NAME = "bexPack";
-	public static final String VERSION = "1.1.9";
-	public static final String AUTHOR = "Bexxkie";
+	public static final String VERSION = "1.2.0";
+	public static final String AUTHOR = "Bexxkie, Dr. Stupid";
 	public static final String DESC = "This does a bunch of shit...";
 	@Inject
 	private PluginContainer pluginContainer;
@@ -81,6 +82,7 @@ public class PixelCandy
 		Sponge.getEventManager().registerListeners(this, new InventoryEvents());
 		Sponge.getEventManager().registerListeners(this, new LeaveJoinEvents());
 		Sponge.getEventManager().registerListeners(this, new WorldEvents());
+		Sponge.getEventManager().registerListeners(this, new AlcoholEvents());
 		
 	}
 

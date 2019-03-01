@@ -96,4 +96,19 @@ public class Getters
 		return p.get(Keys.IS_SNEAKING).orElse(false);
 	}
 
+	public static ItemStack getDrink(String id)
+	{
+		ItemStack drink = ItemStack.of(Sponge.getGame().getRegistry().getType(ItemType.class, "minecraft:potion").get());
+		List<Text> lore = new ArrayList<Text>();
+		
+		String drinkName = AlcoholProcessor.getString(id, "name");
+		String drinkLore = AlcoholProcessor.getString(id, "lore");
+
+		lore.add(Text.of("Alcoholic Beverage"));
+		lore.add(Text.of(id));
+		lore.add(Text.of(drinkLore));
+		drink.offer(Keys.DISPLAY_NAME,Text.of(TextColors.RED,drinkName));
+		drink.offer(Keys.ITEM_LORE,lore);
+		return drink;
+	}
 }

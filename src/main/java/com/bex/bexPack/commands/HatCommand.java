@@ -226,6 +226,5 @@ public class HatCommand
 			return RabbitTypes.BROWN;
 		}	
 
-
 	}
 }
