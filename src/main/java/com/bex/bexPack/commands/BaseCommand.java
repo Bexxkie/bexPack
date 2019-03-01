@@ -20,6 +20,7 @@ public class BaseCommand
 			.child(new ClearHatCommand().getCommandSpec(), "clearHat")
 			.child(new InfoCommand().getCommandSpec(), "info")
 			.child(new PokeRain().getCommandSpec(), "curse")
+			.child(new AlcoholCommand().getCommandSpec(), "spawnDrink")
 			.build();
 
 	public CommandSpec getCommandSpec() {

@@ -9,7 +9,7 @@
 			 -                                     		   -
 			 -                                             -
 			 -               Author: Bexxkie               -
-			 -            CurrentVersion: 1.1.8b           -                                                    
+			 -            CurrentVersion: 1.2.0            -                                                    
 			-------------------------------------------------
 			% % % % % % % % % % % % % % % % % % % % % % % % %
 		  % % % % % % % % % % % % % % % % % % % % % % % % % % %
@@ -38,6 +38,8 @@
  	- /pcan spawnEgg
  		- bex.candies.spawn
  		- spawn an incubator
+ 	- /pcan spawnDrink
+ 		- bex.alcohol.spawn
  	- /pcan incubate
  		- bex.egg.incubate
  		- incubate an egg
@@ -67,6 +69,17 @@
 ------------------------------------------
 
 -------------------------------------------------------------------------
+ Ver: 1.2.0
+ 	- Added Dr. Stupid as an author
+ 	- Added Alcohol Gambling
+ 		- /pcan spawnDrink <player name> <drink id>
+ 		- config location located in <server root directory>/config/alcohol/alcohol.conf
+ 		- added onConsumeDrink event handler
+ 		- permission: bex.alcohol.spawn
+ 	- Added IndexOutOfBoundsException to itemDoublecheck event handler
+ 	- Updated build paths for Pixelmon 7.0.3
+
+
  Ver: 1.1.9
  	- updated Eventhandlers
  	- removed commands
