@@ -9,7 +9,11 @@
 			 -                                     		   -
 			 -                                             -
 			 -               Author: Bexxkie               -
+<<<<<<< HEAD
 			 -            CurrentVersion: 1.2.1            -                                                    
+=======
+			 -            CurrentVersion: 1.2.0            -                                                    
+>>>>>>> branch 'master' of https://github.com/BrianKG/bexPack.git
 			-------------------------------------------------
 			% % % % % % % % % % % % % % % % % % % % % % % % %
 		  % % % % % % % % % % % % % % % % % % % % % % % % % % %
@@ -69,6 +73,7 @@
 ------------------------------------------
 
 -------------------------------------------------------------------------
+<<<<<<< HEAD
  Ver: 1.2.1
  	- updated ruler
  		- includes clicked block
@@ -77,6 +82,8 @@
  	- updated flight detection
  	- fixed not being able to select slot 6 in modLevel command 
  
+=======
+>>>>>>> branch 'master' of https://github.com/BrianKG/bexPack.git
  Ver: 1.2.0
  	- Added Dr. Stupid as an author
  	- Added Alcohol Gambling

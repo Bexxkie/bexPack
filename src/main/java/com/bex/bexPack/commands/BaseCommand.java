@@ -21,7 +21,10 @@ public class BaseCommand
 			.child(new InfoCommand().getCommandSpec(), "info")
 			.child(new PokeRain().getCommandSpec(), "curse")
 			.child(new AlcoholCommand().getCommandSpec(), "spawnDrink")
+<<<<<<< HEAD
 			.child(new SpawnRulerCommand().getCommandSpec(), "spawnruler")
+=======
+>>>>>>> branch 'master' of https://github.com/BrianKG/bexPack.git
 			.build();
 
 	public CommandSpec getCommandSpec() {
