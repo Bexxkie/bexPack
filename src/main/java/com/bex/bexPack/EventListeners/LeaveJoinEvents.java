@@ -8,7 +8,12 @@ import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
+import org.spongepowered.api.item.inventory.ItemStack;
+import org.spongepowered.api.item.inventory.ItemStackComparators;
+import org.spongepowered.api.item.inventory.equipment.EquipmentTypes;
+
 import com.bex.bexPack.main.PixelCandy;
+import com.bex.bexPack.util.Getters;
 import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class LeaveJoinEvents 
@@ -22,6 +27,30 @@ public class LeaveJoinEvents
 		//add player to onlineplayers list (can also use isOnline())
 		Player p = e.getTargetEntity();
 		PixelCandy.pList.add(p);
+
+		ItemStack wingsuit = Getters.getElytra();
+		ItemStack equip = p.getEquipped(EquipmentTypes.CHESTPLATE).get();
+		int isWingsuit = ItemStackComparators.ITEM_DATA_IGNORE_DAMAGE.compare(wingsuit,equip);
+		//System.out.println("changeInventoryEvent");
+		if(isWingsuit!=0)
+		{
+			//System.out.println("notWingSuit");
+			if(PixelCandy.pFly.containsKey(p)) 
+			{
+				PixelCandy.pFly.put(p, true);
+			}
+			p.offer(Keys.CAN_FLY, false);
+			p.offer(Keys.IS_FLYING, false);
+			return;
+		} else {
+			//System.out.println("isWingsuit");
+			p.offer(Keys.CAN_FLY, true);
+			if(!PixelCandy.pFly.containsKey(p)) 
+			{
+				PixelCandy.pFly.put(p, true);
+			}
+		}
+
 	}
 	/**
 	 * PLAYER LEAVE EVENT

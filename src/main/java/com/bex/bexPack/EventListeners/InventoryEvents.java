@@ -10,10 +10,17 @@ import org.spongepowered.api.event.item.inventory.ChangeInventoryEvent;
 import org.spongepowered.api.event.item.inventory.ClickInventoryEvent;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
+import org.spongepowered.api.item.inventory.ItemStackComparators;
 import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 import org.spongepowered.api.item.inventory.Slot;
+import org.spongepowered.api.item.inventory.equipment.EquipmentTypes;
 import org.spongepowered.api.item.inventory.transaction.SlotTransaction;
 import org.spongepowered.api.text.Text;
+
+import com.bex.bexPack.main.PixelCandy;
+import com.bex.bexPack.util.Getters;
+
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 
 public class InventoryEvents 
 {
@@ -43,7 +50,7 @@ public class InventoryEvents
 	 * @param e 
 	 */
 	@Listener
-	public void itemDoublecheck(ClickInventoryEvent e,@Root Player p)
+	public void itemDoublecheck(ClickInventoryEvent e, @Root Player p)
 	{
 		try {
 			ItemStackSnapshot _im = e.getTransactions().get(0).getOriginal();
@@ -63,5 +70,28 @@ public class InventoryEvents
 
 	}
 	
-	
+	@Listener
+	public void wingSuitEquip(ChangeInventoryEvent e, @Root Player p)
+	{
+		ItemStack wingsuit = Getters.getElytra();
+		ItemStack equip = p.getEquipped(EquipmentTypes.CHESTPLATE).get();
+		int isWingsuit = ItemStackComparators.ITEM_DATA_IGNORE_DAMAGE.compare(wingsuit,equip);
+		//System.out.println("changeInventoryEvent");
+		if(isWingsuit!=0)
+		{
+			//System.out.println("notWingSuit");
+			if(PixelCandy.pFly.containsKey(p)) 
+			{
+				PixelCandy.pFly.put(p, true);
+			}
+			p.offer(Keys.CAN_FLY, false);
+			p.offer(Keys.IS_FLYING, false);
+			return;
+		}
+		//System.out.println("isWingsuit");
+		p.offer(Keys.CAN_FLY, true);
+		if(PixelCandy.pFly.containsKey(p)) {return;}
+		PixelCandy.pFly.put(p, true);
+	}
+
 }

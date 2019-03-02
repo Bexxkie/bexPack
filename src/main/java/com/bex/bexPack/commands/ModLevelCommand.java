@@ -51,7 +51,7 @@ public class ModLevelCommand
 							int slot = args.<Integer>getOne("slot").get();
 							int levl = args.<Integer>getOne("level").get();
 
-							if(slot<=0||slot>=6)
+							if(slot<=0||slot>6)
 							{
 								Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE).
 										append(Text.builder("You must choose a valid slot [1-6]").color(TextColors.RED).build()).build();

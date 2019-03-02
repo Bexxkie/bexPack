@@ -64,6 +64,7 @@ public class PixelCandy
 	/* onlinePlayers 		   */		public static List<Player> pList = new ArrayList<Player>();
 	/* entityItemRain          */		public static List<Entity> blockMap = new ArrayList<Entity>();
 	/* entityHat  Toggle       */		public static List<Player> bMapTog = new ArrayList<Player>();
+	/* flightSuit list	       */		public static List<Player> flightSuitList = new ArrayList<Player>();
 	/* player, entity,time     */		public static HashMap<Player,HashMap<Entity,Integer>> curseMap = new HashMap<Player,HashMap<Entity,Integer>>();
 	/* Player, itemToRain      */		public static HashMap<Player,ItemStack> ItemRainMap = new HashMap<Player,ItemStack>();
 	/* cooldown by player	   */		public static HashMap<Player,Integer> Cooldowns = new HashMap<Player, Integer>();
@@ -314,6 +315,7 @@ public class PixelCandy
 			}
 		}).name("bp-entityHatHelper_t.100ms").submit(this);
 		//playerListenHelper (5s)
+	/*
 		tb.interval(5, TimeUnit.SECONDS);
 		tb.execute(new Runnable()
 		{
@@ -327,7 +329,7 @@ public class PixelCandy
 						ItemStack is = p.getEquipped(EquipmentTypes.CHESTPLATE).get();
 						ItemStack wings = Getters.getElytra();
 						int b = ItemStackComparators.ITEM_DATA_IGNORE_DAMAGE.compare(is, wings);
-
+						
 						if(b==0)
 						{
 							if(!PixelCandy.pFly.containsKey(p))
@@ -350,6 +352,7 @@ public class PixelCandy
 				}
 			}
 		}).name("bp-playerListener_t.5s").submit(this);
+		*/
 		tb.interval(500, TimeUnit.MILLISECONDS);
 		tb.execute(new Runnable()
 		{
