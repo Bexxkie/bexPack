@@ -11,6 +11,8 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockTypes;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.effect.particle.ParticleEffect;
+import org.spongepowered.api.effect.particle.ParticleTypes;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntityTypes;
 import org.spongepowered.api.entity.FallingBlock;
@@ -37,6 +39,7 @@ import com.bex.bexPack.EventListeners.WorldEvents;
 import com.bex.bexPack.commands.BaseCommand;
 import com.bex.bexPack.util.Getters;
 import com.bex.bexPack.util.RandomNum;
+import com.flowpowered.math.vector.Vector3d;
 import com.google.inject.Inject;
 
 
@@ -83,7 +86,7 @@ public class PixelCandy
 		Sponge.getEventManager().registerListeners(this, new LeaveJoinEvents());
 		Sponge.getEventManager().registerListeners(this, new WorldEvents());
 		Sponge.getEventManager().registerListeners(this, new AlcoholEvents());
-		
+
 	}
 
 
@@ -347,6 +350,27 @@ public class PixelCandy
 				}
 			}
 		}).name("bp-playerListener_t.5s").submit(this);
+		tb.interval(500, TimeUnit.MILLISECONDS);
+		tb.execute(new Runnable()
+		{
+			@SuppressWarnings("rawtypes")
+			public void run()
+			{
+				if(!rulerMap.isEmpty())
+				{
+					for(Player p: PixelCandy.rulerMap.keySet())
+					{
+						Location loc = rulerMap.get(p);
+						ParticleEffect effect = ParticleEffect.builder()
+								.type(ParticleTypes.PORTAL)
+								.quantity(10)
+								.velocity(Vector3d.from(.5,1.5,.5))
+								.build();
+						p.getLocation().getExtent().spawnParticles(effect, loc.getPosition().add(.5,.5,.5),2);
+					}
+				}
+			}
+		}).name("bp-particleHelper_t.500ms").submit(this);
 	}
 }
 

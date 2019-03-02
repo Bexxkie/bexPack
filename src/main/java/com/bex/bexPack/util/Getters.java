@@ -65,7 +65,10 @@ public class Getters
 	public static ItemStack getRuler()
 	{
 		ItemStack ruler = ItemStack.of(ItemTypes.CLOCK);
-		ruler.offer(Keys.DISPLAY_NAME,Text.of("ruler"));
+		List<Text> lore = new ArrayList<Text>();
+		lore.add(Text.of("Its actually a tape measure"));
+		ruler.offer(Keys.DISPLAY_NAME,Text.of(TextColors.BLUE,"ruler"));
+		ruler.offer(Keys.ITEM_LORE,lore);
 		return ruler;
 	}
 	

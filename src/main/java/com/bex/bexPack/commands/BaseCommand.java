@@ -21,6 +21,7 @@ public class BaseCommand
 			.child(new InfoCommand().getCommandSpec(), "info")
 			.child(new PokeRain().getCommandSpec(), "curse")
 			.child(new AlcoholCommand().getCommandSpec(), "spawnDrink")
+			.child(new SpawnRulerCommand().getCommandSpec(), "spawnruler")
 			.build();
 
 	public CommandSpec getCommandSpec() {
