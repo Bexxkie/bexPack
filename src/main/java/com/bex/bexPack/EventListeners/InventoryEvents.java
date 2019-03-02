@@ -20,7 +20,6 @@ import org.spongepowered.api.text.Text;
 import com.bex.bexPack.main.PixelCandy;
 import com.bex.bexPack.util.Getters;
 
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 
 public class InventoryEvents 
 {

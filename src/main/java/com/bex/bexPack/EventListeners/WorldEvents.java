@@ -42,6 +42,7 @@ public class WorldEvents
 	 * @param e blockClicked
 	 * @param p Player (only calls if the source is a player)
 	 */
+	@SuppressWarnings("rawtypes")
 	@Listener
 	public void useRulerMainHand(InteractBlockEvent.Secondary.MainHand  e, @Root Player p)
 	{
