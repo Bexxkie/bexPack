@@ -9,7 +9,7 @@
 			 -                                     		   -
 			 -                                             -
 			 -               Author: Bexxkie               -
-			 -            CurrentVersion: 1.2.0            -                                                    
+			 -            CurrentVersion: 1.2.1            -                                                    
 			-------------------------------------------------
 			% % % % % % % % % % % % % % % % % % % % % % % % %
 		  % % % % % % % % % % % % % % % % % % % % % % % % % % %
@@ -69,6 +69,14 @@
 ------------------------------------------
 
 -------------------------------------------------------------------------
+ Ver: 1.2.1
+ 	- updated ruler
+ 		- includes clicked block
+ 		- /pcan spawnruler <player> <count>
+ 		- added particle marker to first block
+ 	- updated flight detection
+ 	- fixed not being able to select slot 6 in modLevel command 
+ 
  Ver: 1.2.0
  	- Added Dr. Stupid as an author
  	- Added Alcohol Gambling
