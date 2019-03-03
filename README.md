@@ -54,9 +54,8 @@
 	- bex.fun.hat
 	- bex.util.enchant
 	- bex.dev
-------------------------------------------
- ## EXTRA PERMISSIONS
- 	- bex.fun.superhats
+	- bex.fun.superhats
+
 ------------------------------------------ 		
  ## DEBUG COMMANDS: (DISABLED IN RELEASE)
  	- /pcan eggSteps
