@@ -90,7 +90,7 @@ public class AlcoholEvents
 								.append(Text.builder(">> ").color(TextColors.BLUE).style(TextStyles.BOLD).build())
 								.append(Text.builder(p.getName()).color(TextColors.WHITE).style(TextStyles.RESET).build())
 								.append(Text.builder(" won ").color(TextColors.AQUA).style(TextStyles.RESET).build())
-								.append(Text.builder("$+"String.valueOf(reward)).color(TextColors.GRAY).style(TextStyles.RESET).build())
+								.append(Text.builder("$"+String.valueOf(reward)).color(TextColors.GRAY).style(TextStyles.RESET).build())
 								.append(Text.builder(" from ").color(TextColors.AQUA).style(TextStyles.RESET).build())
 								.append(Text.builder(AlcoholProcessor.getString(id, "name")).color(TextColors.WHITE).style(TextStyles.RESET).build())
 								.append(Text.builder("!!!").color(TextColors.AQUA).style(TextStyles.RESET).build())
