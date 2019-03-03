@@ -1,16 +1,16 @@
 ------------------------------------------
 # BEXPACK
 - Authors: Bexxkie, Dr. Stupid
-- Version: 1.2.2
+- [Version: 1.2.2](#Ver_1.2.2)
 ------------------------------------------
 ## TODO
 - [x] make the enchanting thing
 - [ ] swear jar \(?)
 - [ ] move all the math stuff to a single class
 ------------------------------------------
-- [Changelog](#CHANGELOG)
 - [Commands](#COMMANDS)
 - [Permissions](#PERMISSIONS)
+- [Changelog](#CHANGELOG)
 
 ------------------------------------------		  
  ## COMMANDS
@@ -65,7 +65,7 @@
 ------------------------------------------
 ## CHANGELOG
 ------------------------------------------	
- ### Ver 1.2.2
+ ### Ver_1.2.2
 	- added enchant command
 		- /pcan enchant
 		- bex.util.enchant
@@ -74,7 +74,7 @@
 		- bex.fun.override
 ------------------------------------------
 	
-### Ver 1.2.1
+### Ver_1.2.1
 	- updated ruler
 		- includes clicked block
 		- /pcan spawnruler <player> <count>
@@ -83,7 +83,7 @@
 	- fixed not being able to select slot 6 in modLevel command 
 ------------------------------------------
   
- ### Ver 1.2.0
+ ### Ver_1.2.0
  	- Added Dr. Stupid as an author
  	- Added Alcohol Gambling
  		- /pcan spawnDrink <player name> <drink id>
@@ -94,7 +94,7 @@
  	- Updated build paths for Pixelmon 7.0.3
 ------------------------------------------
  
-  ### Ver 1.1.9
+  ### Ver_1.1.9
  	- updated Eventhandlers
  	- removed commands
  		- /pcan bunnyHat
@@ -104,7 +104,7 @@
  			- type = bunny, parrot
 ------------------------------------------	
  	
- ### Ver 1.1.8
+ ### Ver_1.1.8
  	- updated ItemRain
  		- /pcan itemRain <player> <?time=10>
  		- uses item in hand as target item
@@ -117,7 +117,7 @@
  		- implimented cooldown (60s)
 ------------------------------------------
 
- ### Ver 1.1.7
+ ### Ver_1.1.7
  	- updated ItemRain
  		-/pcan itemRain <player> <?item> <?time>
  			- item [heart,heart2] blank==roseBlock
@@ -127,13 +127,13 @@
  			- is this really a curse?
  			- bex.fun.superRain
 ------------------------------------------ 
- ### Ver 1.1.6b
+ ### Ver_1.1.6b
  	- hat changes (applies to superHats and hats)
  		- hats now have INVULNERABLE tag
  		- fixed logging off not restoring gravity to hats
 ------------------------------------------
  
- ### Ver 1.1.6
+ ### Ver_1.1.6
  	- Commands updated
 		- Player requirements are now enforced
 			- /pcan convetCandy
@@ -156,7 +156,7 @@
 			- returns version info
 ------------------------------------------
 
- ### Ver 1.1.5
+ ### Ver_1.1.5
 	  - superHats changes
 		- only pokemon can be worn, and you must own them
 		- added toggle command for selecting a hat
@@ -167,7 +167,7 @@
 				- bex.fun.superhats
 ------------------------------------------  	
  
-### Ver 1.1.4
+### Ver_1.1.4
 	 - Rewrote SuperHat
 		- disables gravity on entity and updates location relative to players location
 		- no longer blocks targeting
@@ -178,13 +178,13 @@
 		- /pcan parrothat 0
 ------------------------------------------
  	
-### Ver 1.1.2
+### Ver_1.1.2
 	 - Added SuperHat
 		- bex.fun.superhats
 	 - updated wings
  ------------------------------------------
  
-### Ver 1.1.1
+### Ver_1.1.1
 	- Added BunnyHat
 		- /pcan bunnyHat <type>
  
@@ -195,7 +195,7 @@
 		- bex.fun.hat
 ------------------------------------------
 
-### Ver 1.1.0
+### Ver_1.1.0
 	 - Added flower rain
 		- /pcan itemRain <player>
 
@@ -210,13 +210,13 @@
 		- bex.hax.lvl
 ------------------------------------------
 
- ### Ver 1.0.1
+ ### Ver_1.0.1
 	 - minor bug fixes
 		- incubator will not be used when target egg is <= 2 egg steps.
 		- fixed permission node type mismatch
 ------------------------------------------
  
- ### Ver 1.0.0
+ ### Ver_1.0.0
 	- Created Changelog File
 		- Added 'Incubator'
 			- removed 'use incubator to incubate', replaced with command
