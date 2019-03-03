@@ -3,7 +3,10 @@ package com.bex.bexPack.EventListeners;
 import java.util.NoSuchElementException;
 
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.manipulator.mutable.entity.GameModeData;
 import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.entity.living.player.gamemode.GameMode;
+import org.spongepowered.api.entity.living.player.gamemode.GameModes;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.filter.cause.Root;
 import org.spongepowered.api.event.item.inventory.ChangeInventoryEvent;
@@ -68,10 +71,16 @@ public class InventoryEvents
 		}catch(NoSuchElementException | NullPointerException | IndexOutOfBoundsException ex) {}
 
 	}
-	
+
 	@Listener
 	public void wingSuitEquip(ChangeInventoryEvent e, @Root Player p)
 	{
+		GameModeData data = p.getGameModeData();
+		GameMode gm = data.get(Keys.GAME_MODE).get();
+		if(gm.equals(GameModes.CREATIVE))
+		{
+			return;
+		}
 		ItemStack wingsuit = Getters.getElytra();
 		ItemStack equip = p.getEquipped(EquipmentTypes.CHESTPLATE).get();
 		int isWingsuit = ItemStackComparators.ITEM_DATA_IGNORE_DAMAGE.compare(wingsuit,equip);
