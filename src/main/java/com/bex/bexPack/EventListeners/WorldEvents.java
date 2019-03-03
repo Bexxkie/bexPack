@@ -102,7 +102,7 @@ public class WorldEvents
 	 * @param e blockBreak
 	 * @param p Player (only calls if the source is a player)
 	 */
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unlikely-arg-type" })
 	@Listener
 	public void blockBreakEvent(ChangeBlockEvent.Break e, @Root Player p)
 	{
