@@ -33,7 +33,7 @@ public class EntityEvents
 	 * @param p player executed event
 	 */
 	@Listener
-	public void EntityInteractEvent(InteractEntityEvent.Secondary.MainHand e, @Root Player p)
+	public void candyUseHatEvent(InteractEntityEvent.Secondary.MainHand e, @Root Player p)
 	{
 		ItemStack candy = Getters.getCandy();
 		Entity ent = e.getTargetEntity();

@@ -4,8 +4,11 @@ import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.manipulator.mutable.entity.GameModeData;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.entity.living.player.gamemode.GameMode;
+import org.spongepowered.api.entity.living.player.gamemode.GameModes;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.item.inventory.ItemStack;
@@ -32,6 +35,12 @@ public class LeaveJoinEvents
 		ItemStack equip = p.getEquipped(EquipmentTypes.CHESTPLATE).get();
 		int isWingsuit = ItemStackComparators.ITEM_DATA_IGNORE_DAMAGE.compare(wingsuit,equip);
 		//System.out.println("changeInventoryEvent");
+		GameModeData data = p.getGameModeData();
+		GameMode gm = data.get(Keys.GAME_MODE).get();
+		if(gm.equals(GameModes.CREATIVE))
+		{
+			return;
+		}
 		if(isWingsuit!=0)
 		{
 			//System.out.println("notWingSuit");
