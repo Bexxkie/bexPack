@@ -102,31 +102,40 @@ public class WorldEvents
 	 * @param e blockBreak
 	 * @param p Player (only calls if the source is a player)
 	 */
+	@SuppressWarnings("rawtypes")
 	@Listener
 	public void blockBreakEvent(ChangeBlockEvent.Break e, @Root Player p)
 	{
 		GameModeData data = p.getGameModeData();
 		GameMode gm = data.get(Keys.GAME_MODE).get();
-		if(gm.equals(GameModes.CREATIVE))
+		if(!gm.equals(GameModes.CREATIVE))
 		{
-			return;
-		}
-		BlockSnapshot bs = e.getTransactions().get(0).getOriginal();
-		BlockType h = Sponge.getGame().getRegistry().getType(BlockType.class,"pixelmon:healer").get();
-		BlockType c = BlockTypes.CAKE;
-		BlockType b = bs.getState().getType();
-		//System.out.println(b);
-		if(b==h)
-		{	
-			ItemStack im = ItemStack.of(Sponge.getGame().getRegistry().getType(ItemType.class, "pixelmon:healer").get());
-			im.setQuantity(1);
-			p.getInventory().offer(im);
-		}
-		if(b==c)
-		{
-			ItemStack im = ItemStack.of(ItemTypes.CAKE);
-			im.setQuantity(1);
-			p.getInventory().offer(im);
+			BlockSnapshot bs = e.getTransactions().get(0).getOriginal();
+			BlockType h = Sponge.getGame().getRegistry().getType(BlockType.class,"pixelmon:healer").get();
+			BlockType c = BlockTypes.CAKE;
+			BlockType b = bs.getState().getType();
+			//System.out.println(b);
+			if(b==h)
+			{	
+				ItemStack im = ItemStack.of(Sponge.getGame().getRegistry().getType(ItemType.class, "pixelmon:healer").get());
+				im.setQuantity(1);
+				p.getInventory().offer(im);
+			}
+			if(b==c)
+			{
+				ItemStack im = ItemStack.of(ItemTypes.CAKE);
+				im.setQuantity(1);
+				p.getInventory().offer(im);
+			}
+			if(!PixelCandy.enchantingBlockMap.isEmpty())
+			{
+				Location l = bs.getLocation().get();
+				if(PixelCandy.enchantingBlockMap.containsKey(l))
+				{
+					e.setCancelled(true);
+				}
+			}
+
 		}
 	}
 

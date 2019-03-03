@@ -1,7 +1,9 @@
 package com.bex.bexPack.EventListeners;
 
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 
+import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.mutable.entity.GameModeData;
 import org.spongepowered.api.entity.living.player.Player;
@@ -11,7 +13,9 @@ import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.filter.cause.Root;
 import org.spongepowered.api.event.item.inventory.ChangeInventoryEvent;
 import org.spongepowered.api.event.item.inventory.ClickInventoryEvent;
+import org.spongepowered.api.event.item.inventory.InteractInventoryEvent;
 import org.spongepowered.api.item.ItemTypes;
+import org.spongepowered.api.item.inventory.InventoryArchetypes;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.item.inventory.ItemStackComparators;
 import org.spongepowered.api.item.inventory.ItemStackSnapshot;
@@ -19,6 +23,7 @@ import org.spongepowered.api.item.inventory.Slot;
 import org.spongepowered.api.item.inventory.equipment.EquipmentTypes;
 import org.spongepowered.api.item.inventory.transaction.SlotTransaction;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.world.Location;
 
 import com.bex.bexPack.main.PixelCandy;
 import com.bex.bexPack.util.Getters;
@@ -100,6 +105,30 @@ public class InventoryEvents
 		p.offer(Keys.CAN_FLY, true);
 		if(PixelCandy.pFly.containsKey(p)) {return;}
 		PixelCandy.pFly.put(p, true);
+	}
+	@SuppressWarnings("rawtypes")
+	@Listener
+	public void closeEnchantmentTableEvent(InteractInventoryEvent.Close e,@Root Player p)
+	{
+		if(e.getTargetInventory().getArchetype().equals(InventoryArchetypes.ENCHANTING_TABLE))
+		{
+			if(PixelCandy.enchantingBlockMap.isEmpty())
+			{
+				return;
+			}
+			Location loc = p.getLocation();
+			loc = loc.add(2,0,0);
+			if(PixelCandy.enchantingBlockMap.containsKey(p))
+			{
+				HashMap<Location,BlockType> tmp = PixelCandy.enchantingBlockMap.get(p);
+				for(Location _l : tmp.keySet())
+				{
+					_l.setBlockType(tmp.get(_l));
+				}
+				PixelCandy.enchantingBlockMap.remove(p);
+			}
+			
+		}
 	}
 
 }

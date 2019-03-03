@@ -3,6 +3,7 @@ package com.bex.bexPack.EventListeners;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 
+import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.mutable.entity.GameModeData;
 import org.spongepowered.api.entity.Entity;
@@ -14,6 +15,7 @@ import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.item.inventory.ItemStackComparators;
 import org.spongepowered.api.item.inventory.equipment.EquipmentTypes;
+import org.spongepowered.api.world.Location;
 
 import com.bex.bexPack.main.PixelCandy;
 import com.bex.bexPack.util.Getters;
@@ -64,6 +66,7 @@ public class LeaveJoinEvents
 	/**
 	 * PLAYER LEAVE EVENT
 	 */
+	@SuppressWarnings("rawtypes")
 	@Listener
 	public void playerLeaveEvent(ClientConnectionEvent.Disconnect e)
 	{
@@ -94,7 +97,8 @@ public class LeaveJoinEvents
 		//
 		//Clear curse entities
 		//
-		if(PixelCandy.curseMap.containsKey(p)) {
+		if(PixelCandy.curseMap.containsKey(p)) 
+		{
 			HashMap<Entity, Integer> ls = PixelCandy.curseMap.get(p);
 			try {
 				for(Entity ent:ls.keySet())
@@ -105,6 +109,19 @@ public class LeaveJoinEvents
 				}
 			}catch(ConcurrentModificationException |NullPointerException ex) {}	
 
+		}
+		//
+		//clear enchant table shit
+		//
+		if(PixelCandy.enchantingBlockMap.containsKey(p))
+		{
+			HashMap<Location, BlockType> tmp = PixelCandy.enchantingBlockMap.get(p);
+			for(Location loc :tmp.keySet())
+			{
+				loc.setBlockType(tmp.get(loc));
+			}
+			
+			PixelCandy.enchantingBlockMap.remove(p);
 		}
 	}	
 

@@ -43,8 +43,8 @@ public class ItemRainCommand
 						Player p = (Player)src;
 						Player pt = args.<Player>getOne("player").get();
 						int time = args.<Integer>getOne("time").get();
-						
-						if(PixelCandy.Cooldowns.containsKey(pt))
+
+						if(PixelCandy.Cooldowns.containsKey(pt)&&!src.hasPermission("bex.fun.override"))
 						{
 							int remT = PixelCandy.Cooldowns.get(pt);
 							Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE)
@@ -59,19 +59,21 @@ public class ItemRainCommand
 						{
 							Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE)
 									.append(Text.builder("Player must be online").color(TextColors.RED)
-															.build()).build();
+											.build()).build();
 							src.sendMessage(msg);
 						}
-						PixelCandy.Cooldowns.put(pt, 60);
-
+						if(!src.hasPermission("bex.fun.override"))
+						{
+							PixelCandy.Cooldowns.put(pt, 30);
+						}
 						if(time > 15)
 						{time = 15;}
-						
+
 						if(time <1)
 						{time=1;}
-						
+
 						ItemStack inHand = p.getItemInHand(HandTypes.MAIN_HAND).get();
-						
+
 						if(!inHand.equals(ItemStack.of(ItemTypes.AIR)))
 						{
 							ItemStack iRain = inHand.copy();

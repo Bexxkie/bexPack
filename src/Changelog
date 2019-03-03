@@ -9,8 +9,8 @@
 			 -                                     		   -
 			 -                                             -
 			 -               Author: Bexxkie               -
-			 -            CurrentVersion: 1.2.1            -                                                    
-			 -            CurrentVersion: 1.2.0            -                                                    
+			 -            CurrentVersion: 1.2.2            -                                                    
+			 -           					               -                                                    
 			-------------------------------------------------
 			% % % % % % % % % % % % % % % % % % % % % % % % %
 		  % % % % % % % % % % % % % % % % % % % % % % % % % % %
@@ -59,6 +59,8 @@
  		- bex.fun.hat
  	- /pcan info
  		- bex.dev
+ 	- /pcan enchant
+ 		- bex.util.enchant
 ------------------------------------------
  - extra permissions
  	- bex.fun.superhats
@@ -70,7 +72,15 @@
 ------------------------------------------
 
 -------------------------------------------------------------------------
-
+ Ver: 1.2.2
+ 	- added enchant command
+ 		- /pcan enchant
+ 		- bex.util.enchant
+ 	- changed cooldown [60s -> 30s]
+	- added override permission to cooldowns
+		- bex.fun.override
+	
+	
  Ver: 1.2.1
  	- updated ruler
  		- includes clicked block

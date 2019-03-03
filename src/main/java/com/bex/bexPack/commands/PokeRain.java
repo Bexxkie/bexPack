@@ -49,7 +49,7 @@ public class PokeRain
 					{
 						Player pt = args.<Player>getOne("player").get();
 
-						if(PixelCandy.Cooldowns.containsKey(pt))
+						if(PixelCandy.Cooldowns.containsKey(pt)&&!src.hasPermission("bex.fun.override"))
 						{
 							int remT = PixelCandy.Cooldowns.get(pt);
 							Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE)
@@ -67,7 +67,10 @@ public class PokeRain
 															.build()).build();
 							src.sendMessage(msg);
 						}
-						PixelCandy.Cooldowns.put(pt, 60);	
+						if(!src.hasPermission("bex.fun.override"))
+						{
+							PixelCandy.Cooldowns.put(pt, 30);	
+						}
 						HashMap<Entity,Integer> elist = new HashMap<Entity,Integer>();
 						for(int x = 0;x < 10;++x)
 						{

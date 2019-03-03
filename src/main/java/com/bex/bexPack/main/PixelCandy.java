@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.block.BlockState;
+import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.block.BlockTypes;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.mutable.entity.GameModeData;
@@ -24,8 +25,6 @@ import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.item.inventory.ItemStack;
-import org.spongepowered.api.item.inventory.ItemStackComparators;
-import org.spongepowered.api.item.inventory.equipment.EquipmentTypes;
 import org.spongepowered.api.plugin.Dependency;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
@@ -40,7 +39,6 @@ import com.bex.bexPack.EventListeners.InventoryEvents;
 import com.bex.bexPack.EventListeners.LeaveJoinEvents;
 import com.bex.bexPack.EventListeners.WorldEvents;
 import com.bex.bexPack.commands.BaseCommand;
-import com.bex.bexPack.util.Getters;
 import com.bex.bexPack.util.RandomNum;
 import com.flowpowered.math.vector.Vector3d;
 import com.google.inject.Inject;
@@ -55,7 +53,7 @@ dependencies = {@Dependency(id = "pixelmon")})
 public class PixelCandy 
 {
 	public static final String NAME = "bexPack";
-	public static final String VERSION = "1.2.1";
+	public static final String VERSION = "1.2.2";
 	public static final String AUTHOR = "Bexxkie, Dr. Stupid";
 	public static final String DESC = "This does a bunch of shit...";
 	@Inject
@@ -72,6 +70,8 @@ public class PixelCandy
 	/* Player, itemToRain      */		public static HashMap<Player,ItemStack> ItemRainMap = new HashMap<Player,ItemStack>();
 	/* cooldown by player	   */		public static HashMap<Player,Integer> Cooldowns = new HashMap<Player, Integer>();
 	@SuppressWarnings("rawtypes")
+	public static HashMap<Player,HashMap<Location,BlockType>> enchantingBlockMap = new HashMap<Player, HashMap<Location,BlockType>>();
+	@SuppressWarnings("rawtypes")
 	public static HashMap<Player,Location> rulerMap = new HashMap<Player, Location>();
 	public static Boolean ride = false;
 	public static UUID bex = UUID.fromString("7c4958de-7a27-4b58-ac97-947142459d76");
@@ -83,6 +83,7 @@ public class PixelCandy
 	@Listener
 	public void onServerStart(GameInitializationEvent e)
 	{
+		INSTANCE = this;
 		Sponge.getCommandManager().register(this, new BaseCommand().getCommandSpec(), "pixelcandy", "pcan");
 		//Register the listeners
 		Sponge.getEventManager().registerListeners(this, new EntityEvents());
@@ -99,7 +100,6 @@ public class PixelCandy
 	{
 		run();
 	}
-
 	public PluginContainer getPluginContainer() 
 	{
 		return this.pluginContainer;
@@ -241,7 +241,7 @@ public class PixelCandy
 					{
 						GameModeData data = p.getGameModeData();
 						GameMode gm = data.get(Keys.GAME_MODE).get();
-						if(gm.equals(GameModes.CREATIVE))
+						if(gm.equals(GameModes.SURVIVAL))
 						{
 							int xp = p.get(Keys.TOTAL_EXPERIENCE).get();
 							if(p.get(Keys.IS_FLYING).get())
@@ -268,7 +268,7 @@ public class PixelCandy
 					{
 						GameModeData data = p.getGameModeData();
 						GameMode gm = data.get(Keys.GAME_MODE).get();
-						if(!gm.equals(GameModes.CREATIVE))
+						if(gm.equals(GameModes.SURVIVAL))
 						{
 
 							int xp = p.get(Keys.TOTAL_EXPERIENCE).get();
