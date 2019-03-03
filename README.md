@@ -12,7 +12,7 @@
 		     -            CurrentVersion: 1.2.2            -                                                    
 		     -            CurrentVersion: 1.2.0            -                                                    
 		    -------------------------------------------------
-		   % % % % % % % % % % % % % % % % % % % % % % % % %
+		    % % % % % % % % % % % % % % % % % % % % % % % % %
 		  % % % % % % % % % % % % % % % % % % % % % % % % % % %
 		 % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 		---------------------------------------------------------
@@ -71,25 +71,26 @@
  		- displays current eggCycle of <slot> to console
 ------------------------------------------
 
--------------------------------------------------------------------------
- -Ver: 1.2.2
- 	- added enchant command
- 		- /pcan enchant
- 		- bex.util.enchant
- 	- changed cooldown [60s -> 30s]
+------------------------------------------	
+ - V 1.2.2
+	- added enchant command
+		- /pcan enchant
+		- bex.util.enchant
+	- changed cooldown [60s -> 30s]
 	- added override permission to cooldowns
 		- bex.fun.override
+------------------------------------------
 	
-	
- -Ver: 1.2.1
- 	- updated ruler
- 		- includes clicked block
- 		- /pcan spawnruler <player> <count>
- 		- added particle marker to first block
- 	- updated flight detection
- 	- fixed not being able to select slot 6 in modLevel command 
- 
- -Ver: 1.2.0
+- Ver 1.2.1
+	- updated ruler
+		- includes clicked block
+		- /pcan spawnruler <player> <count>
+		- added particle marker to first block
+	- updated flight detection
+	- fixed not being able to select slot 6 in modLevel command 
+------------------------------------------
+  
+ - Ver 1.2.0
  	- Added Dr. Stupid as an author
  	- Added Alcohol Gambling
  		- /pcan spawnDrink <player name> <drink id>
@@ -98,20 +99,19 @@
  		- permission: bex.alcohol.spawn
  	- Added IndexOutOfBoundsException to itemDoublecheck event handler
  	- Updated build paths for Pixelmon 7.0.3
-
-
- -Ver: 1.1.9
+------------------------------------------
+ 
+  - Ver 1.1.9
  	- updated Eventhandlers
  	- removed commands
  		- /pcan bunnyHat
  		- /pcan parrotHat
  	- added commands
  		- /pcan hat <type> [1-5] 
- 	-		- type = bunny, parrot
- 	-
- 	-
+ 			- type = bunny, parrot
+------------------------------------------	
  	
- -Ver: 1.1.8
+ - Ver 1.1.8
  	- updated ItemRain
  		- /pcan itemRain <player> <?time=10>
  		- uses item in hand as target item
@@ -119,13 +119,12 @@
  		- Maximum time = 15s
  		- reduced spawn calls (1 from 3)
  		- implimented cooldown (60s)
- 		
  	- updated curse
  		- reduced quantity to 10 from 15
  		- implimented cooldown (60s)
+------------------------------------------
 
-
- -Ver: 1.1.7
+ - Ver 1.1.7
  	- updated ItemRain
  		-/pcan itemRain <player> <?item> <?time>
  			- item [heart,heart2] blank==roseBlock
@@ -134,104 +133,103 @@
  		- /pcan curse <player>
  			- is this really a curse?
  			- bex.fun.superRain
- 
- -Ver: 1.1.6b
+------------------------------------------ 
+ - Ver 1.1.6b
  	- hat changes (applies to superHats and hats)
  		- hats now have INVULNERABLE tag
  		- fixed logging off not restoring gravity to hats
+------------------------------------------
  
- -Ver: 1.1.6
-  - Commands updated
-  	- Player requirements are now enforced
-  		- /pcan convetCandy
-  		- /pcan incubate <slot>
-  		- /pcan convetCandy
-  		- /pcan modLevel <slot> <level>
-  		- /pcan bunnyHat <type>
-  		- /pcan parrotHat <type>
-  		- /pcan clearHat <type>
-  		- /pcan toggleHat <type>
-  		- /pcan eggSteps <slot> (!DEBUG COMMAND!)
-  		
+ - Ver 1.1.6
+ 	- Commands updated
+		- Player requirements are now enforced
+			- /pcan convetCandy
+			- /pcan incubate <slot>
+			- /pcan convetCandy
+			- /pcan modLevel <slot> <level>
+			- /pcan bunnyHat <type>
+			- /pcan parrotHat <type>
+			- /pcan clearHat <type>
+			- /pcan toggleHat <type>
+			- /pcan eggSteps <slot> (!DEBUG COMMAND!)
   	- Arguments to commands updated
 	  	- /pcan spawnCandy <player> <?count=1> 
 	  	- /pcan spawnEgg <player> <?count=1>
 	  	- /pcan spawnWings <player>
 	  	  		
-  - Added info command
-  	- /pcan info
-  		- bex.dev
-  		- returns version info
+  	- Added info command
+		- /pcan info
+			- bex.dev
+			- returns version info
+------------------------------------------
 
+ - Ver 1.1.5
+	  - superHats changes
+		- only pokemon can be worn, and you must own them
+		- added toggle command for selecting a hat
+			- /pcan togglehat
+				- bex.fun.superhats
+		- added clear command
+			- /pcan clearhat
+				- bex.fun.superhats
+------------------------------------------  	
+ 
+- Ver 1.1.4
+	 - Rewrote SuperHat
+		- disables gravity on entity and updates location relative to players location
+		- no longer blocks targeting
+		- Sneak+RMB to pick a hat
+		- fixed hats not being removed or updated in some instances
+	 - added option to remove hat
+		- /pcan bunnyhat 0
+		- /pcan parrothat 0
+------------------------------------------
+ 	
+- Ver 1.1.2
+	 - Added SuperHat
+		- bex.fun.superhats
+	 - updated wings
+ ------------------------------------------
+ 
+- Ver 1.1.1
+	- Added BunnyHat
+		- /pcan bunnyHat <type>
+ 
+	 - Added ParrotHat
+		- /pcan parrotHat <type>
 
- -Ver: 1.1.5
-  - superHats changes
-  	- only pokemon can be worn, and you must own them
-  	- added toggle command for selecting a hat
-  		- /pcan togglehat
-  	 		- bex.fun.superhats
-  	- added clear command
-  		- /pcan clearhat
-  			- bex.fun.superhats
-  	
--Ver: 1.1.4
- - Rewrote SuperHat
- 	- disables gravity on entity and updates location relative to players location
- 	- no longer blocks targeting
- 	- Sneak+RMB to pick a hat
- 	- fixed hats not being removed or updated in some instances
- - added option to remove hat
- 	- /pcan bunnyhat 0
- 	- /pcan parrothat 0
- 	
- 	
--Ver: 1.1.2
- - Added SuperHat
- 	- bex.fun.superhats
- - updated wings
- 
- 
--Ver: 1.1.1
- - Added BunnyHat
- 	- /pcan bunnyHat <type>
- 
- - Added ParrotHat
- 	- /pcan parrotHat <type>
- 
- - Added Permission nodes
- 	- bex.fun.hat
+	 - Added Permission nodes
+		- bex.fun.hat
+------------------------------------------
 
+- Ver 1.1.0
+	 - Added flower rain
+		- /pcan itemRain <player>
 
--Ver: 1.1.0
- - Added flower rain
- 	- /pcan itemRain <player>
- 	
- - Added level hacks
- 	- /pcan setLevel <slot> <level>
- 	
- - Added flight when wearing elytra
- 	- drains .5xp/s while flying 
+	 - Added level hacks
+		- /pcan setLevel <slot> <level>
+
+	 - Added flight when wearing elytra
+		- drains .5xp/s while flying 
+
+	 - Added permission nodes
+		- bex.fun.rain
+		- bex.hax.lvl
+------------------------------------------
+
+ - Ver 1.0.1
+	 - minor bug fixes
+		- incubator will not be used when target egg is <= 2 egg steps.
+		- fixed permission node type mismatch
+------------------------------------------
  
- - Added permission nodes
- 	- bex.fun.rain
- 	- bex.hax.lvl
- 
- 
--Ver: 1.0.1
- - minor bug fixes
-	- incubator will not be used when target egg is <= 2 egg steps.
-	- fixed permission node type mismatch
- 
- 
--Ver: 1.0.0
- - Created Changelog File
- - Added 'Incubator'
- 	- removed 'use incubator to incubate', replaced with command
- 	- /pcan incubate <slot>
- 	- /pcan spawnegg
- 
- - added permission nodes
- 	- bex.egg.steps
- 	- bex.egg.incubate
- 	- 
+ - Ver 1.0.0
+	- Created Changelog File
+		- Added 'Incubator'
+			- removed 'use incubator to incubate', replaced with command
+			- /pcan incubate <slot>
+			- /pcan spawnegg
+	- added permission nodes
+		- bex.egg.steps
+		- bex.egg.incubate
 -------------------------------------------------------------------------
