@@ -1,11 +1,13 @@
+------------------------------------------
 # BEXPACK
-## AUTHORS Bexxkie, Dr. Stupid
-## CURRENTVERSION: 1.2.2 
+## Authors: Bexxkie, Dr. Stupid
+## V: 1.2.2 
 ------------------------------------------
 ## TODO
-[] swear jar (?)
-[] move all the math stuff to a single class
-[x] make the enchanting thing
+- [x] make the enchanting thing
+- [ ] swear jar \(?)
+- [ ] move all the math stuff to a single class
+
 
 ------------------------------------------		  
  - Commands
