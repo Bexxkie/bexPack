@@ -1,7 +1,7 @@
 ------------------------------------------
 # BEXPACK
 - Authors: Bexxkie, Dr. Stupid
-- [Current Version: 1.2.2](#Ver_1.2.2)
+- Current Version: 1.2.2
 ------------------------------------------
 ## TODO
 - [x] make the enchanting thing
