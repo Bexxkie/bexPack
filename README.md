@@ -7,10 +7,11 @@
 - [x] make the enchanting thing
 - [ ] swear jar \(?)
 - [ ] move all the math stuff to a single class
-
+------------------------------------------
+[Changelog](#CHANGELOG)
 
 ------------------------------------------		  
- - Commands
+ ## Commands
  	- /pcan spawnCandy
  		- bex.candies.spawn
  		- Spawn unusual candy
@@ -43,15 +44,16 @@
  	- /pcan enchant
  		- bex.util.enchant
 ------------------------------------------
- - extra permissions
+ ## extra permissions
  	- bex.fun.superhats
 ------------------------------------------ 		
- - DEBUG COMMANDS: (DISABLED IN RELEASE)
+ ## DEBUG COMMANDS: (DISABLED IN RELEASE)
  	- /pcan eggSteps
  		- bex.egg.steps
  		- displays current eggCycle of <slot> to console
 ------------------------------------------
 
+# CHANGELOG
 ------------------------------------------	
  - V 1.2.2
 	- added enchant command
