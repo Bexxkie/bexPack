@@ -11,12 +11,15 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockTypes;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.manipulator.mutable.entity.GameModeData;
 import org.spongepowered.api.effect.particle.ParticleEffect;
 import org.spongepowered.api.effect.particle.ParticleTypes;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntityTypes;
 import org.spongepowered.api.entity.FallingBlock;
 import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.entity.living.player.gamemode.GameMode;
+import org.spongepowered.api.entity.living.player.gamemode.GameModes;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
@@ -236,11 +239,16 @@ public class PixelCandy
 				{
 					for(Player p:PixelCandy.pFly.keySet())
 					{
-						int xp = p.get(Keys.TOTAL_EXPERIENCE).get();
-						if(p.get(Keys.IS_FLYING).get())
+						GameModeData data = p.getGameModeData();
+						GameMode gm = data.get(Keys.GAME_MODE).get();
+						if(gm.equals(GameModes.CREATIVE))
 						{
-							xp=xp-2;
-							p.offer(Keys.TOTAL_EXPERIENCE,xp);
+							int xp = p.get(Keys.TOTAL_EXPERIENCE).get();
+							if(p.get(Keys.IS_FLYING).get())
+							{
+								xp=xp-2;
+								p.offer(Keys.TOTAL_EXPERIENCE,xp);
+							}
 						}
 					}
 				}
@@ -258,12 +266,18 @@ public class PixelCandy
 				{
 					for(Player p:PixelCandy.pFly.keySet())
 					{
-						int xp = p.get(Keys.TOTAL_EXPERIENCE).get();
-						if(p.get(Keys.IS_FLYING).get())
+						GameModeData data = p.getGameModeData();
+						GameMode gm = data.get(Keys.GAME_MODE).get();
+						if(!gm.equals(GameModes.CREATIVE))
 						{
-							if(xp<1 || PixelCandy.pFly.get(p)==false)
+
+							int xp = p.get(Keys.TOTAL_EXPERIENCE).get();
+							if(p.get(Keys.IS_FLYING).get())
 							{
-								p.offer(Keys.IS_FLYING, false);
+								if(xp<1 || PixelCandy.pFly.get(p)==false)
+								{
+									p.offer(Keys.IS_FLYING, false);
+								}
 							}
 						}
 					}
@@ -315,7 +329,7 @@ public class PixelCandy
 			}
 		}).name("bp-entityHatHelper_t.100ms").submit(this);
 		//playerListenHelper (5s)
-	/*
+		/*
 		tb.interval(5, TimeUnit.SECONDS);
 		tb.execute(new Runnable()
 		{
@@ -329,7 +343,7 @@ public class PixelCandy
 						ItemStack is = p.getEquipped(EquipmentTypes.CHESTPLATE).get();
 						ItemStack wings = Getters.getElytra();
 						int b = ItemStackComparators.ITEM_DATA_IGNORE_DAMAGE.compare(is, wings);
-						
+
 						if(b==0)
 						{
 							if(!PixelCandy.pFly.containsKey(p))
@@ -352,7 +366,7 @@ public class PixelCandy
 				}
 			}
 		}).name("bp-playerListener_t.5s").submit(this);
-		*/
+		 */
 		tb.interval(500, TimeUnit.MILLISECONDS);
 		tb.execute(new Runnable()
 		{
