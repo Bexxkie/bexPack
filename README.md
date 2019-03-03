@@ -1,17 +1,19 @@
 ------------------------------------------
 # BEXPACK
-## Authors: Bexxkie, Dr. Stupid
-## V: 1.2.2 
+- Authors: Bexxkie, Dr. Stupid
+- Version: 1.2.2
 ------------------------------------------
 ## TODO
 - [x] make the enchanting thing
 - [ ] swear jar \(?)
 - [ ] move all the math stuff to a single class
 ------------------------------------------
-[Changelog](#CHANGELOG)
+- [Changelog](#CHANGELOG)
+- [Commands](#COMMANDS)
+- [Permissions](#PERMISSIONS)
 
 ------------------------------------------		  
- ## Commands
+ ## COMMANDS
  	- /pcan spawnCandy
  		- bex.candies.spawn
  		- Spawn unusual candy
@@ -31,9 +33,7 @@
  		- rain roses on a player for 10 seconds
  	- /pcan setLevel <slot> <level>
  		- bex.hax.lvl
- 	- /pcan bunnyHat
- 		- bex.fun.hat
- 	- /pcan parrotHat
+ 	- /pcan hat <entity> <type>
  		- bex.fun.hat
  	- /pcan togglehat
  		- bex.fun.hat
@@ -43,6 +43,17 @@
  		- bex.dev
  	- /pcan enchant
  		- bex.util.enchant
+------------------------------------------
+## PERMISSIONS
+	- bex.candies.spawn
+	- bex.candies.convert
+	- bex.alcohol.spawn
+	- bex.egg.incubate
+	- bex.fun.rain
+	- bex.hax.lvl
+	- bex.fun.hat
+	- bex.util.enchant
+	- bex.dev
 ------------------------------------------
  ## extra permissions
  	- bex.fun.superhats
@@ -55,7 +66,7 @@
 
 # CHANGELOG
 ------------------------------------------	
- - V 1.2.2
+ - Ver 1.2.2
 	- added enchant command
 		- /pcan enchant
 		- bex.util.enchant
