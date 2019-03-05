@@ -44,10 +44,10 @@ public class GameStartCommand
 						Messenger.sendMessage(src, "Minumum time limit is 10s, set to 10s", TextColors.RED);
 						timeLimit = 10;
 					}
-					if(timeLimit > 120)
+					if(timeLimit > 1200)
 					{
-						Messenger.sendMessage(src, "Maximum time limit is 120s, set to 120s", TextColors.RED);
-						timeLimit = 120;
+						Messenger.sendMessage(src, "Maximum time limit is 120s, set to 1200s", TextColors.RED);
+						timeLimit = 1200;
 					}
 					if(guesses < 1)
 					{
