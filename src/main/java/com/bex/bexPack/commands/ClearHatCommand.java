@@ -12,6 +12,7 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
 import com.bex.bexPack.main.PixelCandy;
+import com.bex.bexPack.util.Messenger;
 
 public class ClearHatCommand 
 {
@@ -38,21 +39,24 @@ public class ClearHatCommand
 							{
 								PixelCandy.bunnyMap2.get(p).offer(Keys.HAS_GRAVITY,true);
 								PixelCandy.bunnyMap2.remove(p);
-								Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE).
-										append(Text.builder("hat cleared").color(TextColors.GREEN).build()).build();
-								p.sendMessage(msg);
+								Messenger.sendMessage(src, "hat cleared", TextColors.GREEN);
+								//Text msg = Text.builder(Getters.getPrefix().toString()).
+								//		append(Text.builder("hat cleared").color(TextColors.GREEN).build()).build();
+								//p.sendMessage(msg);
 							}
 							else 
 							{
-								Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE).
-										append(Text.builder("You arent wearing a hat").color(TextColors.GREEN).build()).build();
-								p.sendMessage(msg);
+								Messenger.sendMessage(src, "you aren't wearing a hat", TextColors.RED);
+								//Text msg = Text.builder(Getters.getPrefix().toString()).
+								//		append(Text.builder("You arent wearing a hat").color(TextColors.GREEN).build()).build();
+								//p.sendMessage(msg);
 							}
 						}
 					}
 					else
 					{
-						src.sendMessage(Text.of("[bPack] You must be a player to run this command"));
+						Messenger.sendMessageNotPlayer(src);
+						//src.sendMessage(Text.of(Getters.getPrefix()+"You must be a player to run this command"));
 					}
 					return CommandResult.success();
 				}

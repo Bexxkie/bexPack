@@ -16,6 +16,7 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
 import com.bex.bexPack.main.PixelCandy;
+import com.bex.bexPack.util.Messenger;
 
 public class ItemRainCommand 
 {
@@ -47,20 +48,23 @@ public class ItemRainCommand
 						if(PixelCandy.Cooldowns.containsKey(pt)&&!src.hasPermission("bex.fun.override"))
 						{
 							int remT = PixelCandy.Cooldowns.get(pt);
-							Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE)
-									.append(Text.builder("This player cannot be targeted for another ").color(TextColors.RED)
-											.append(Text.builder(remT+" ").color(TextColors.YELLOW)
-													.append(Text.builder("seconds.").color(TextColors.RED)
-															.build()).build()).build()).build();
-							src.sendMessage(msg);
+							
+							Messenger.sendComplexMessage(src, "This player is under cooldown, seconds remaining:", TextColors.RED, remT+"", TextColors.YELLOW);
+							//Text msg = Text.builder(Getters.getPrefix().toString())
+							//		.append(Text.builder("This player cannot be targeted for another ").color(TextColors.RED)
+							//				.append(Text.builder(remT+" ").color(TextColors.YELLOW)
+							//						.append(Text.builder("seconds.").color(TextColors.RED)
+							//								.build()).build()).build()).build();
+							//src.sendMessage(msg);
 							return CommandResult.success();
 						}	
 						if(pt.isOnline()==false)
 						{
-							Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE)
-									.append(Text.builder("Player must be online").color(TextColors.RED)
-											.build()).build();
-							src.sendMessage(msg);
+							Messenger.sendMessage(src, "Player must be online", TextColors.RED);
+							//Text msg = Text.builder(Getters.getPrefix().toString())
+							//		.append(Text.builder("Player must be online").color(TextColors.RED)
+							//				.build()).build();
+							//src.sendMessage(msg);
 						}
 						if(!src.hasPermission("bex.fun.override"))
 						{

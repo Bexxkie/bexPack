@@ -11,6 +11,7 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
 import com.bex.bexPack.main.PixelCandy;
+import com.bex.bexPack.util.Messenger;
 
 public class ToggleHat 
 {
@@ -36,23 +37,26 @@ public class ToggleHat
 							if(PixelCandy.bMapTog.contains(p))
 							{
 								PixelCandy.bMapTog.remove(p);
-								Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE).
-										append(Text.builder("hat equips disabled").color(TextColors.GREEN).build()).build();
-								p.sendMessage(msg);
+								Messenger.sendComplexMessage(src, "hat equips",TextColors.GREEN, "disabled", TextColors.YELLOW);
+								//Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE).
+								//		append(Text.builder("hat equips disabled").color(TextColors.GREEN).build()).build();
+								//p.sendMessage(msg);
 							}
 							else 
 							{
 								PixelCandy.bMapTog.add(p);
-								Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE).
-										append(Text.builder("hat equips enabled").color(TextColors.GREEN).build()).build();
-								p.sendMessage(msg);
+								Messenger.sendComplexMessage(src, "hat equips",TextColors.GREEN, "enabbled", TextColors.YELLOW);
+								//Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE).
+								//		append(Text.builder("hat equips enabled").color(TextColors.GREEN).build()).build();
+								//p.sendMessage(msg);
 
 							}
 						}
 					}
 					else
 					{
-						src.sendMessage(Text.of("[bPack] You must be a player to run this command"));
+						Messenger.sendMessageNotPlayer(src);
+						//src.sendMessage(Text.of("[bPack] You must be a player to run this command"));
 					}
 					return CommandResult.success();
 				}

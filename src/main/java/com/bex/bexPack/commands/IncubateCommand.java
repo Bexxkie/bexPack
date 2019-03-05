@@ -16,6 +16,7 @@ import org.spongepowered.api.text.format.TextColors;
 
 import com.bex.bexPack.main.PixelCandy;
 import com.bex.bexPack.util.Getters;
+import com.bex.bexPack.util.Messenger;
 import com.pixelmonmod.pixelmon.Pixelmon;
 //import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
 //import com.pixelmonmod.pixelmon.storage.PixelmonStorage;
@@ -55,9 +56,10 @@ public class IncubateCommand
 							int b = ItemStackComparators.IGNORE_SIZE.compare(i, egg);
 							if(slot<=0||slot>6)
 							{
-								Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE).
-										append(Text.builder("You must choose a valid slot [1-6]").color(TextColors.RED).build()).build();
-								p.sendMessage(msg);
+								Messenger.sendMessage(p, "You must choose a valid slot [1-6]", TextColors.RED);
+								//Text msg = Text.builder(Getters.getPrefix().toString()).
+								//		append(Text.builder("You must choose a valid slot [1-6]").color(TextColors.RED).build()).build();
+								//p.sendMessage(msg);
 								return CommandResult.success();
 							}
 							if(b==0)
@@ -77,9 +79,10 @@ public class IncubateCommand
 										//if(epix.eggCycles<=2)
 										if(pk.getEggCycles()<=2)
 										{
-											Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE).
-													append(Text.builder("Incubation would have almost no affect on this egg, show it some love").color(TextColors.GREEN).build()).build();
-											p.sendMessage(msg);
+											Messenger.sendMessage(p, "Incubation would have almost no affect on this egg, show it some love", TextColors.GREEN);
+											//Text msg = Text.builder(Getters.getPrefix().toString()).
+											//		append(Text.builder("Incubation would have almost no affect on this egg, show it some love").color(TextColors.GREEN).build()).build();
+											//p.sendMessage(msg);
 										}
 										else // egg cycles at acceptable level
 										{
@@ -96,39 +99,44 @@ public class IncubateCommand
 												i.setQuantity(i.getQuantity()-1);
 												p.setItemInHand(HandTypes.MAIN_HAND, i);
 											}
-											Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE)
+											Messenger.sendMessage(p, "Pokemon successfully incubated", TextColors.RED);
+											//Text msg = Text.builder(Getters.getPrefix().toString())
 													//		.append(Text.builder("Pokemon successfully incubated, go for a short walk to finish the process").color(TextColors.GREEN).build()).build();
-													/*1.7 */					.append(Text.builder("Pokemon successfully incubated").color(TextColors.GREEN).build()).build();
-											p.sendMessage(msg);
+													/*1.7 */					//.append(Text.builder("Pokemon successfully incubated").color(TextColors.GREEN).build()).build();
+											//p.sendMessage(msg);
 										}
 									}
 									else	//not an egg
 									{
-										Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE)
-												.append(Text.builder("There is no egg in this slot").color(TextColors.RED).build()).build();
-										p.sendMessage(msg);
+										Messenger.sendMessage(p, "There is no egg in this slot", TextColors.RED);
+										//Text msg = Text.builder(Getters.getPrefix().toString())
+										//		.append(Text.builder("There is no egg in this slot").color(TextColors.RED).build()).build();
+										//p.sendMessage(msg);
 										return CommandResult.success();
 									}
 								}
 								catch(NullPointerException ex)
 								{
-									Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE)
-											.append(Text.builder("There is no egg in this slot").color(TextColors.RED).build()).build();
-									p.sendMessage(msg);
+									Messenger.sendMessage(p, "There is no egg in this slot", TextColors.RED);
+									//Text msg = Text.builder(Getters.getPrefix().toString())
+									//		.append(Text.builder("There is no egg in this slot").color(TextColors.RED).build()).build();
+									//p.sendMessage(msg);
 									return CommandResult.success();
 								}
 							}
 							else //no incubator 
 							{
-								Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE)
-										.append(Text.builder("You must be holding an incubator to do this").color(TextColors.RED).build()).build();
-								p.sendMessage(msg);
+								Messenger.sendMessage(p, "There is no egg in this slot", TextColors.RED);
+								//Text msg = Text.builder(Getters.getPrefix().toString())
+								//		.append(Text.builder("You must be holding an incubator to do this").color(TextColors.RED).build()).build();
+								//p.sendMessage(msg);
 							}
 						}
 					}
 					else
 					{
-						src.sendMessage(Text.of("[bPack] You must be a player to run this command"));
+						Messenger.sendMessageNotPlayer(src);
+						//src.sendMessage(Text.of(Getters.getPrefix()+"You must be a player to run this command"));
 					}
 					return CommandResult.success();
 				}

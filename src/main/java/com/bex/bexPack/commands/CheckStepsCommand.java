@@ -8,8 +8,8 @@ import org.spongepowered.api.command.spec.CommandExecutor;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
-
 import com.bex.bexPack.main.PixelCandy;
+import com.bex.bexPack.util.Messenger;
 import com.pixelmonmod.pixelmon.Pixelmon;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.storage.PartyStorage;
@@ -62,7 +62,8 @@ public class CheckStepsCommand {
 					}
 					else
 					{
-						src.sendMessage(Text.of("[bPack] You must be a player to run this command"));
+						Messenger.sendMessageNotPlayer(src);
+						//src.sendMessage(Text.of(Getters.getPrefix()+" You must be a player to run this command"));
 					}
 					return CommandResult.success();
 				}

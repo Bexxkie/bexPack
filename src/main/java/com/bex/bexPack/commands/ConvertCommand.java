@@ -14,6 +14,7 @@ import org.spongepowered.api.text.Text;
 
 import com.bex.bexPack.main.PixelCandy;
 import com.bex.bexPack.util.Getters;
+import com.bex.bexPack.util.Messenger;
 
 
 
@@ -58,7 +59,8 @@ public class ConvertCommand
 					}
 					else 
 					{
-						src.sendMessage(Text.of("[bPack] You must be a player to run this command"));
+						Messenger.sendMessageNotPlayer(src);
+						//src.sendMessage(Text.of(Getters.getPrefix()+"You must be a player to run this command"));
 					}
 
 					return CommandResult.success();

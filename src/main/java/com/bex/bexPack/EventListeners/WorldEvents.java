@@ -33,6 +33,9 @@ import com.bex.bexPack.main.PixelCandy;
 import com.bex.bexPack.util.Getters;
 import com.flowpowered.math.vector.Vector3d;
 
+import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntitySquid;
+
 public class WorldEvents 
 {
 	//TODO finish up the ruler and test it. (watch with name 'ruler')
@@ -138,21 +141,26 @@ public class WorldEvents
 
 		}
 	}
-
-
+	
+	//From mob drops and block break
 	@Listener
 	public void itemDropEvent(DropItemEvent.Destruct e)
 	{
 		Optional<BlockSnapshot> bs = e.getCause().getContext().get(EventContextKeys.BLOCK_HIT);
-
+		Optional<EntityAnimal> ea = e.getCause().first(EntityAnimal.class);
+		Optional<EntitySquid> es = e.getCause().first(EntitySquid.class);
 		try{
+			if(ea.isPresent()||es.isPresent())
+			{
+				e.setCancelled(true);
+			}
 			BlockType bss = bs.get().getState().getType();
 			BlockType h = Sponge.getGame().getRegistry().getType(BlockType.class,"pixelmon:healer").get();
 			if(bss==h)
 			{
 				e.setCancelled(true);
 			}
-		}catch (NoSuchElementException ex)
+		}catch (NoSuchElementException |NullPointerException ex)
 		{
 			return;
 		}

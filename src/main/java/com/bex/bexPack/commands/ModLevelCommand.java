@@ -12,6 +12,7 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
 import com.bex.bexPack.main.PixelCandy;
+import com.bex.bexPack.util.Messenger;
 import com.pixelmonmod.pixelmon.Pixelmon;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.storage.PartyStorage;
@@ -53,9 +54,10 @@ public class ModLevelCommand
 
 							if(slot<=0||slot>6)
 							{
-								Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE).
-										append(Text.builder("You must choose a valid slot [1-6]").color(TextColors.RED).build()).build();
-								p.sendMessage(msg);
+								Messenger.sendMessage(src, "You must choose a valid slot [1-6]", TextColors.RED);
+								//Text msg = Text.builder(Getters.getPrefix().toString())
+								//		.append(Text.builder("You must choose a valid slot [1-6]").color(TextColors.RED).build()).build();
+								//p.sendMessage(msg);
 								return CommandResult.success();
 							}
 							slot=slot-1;
@@ -66,16 +68,18 @@ public class ModLevelCommand
 							{
 								Pokemon pk = party.get(slot);
 								pk.setLevelNum(levl);
-								Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE)
-										//		.append(Text.builder("Pokemon leveled successfully").color(TextColors.GREEN).build()).build();
-										/*1.7 */					.append(Text.builder("Pokemon successfully leveled").color(TextColors.GREEN).build()).build();
-								p.sendMessage(msg);
+								Messenger.sendMessage(src, "Pokemon leveled successfully", TextColors.RED);
+								//Text msg = Text.builder(Getters.getPrefix().toString())
+								//		//		.append(Text.builder("Pokemon leveled successfully").color(TextColors.GREEN).build()).build();
+								//		/*1.7 */					.append(Text.builder("Pokemon successfully leveled").color(TextColors.GREEN).build()).build();
+								//p.sendMessage(msg);
 							}
 							catch(NullPointerException ex)
 							{
-								Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE)
-										.append(Text.builder("This slot is empty").color(TextColors.RED).build()).build();
-								p.sendMessage(msg);
+								Messenger.sendMessage(src, "This slot is empty", TextColors.RED);
+								//Text msg = Text.builder(Getters.getPrefix().toString())
+								//		.append(Text.builder("This slot is empty").color(TextColors.RED).build()).build();
+								//p.sendMessage(msg);
 								return CommandResult.success();
 							}
 
@@ -83,7 +87,8 @@ public class ModLevelCommand
 					}
 					else
 					{
-						src.sendMessage(Text.of("[bPack] You must be a player to run this command"));
+						Messenger.sendMessageNotPlayer(src);
+						//src.sendMessage(Text.of(Getters.getPrefix()+"You must be a player to run this command"));
 					}
 					return CommandResult.success();
 				}

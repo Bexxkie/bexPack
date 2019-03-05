@@ -29,12 +29,14 @@ import org.spongepowered.api.plugin.Dependency;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.scheduler.Task;
+import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 import org.spongepowered.api.world.extent.Extent;
 
 import com.bex.bexPack.EventListeners.*;
 import com.bex.bexPack.commands.BaseCommand;
+import com.bex.bexPack.util.Messenger;
 import com.bex.bexPack.util.RandomNum;
 import com.flowpowered.math.vector.Vector3d;
 import com.google.inject.Inject;
@@ -48,8 +50,8 @@ description = PixelCandy.DESC,
 dependencies = {@Dependency(id = "pixelmon")})
 public class PixelCandy 
 {
-	public static final String NAME = "bexPack";
-	public static final String VERSION = "1.2.3";
+	public static final String NAME = "pixelCandy";
+	public static final String VERSION = "1.2.4";
 	public static final String AUTHOR = "Bexxkie, Dr. Stupid";
 	public static final String DESC = "This does a bunch of shit...";
 	@Inject
@@ -65,6 +67,8 @@ public class PixelCandy
 	/* player, entity,time     */		public static HashMap<Player,HashMap<Entity,Integer>> curseMap = new HashMap<Player,HashMap<Entity,Integer>>();
 	/* Player, itemToRain      */		public static HashMap<Player,ItemStack> ItemRainMap = new HashMap<Player,ItemStack>();
 	/* cooldown by player	   */		public static HashMap<Player,Integer> Cooldowns = new HashMap<Player, Integer>();
+	public static HashMap<Player,Integer> gameGuesses = new HashMap<Player,Integer>();
+	public static HashMap<String,Integer> gameTargetWordAndTime = new HashMap<String,Integer>();
 	@SuppressWarnings("rawtypes")
 	public static HashMap<Player,HashMap<Location,BlockType>> enchantingBlockMap = new HashMap<Player, HashMap<Location,BlockType>>();
 	@SuppressWarnings("rawtypes")
@@ -87,7 +91,7 @@ public class PixelCandy
 		Sponge.getEventManager().registerListeners(this, new LeaveJoinEvents());
 		Sponge.getEventManager().registerListeners(this, new WorldEvents());
 		Sponge.getEventManager().registerListeners(this, new AlcoholEvents());
-		
+
 	}
 
 
@@ -211,7 +215,6 @@ public class PixelCandy
 					catch(ConcurrentModificationException e)
 					{}
 				}
-
 				//Cooldowns
 				for(Player p:PixelCandy.Cooldowns.keySet())
 				{
@@ -223,7 +226,30 @@ public class PixelCandy
 					remT=remT-1;
 					PixelCandy.Cooldowns.replace(p, remT);
 				}
+				//GameTimer
+				if(PixelCandy.gameTargetWordAndTime.isEmpty()==false)
+				{
+					for(String _s : PixelCandy.gameTargetWordAndTime.keySet())
+					{
+						int _t = PixelCandy.gameTargetWordAndTime.get(_s);
+						//System.out.println(_t);
+						if(_t<=0)
+						{
+							//gameOver
+							Messenger.broadcastComplexMessage("Bad luck, no one guessed the word. It was ", TextColors.RED, _s.toString(), TextColors.YELLOW);
+							PixelCandy.gameTargetWordAndTime.clear();
+							PixelCandy.gameGuesses.clear();
+						}
+						else 
+						{
+							_t = _t-1;
+							PixelCandy.gameTargetWordAndTime.replace(_s, _t);
+						}
+					}
+
+				}
 			}
+
 		}).name("bp-itemRain_t.1s").submit(this);
 		//flight drain 0.5xp/s (4s)
 		tb.interval(4, TimeUnit.SECONDS);
@@ -280,90 +306,8 @@ public class PixelCandy
 				}
 			}
 		}).name("bp-elytraFlightHandler_t.500ms").submit(this);
-		//EntityHat Helper (.1s)
-		tb.interval(100, TimeUnit.MILLISECONDS);
-		tb.execute(new Runnable()
-		{
-			Boolean _b =false;
-			@SuppressWarnings({ "unchecked", "rawtypes" })
-			public void run()
-			{
-				if(PixelCandy.ride==false&&_b==false)
-				{
-					return;
-				}
-				//
-				//new Style, moveEntity
-				//
-				if(PixelCandy.ride==false&&_b==true)
-				{
-					for(Player p:PixelCandy.bunnyMap2.keySet())
-					{
-						Entity ent = PixelCandy.bunnyMap2.get(p);
-						if(ent.getPassengers()!=null)
-						{
-							ent.offer(Keys.HAS_GRAVITY,true);
-							ent.offer(Keys.INVULNERABLE,false);
-							PixelCandy.bunnyMap2.remove(p);
-							return;
-						}
-						if(ent.isLoaded())
-						{
-							Location loc = p.getLocation();
-							loc=loc.add(0,2,0);
-							ent.offer(Keys.HAS_GRAVITY,false);
-							ent.offer(Keys.INVULNERABLE,true);
-							ent.setLocation(loc);
-
-							return;
-						}
-
-						PixelCandy.bunnyMap2.remove(p);
-					}	
-					return;
-				}
-			}
-		}).name("bp-entityHatHelper_t.100ms").submit(this);
 		//playerListenHelper (5s)
-		/*
-		tb.interval(5, TimeUnit.SECONDS);
-		tb.execute(new Runnable()
-		{
-			public void run() 
-			{
-				if(PixelCandy.pList.isEmpty()==false)
-				{
-					for(Player p:PixelCandy.pList)
-					{
-						//ItemType it = p.getEquipped(EquipmentTypes.CHESTPLATE).get().getType();
-						ItemStack is = p.getEquipped(EquipmentTypes.CHESTPLATE).get();
-						ItemStack wings = Getters.getElytra();
-						int b = ItemStackComparators.ITEM_DATA_IGNORE_DAMAGE.compare(is, wings);
-
-						if(b==0)
-						{
-							if(!PixelCandy.pFly.containsKey(p))
-							{
-								p.offer(Keys.CAN_FLY,true);
-								p.offer(Keys.IS_FLYING,true);
-								PixelCandy.pFly.put(p,true);
-							}
-						}
-						else
-						{
-							if(PixelCandy.pFly.containsKey(p))
-							{
-								p.offer(Keys.CAN_FLY,false);
-								p.offer(Keys.IS_FLYING,false);
-								PixelCandy.pFly.remove(p);
-							}
-						}
-					}
-				}
-			}
-		}).name("bp-playerListener_t.5s").submit(this);
-		 */
-		tb.interval(500, TimeUnit.MILLISECONDS);
+		tb.interval(250, TimeUnit.MILLISECONDS);
 		tb.execute(new Runnable()
 		{
 			@SuppressWarnings("rawtypes")

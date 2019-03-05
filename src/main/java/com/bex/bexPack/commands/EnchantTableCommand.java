@@ -14,9 +14,11 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.item.inventory.Inventory;
 import org.spongepowered.api.item.inventory.InventoryArchetypes;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.Location;
 
 import com.bex.bexPack.main.PixelCandy;
+import com.bex.bexPack.util.Messenger;
 
 public class EnchantTableCommand 
 {
@@ -66,9 +68,10 @@ public class EnchantTableCommand
 						}
 						for(Location l : tmp.keySet())
 						{
-							if(tmp.get(l).equals(BlockTypes.AIR))
+							if(!tmp.get(l).equals(BlockTypes.AIR))
 							{
-								src.sendMessage(Text.of("[bPack] Not enough room"));
+								Messenger.sendMessage(src, "Not enough room", TextColors.RED);
+								//src.sendMessage(Text.of("[bPack] Not enough room"));
 								return CommandResult.success();
 							}
 						}

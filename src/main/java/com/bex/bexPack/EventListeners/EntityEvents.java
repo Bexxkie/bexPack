@@ -134,7 +134,6 @@ public class EntityEvents
 			e.setCancelled(true);
 		}
 	}
-
 	/**
 	 * this is for updating the location of the entityHat 
 	 * @param e moveEvent
@@ -166,6 +165,4 @@ public class EntityEvents
 			ent.setLocation(loc);
 		}
 	}
-
-
 }

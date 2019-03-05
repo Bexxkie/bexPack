@@ -13,42 +13,31 @@ import org.spongepowered.api.text.format.TextColors;
 import com.bex.bexPack.main.PixelCandy;
 import com.bex.bexPack.util.Messenger;
 
-public class InfoCommand 
+public class GameCloseCommand 
 {
 	private CommandSpec commandSpec = CommandSpec.builder()
-			.description(Text.of("Get version info"))
-			.permission("bex.dev")
+			.description(Text.of("stop a game"))
+			.permission("bex.game.admin")
 			.executor(new CommandExecutor() {
 
 				@Override
 				public CommandResult execute(CommandSource src, CommandContext args) throws CommandException 
 				{
-					if(src instanceof Player)
+					if(!PixelCandy.gameTargetWordAndTime.isEmpty())
 					{
-						Player p = (Player)src;
-						if(p.getUniqueId()==PixelCandy.bex||src.hasPermission("bex.dev"))
-						{
-
-							Messenger.sendMessage(src, ":"+PixelCandy.VERSION, TextColors.GREEN);
-							//Text msg = Text.builder(Getters.getPrefix().toString())
-							//		.append(Text.builder(ver).color(TextColors.GREEN)
-							//				.build()).build();
-							//p.sendMessage(msg);
-							return CommandResult.success();
-						}
+						PixelCandy.gameTargetWordAndTime.clear();
+						PixelCandy.gameGuesses.clear();
+						Messenger.sendMessage(src, "Stopped the game in progress", TextColors.RED);
+						Messenger.broadcastMessage("Game was cancelled by "+((Player)src).getName(), TextColors.RED);
 					}
-					else
-					{
-						Messenger.sendMessage(src, ":"+PixelCandy.VERSION, TextColors.GREEN);
-						//src.sendMessage(Text.of(Getters.getPrefix()+":"+PixelCandy.VERSION));
-					}
+					Messenger.sendMessage(src, "No game in progress", TextColors.RED);
 					return CommandResult.success();
 				}
 			})
 			.build();
 
+
 	public CommandSpec getCommandSpec() {
 		return commandSpec;
-	}	
-
+	}
 }

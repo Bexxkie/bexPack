@@ -61,6 +61,28 @@
 ------------------------------------------
 ## CHANGELOG
 ------------------------------------------	
+### Ver_1.2.4
+	- fixed enchantment command
+	- disabled passive mob drops
+	- changed name to pixcelcandy
+		- prefix now reads [pcan]
+	- removed parrothat's AI
+	- fixed hat command 'type must be 1-6' when 6 is selected
+	- added guessing game
+		- commands
+			- /pcan startGame <wordToGuess> <allowedGuesses> <?timeLimitSeconds=60>
+				- min/max Guess = 1/10
+				- min/max timelimit = 10/120
+				- bex.game.admin
+			- /pcan stopGame
+				- bex.game.admin
+			- /pcan g <guess>
+				- No permission needed
+	- dev stuff
+		- added Messenger class to simplify message sending
+			- javadocs included
+------------------------------------------
+
 ### Ver_1.2.3
 	- renamed AlcoholProcessor.java to GamblingProcessor.java
 	- renamed the "alchol" plugin to "pcangamble"

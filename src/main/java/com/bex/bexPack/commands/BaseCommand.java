@@ -23,6 +23,9 @@ public class BaseCommand
 			.child(new AlcoholCommand().getCommandSpec(), "spawnDrink")
 			.child(new SpawnRulerCommand().getCommandSpec(), "spawnruler")
 			.child(new EnchantTableCommand().getCommandSpec(),"enchant")
+			.child(new GameStartCommand().getCommandSpec(), "startGame")
+			.child(new GameGuessCommand().getCommandSpec(), "g")
+			.child(new GameCloseCommand().getCommandSpec(), "stopGame")
 			.build();
 
 	public CommandSpec getCommandSpec() {

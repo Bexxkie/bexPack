@@ -20,6 +20,7 @@ import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.Location;
 
 import com.bex.bexPack.main.PixelCandy;
+import com.bex.bexPack.util.Messenger;
 import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class HatCommand 
@@ -59,14 +60,16 @@ public class HatCommand
 								parrotHat(rt,p);
 								return CommandResult.success();
 							default:
-								src.sendMessage(Text.of("[bPack] Must choose a type and skin, [bunny,parrot] [1-5]"));
+								Messenger.sendMessage(src, "Must choose a type and skin, [bunny,parrot] [1-(6,5)]", TextColors.RED);
+								//src.sendMessage(Text.of(Getters.getPrefix()+"Must choose a type and skin, [bunny,parrot] [1-5]"));
 								return CommandResult.success();
 							}
 						}
 					}
 					else 
 					{
-						src.sendMessage(Text.of("[bPack] You must be a player to run this command"));
+						Messenger.sendMessageNotPlayer(src);
+						//src.sendMessage(Text.of(Getters.getPrefix()+"You must be a player to run this command"));
 					}
 					return CommandResult.success();
 				}
@@ -97,11 +100,12 @@ public class HatCommand
 				}
 			}
 		}
-		if(rt<1||rt>5)
+		if(rt<1||rt>6)
 		{
-			Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE).
-					append(Text.builder("Type must be between 1-6").color(TextColors.RED).build()).build();
-			p.sendMessage(msg);
+			Messenger.sendMessage(p, "Type must be between 1-6", TextColors.RED);
+			//Text msg = Text.builder(Getters.getPrefix().toString()).
+			//		append(Text.builder("Type must be between 1-6").color(TextColors.RED).build()).build();
+			//p.sendMessage(msg);
 			return;
 		}
 		if(PixelCandy.ride==false&&PixelCandy.bunnyMap2.containsKey(p))
@@ -127,6 +131,7 @@ public class HatCommand
 		{
 			e.offer(Keys.HAS_GRAVITY,false);
 			e.offer(Keys.INVULNERABLE,true);
+			e.offer(Keys.AI_ENABLED, false);
 			PixelCandy.bunnyMap2.put(p, e);
 		}
 	}
@@ -155,9 +160,10 @@ public class HatCommand
 		}
 		if(rt<1||rt>5)
 		{
-			Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE).
-					append(Text.builder("Type must be between 1-5").color(TextColors.RED).build()).build();
-			p.sendMessage(msg);
+			Messenger.sendMessage(p, "Type must be between 1-5", TextColors.RED);
+			//Text msg = Text.builder(Getters.getPrefix().toString()).
+			//		append(Text.builder("Type must be between 1-5").color(TextColors.RED).build()).build();
+			//p.sendMessage(msg);
 			return;
 		}
 
@@ -170,13 +176,14 @@ public class HatCommand
 			}
 			ent.offer(Keys.HAS_GRAVITY,true);
 			ent.offer(Keys.INVULNERABLE,false);
+			
 			PixelCandy.bunnyMap2.remove(p);
 		}
 
 		Location loc = p.getLocation();
 		Entity e = p.getWorld().createEntity(EntityTypes.PARROT, p.getLocation().getPosition());
 		ParrotVariant t = getParrotType(rt);
-
+		
 		e.offer(Keys.PARROT_VARIANT,t);
 		e.offer(Keys.INVULNERABLE,true);
 		loc.spawnEntity(e);
@@ -185,6 +192,7 @@ public class HatCommand
 		{
 			e.offer(Keys.HAS_GRAVITY,false);
 			e.offer(Keys.INVULNERABLE,true);
+			e.offer(Keys.AI_ENABLED, false);
 			PixelCandy.bunnyMap2.put(p, e);
 		}
 	}
