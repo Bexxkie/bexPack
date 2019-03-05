@@ -49,10 +49,10 @@ public class GameGuessCommand
 					int isSame = tar.compareTo(guessWord);
 					if(isSame==0)
 					{	
-						String gMess = "Won with "+remainingGuesses+" guesses left with ";
+						String gMess = " Won with "+remainingGuesses+" guesses left with ";
 						if(remainingGuesses == 1)
 						{
-							gMess = "Won on their last guess with ";
+							gMess = " Won on their last guess with ";
 						}
 						Messenger.broadcastComplexMessage(p.getName()+ gMess, TextColors.GOLD, guessWord, TextColors.GREEN);
 						PixelCandy.gameGuesses.clear();
