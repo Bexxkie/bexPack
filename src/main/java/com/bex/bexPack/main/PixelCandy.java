@@ -33,11 +33,7 @@ import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 import org.spongepowered.api.world.extent.Extent;
 
-import com.bex.bexPack.EventListeners.AlcoholEvents;
-import com.bex.bexPack.EventListeners.EntityEvents;
-import com.bex.bexPack.EventListeners.InventoryEvents;
-import com.bex.bexPack.EventListeners.LeaveJoinEvents;
-import com.bex.bexPack.EventListeners.WorldEvents;
+import com.bex.bexPack.EventListeners.*;
 import com.bex.bexPack.commands.BaseCommand;
 import com.bex.bexPack.util.RandomNum;
 import com.flowpowered.math.vector.Vector3d;
@@ -53,7 +49,7 @@ dependencies = {@Dependency(id = "pixelmon")})
 public class PixelCandy 
 {
 	public static final String NAME = "bexPack";
-	public static final String VERSION = "1.2.2";
+	public static final String VERSION = "1.2.3";
 	public static final String AUTHOR = "Bexxkie, Dr. Stupid";
 	public static final String DESC = "This does a bunch of shit...";
 	@Inject
@@ -91,7 +87,7 @@ public class PixelCandy
 		Sponge.getEventManager().registerListeners(this, new LeaveJoinEvents());
 		Sponge.getEventManager().registerListeners(this, new WorldEvents());
 		Sponge.getEventManager().registerListeners(this, new AlcoholEvents());
-
+		
 	}
 
 

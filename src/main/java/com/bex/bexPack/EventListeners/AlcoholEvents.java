@@ -1,7 +1,7 @@
 package com.bex.bexPack.EventListeners;
 
 import com.bex.bexPack.util.RandomNum;
-import com.bex.bexPack.util.AlcoholProcessor;
+import com.bex.bexPack.util.GamblingProcessor;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class AlcoholEvents
 				String id = lore.get(1).toPlain();
 				//System.out.println(id);
 				
-				Boolean win = getWin(AlcoholProcessor.getInt(id, "numerator"), (AlcoholProcessor.getInt(id, "denominator")));
+				Boolean win = getWin(GamblingProcessor.getInt("drink", id, "numerator"), (GamblingProcessor.getInt("drink", id, "denominator")));
 				List<PotionEffect> effects = new ArrayList<PotionEffect>();
 				if (win) {
 					Optional<EconomyService> serviceOpt = Sponge.getServiceManager().provide(EconomyService.class);
@@ -48,7 +48,7 @@ public class AlcoholEvents
 					EconomyService economyService = serviceOpt.get();
 					Optional<UniqueAccount> userAccount = economyService.getOrCreateAccount(p.getUniqueId());
 					Currency currency = economyService.getDefaultCurrency();
-					int reward = AlcoholProcessor.getInt(id, "reward");
+					int reward = GamblingProcessor.getInt("drink", id, "reward");
 					BigDecimal deposit = new BigDecimal(reward);
 					userAccount.get().deposit(currency, deposit, null);
 					
@@ -84,7 +84,7 @@ public class AlcoholEvents
 							.build();
 					p.sendMessage(msg);
 					
-					if(AlcoholProcessor.getBool(id, "broadcast")) {
+					if(GamblingProcessor.getBool("drink", id, "broadcast")) {
 						msg = Text.builder("<<").color(TextColors.BLUE).style(TextStyles.BOLD)
 								.append(Text.builder("Alcohol").color(TextColors.AQUA).style(TextStyles.RESET).build())
 								.append(Text.builder(">> ").color(TextColors.BLUE).style(TextStyles.BOLD).build())
@@ -92,7 +92,7 @@ public class AlcoholEvents
 								.append(Text.builder(" won ").color(TextColors.AQUA).style(TextStyles.RESET).build())
 								.append(Text.builder("$"+String.valueOf(reward)).color(TextColors.GRAY).style(TextStyles.RESET).build())
 								.append(Text.builder(" from ").color(TextColors.AQUA).style(TextStyles.RESET).build())
-								.append(Text.builder(AlcoholProcessor.getString(id, "name")).color(TextColors.WHITE).style(TextStyles.RESET).build())
+								.append(Text.builder(GamblingProcessor.getString("drink", id, "name")).color(TextColors.WHITE).style(TextStyles.RESET).build())
 								.append(Text.builder("!!!").color(TextColors.AQUA).style(TextStyles.RESET).build())
 								.build();
 						MessageChannel.TO_PLAYERS.send(msg); 

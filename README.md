@@ -11,9 +11,9 @@
 ------------------------------------------
 
 ## JUMP
-- [Commands](#COMMANDS)
-- [Permissions](#PERMISSIONS)
-- [Changelog](#CHANGELOG)
+- [Commands]#(COMMANDS)
+- [Permissions]#(PERMISSIONS)
+- [Changelog]#(CHANGELOG)
 ------------------------------------------		 
  
 ## COMMANDS
@@ -67,6 +67,17 @@
 ------------------------------------------
 ## CHANGELOG
 ------------------------------------------	
+### Ver_1.2.3
+	- renamed AlcoholProcessor.java to GamblingProcessor.java
+	- renamed the "alchol" plugin to "pcangamble"
+		-this means that the config location is now <server root>/config/pcangamble/pcangamble.conf
+	-added the ability to reload the config without having to restart the server
+		-literally just /sponge plugins reload
+	-changed the get functions in GamblingProcessor.java to require more details, allowing the config file to be more detailed
+	-condensed the EventListener imports in PixelCandy.java to just import the whole directory instead of just one directory at a time
+	-changed README.md in such a way that Dr. Stupid's IDE would stop yelling at him
+------------------------------------------
+
 ### Ver_1.2.2
 	- added enchant command
 		- /pcan enchant

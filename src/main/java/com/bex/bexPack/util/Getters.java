@@ -104,8 +104,8 @@ public class Getters
 		ItemStack drink = ItemStack.of(Sponge.getGame().getRegistry().getType(ItemType.class, "minecraft:potion").get());
 		List<Text> lore = new ArrayList<Text>();
 		
-		String drinkName = AlcoholProcessor.getString(id, "name");
-		String drinkLore = AlcoholProcessor.getString(id, "lore");
+		String drinkName = GamblingProcessor.getString("drink", id, "name");
+		String drinkLore = GamblingProcessor.getString("drink", id, "lore");
 
 		lore.add(Text.of("Alcoholic Beverage"));
 		lore.add(Text.of(id));
