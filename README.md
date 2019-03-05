@@ -8,12 +8,6 @@
 - [x] make the enchanting thing
 - [ ] swear jar \(?)
 - [ ] move all the math stuff to a single class
-------------------------------------------
-
-## JUMP
-- [Commands]#(COMMANDS)
-- [Permissions]#(PERMISSIONS)
-- [Changelog]#(CHANGELOG)
 ------------------------------------------		 
  
 ## COMMANDS
