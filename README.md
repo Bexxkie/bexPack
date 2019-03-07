@@ -60,6 +60,16 @@
 ------------------------------------------
 ## CHANGELOG
 ------------------------------------------	
+### Ver_1.2.4b
+	- added preliminary code for slot machines
+		- currently only able to check if a multiblock structure is a valid slot machine
+		- a slot machine is a stone button on a concrete block where:
+			- on top of the concrete must be a carpet
+			- to the left OR right of the concrete must be a lever
+			- the concrete must be on top of an anvil
+			- the anvil must be on top of an obsidian block
+		- pushing the button on the slot is intended to activate it, but currently does nothing
+------------------------------------------
 ### Ver_1.2.4
 	- fixed enchantment command
 	- disabled passive mob drops
