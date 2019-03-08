@@ -23,10 +23,12 @@ import org.spongepowered.api.item.inventory.Slot;
 import org.spongepowered.api.item.inventory.equipment.EquipmentTypes;
 import org.spongepowered.api.item.inventory.transaction.SlotTransaction;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.world.BlockChangeFlags;
 import org.spongepowered.api.world.Location;
 
 import com.bex.bexPack.main.PixelCandy;
 import com.bex.bexPack.util.Getters;
+
 
 
 public class InventoryEvents 
@@ -123,7 +125,7 @@ public class InventoryEvents
 				HashMap<Location,BlockType> tmp = PixelCandy.enchantingBlockMap.get(p);
 				for(Location _l : tmp.keySet())
 				{
-					_l.setBlockType(tmp.get(_l));
+					_l.setBlockType(tmp.get(_l),BlockChangeFlags.NONE);
 				}
 				PixelCandy.enchantingBlockMap.remove(p);
 			}

@@ -60,6 +60,9 @@
 ------------------------------------------
 ## CHANGELOG
 ------------------------------------------	
+### Ver_1.2.4c
+	- added griefpreventionAPI since its shit and it's default flags don't work
+	- pcan enchant can only be used inside of a claim you own, or are trusted in.
 ### Ver_1.2.4b
 	- added preliminary code for slot machines
 		- currently only able to check if a multiblock structure is a valid slot machine

@@ -109,6 +109,7 @@ public class WorldEvents
 	@Listener
 	public void blockBreakEvent(ChangeBlockEvent.Break e, @Root Player p)
 	{
+		
 		GameModeData data = p.getGameModeData();
 		GameMode gm = data.get(Keys.GAME_MODE).get();
 		if(!gm.equals(GameModes.CREATIVE))

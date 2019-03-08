@@ -15,6 +15,8 @@ import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.item.inventory.ItemStackComparators;
 import org.spongepowered.api.item.inventory.equipment.EquipmentTypes;
+import org.spongepowered.api.world.BlockChangeFlag;
+import org.spongepowered.api.world.BlockChangeFlags;
 import org.spongepowered.api.world.Location;
 
 import com.bex.bexPack.main.PixelCandy;
@@ -118,7 +120,7 @@ public class LeaveJoinEvents
 			HashMap<Location, BlockType> tmp = PixelCandy.enchantingBlockMap.get(p);
 			for(Location loc :tmp.keySet())
 			{
-				loc.setBlockType(tmp.get(loc));
+				loc.setBlockType(tmp.get(loc),BlockChangeFlags.NONE);
 			}
 			
 			PixelCandy.enchantingBlockMap.remove(p);

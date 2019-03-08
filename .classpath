@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="C:/pixelmonJARs/forge-1.12.2-14.23.5.2768-universal.jar"/>
 	<classpathentry kind="lib" path="C:/pixelmonJARs/spongeforge-1.12.2-2768-7.1.5.jar"/>
 	<classpathentry kind="lib" path="C:/pixelmonJARs/Pixelmon-1.12.2-7.0.3-universal.jar"/>
+	<classpathentry kind="lib" path="C:/pixelmonJARs/griefprevention-1.12.2-4.3.0.662-api.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

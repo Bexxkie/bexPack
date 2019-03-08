@@ -20,6 +20,9 @@ import org.spongepowered.api.world.Location;
 import com.bex.bexPack.main.PixelCandy;
 import com.bex.bexPack.util.Messenger;
 
+import me.ryanhamshire.griefprevention.GriefPrevention;
+import me.ryanhamshire.griefprevention.api.claim.Claim;
+
 public class EnchantTableCommand 
 {
 	private CommandSpec commandSpec = CommandSpec.builder()
@@ -27,7 +30,7 @@ public class EnchantTableCommand
 			.permission("bex.util.enchant")
 			.executor(new CommandExecutor() {
 
-				@SuppressWarnings({ "rawtypes" })
+				@SuppressWarnings({ "rawtypes", "unchecked" })
 				@Override
 				public CommandResult execute(CommandSource src, CommandContext args) throws CommandException 
 				{
@@ -47,7 +50,7 @@ public class EnchantTableCommand
 								.of(InventoryArchetypes.ENCHANTING_TABLE)
 								.build(PixelCandy.INSTANCE);
 
-
+						
 						Location loc = p.getLocation();
 						HashMap<Location,BlockType> tmp = new HashMap<Location,BlockType>();
 						for(int x = 0;x<2;x++)
@@ -74,6 +77,15 @@ public class EnchantTableCommand
 								//src.sendMessage(Text.of("[bPack] Not enough room"));
 								return CommandResult.success();
 							}
+							Claim claim = GriefPrevention.getApi().getClaimManager(p.getWorld()).getClaimAt(l);
+							boolean isOwner = p.getUniqueId().equals(claim.getOwnerUniqueId());
+							boolean isTrust = claim.isTrusted(p.getUniqueId());
+							if(!claim.isWilderness()&&!isOwner&&!isTrust)
+							{
+								Messenger.sendMessage(src, "Cannot use inside someone elses claim", TextColors.RED);
+								return CommandResult.success();
+							}
+							
 						}
 						for(int x = 0;x<2;x++) 
 						{
