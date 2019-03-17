@@ -3,6 +3,7 @@ package com.bex.bexPack.commands;
 import java.util.HashMap;
 import java.util.Random;
 
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -32,7 +33,7 @@ public class PokeRain
 	private CommandSpec commandSpec = CommandSpec.builder()
 			.description(Text.of("Rain pokemon"))
 			.permission("bex.fun.superRain")
-			.arguments(GenericArguments.onlyOne(GenericArguments.player(Text.of("player"))))
+			.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.of("player"))))
 			.executor(new CommandExecutor() {
 
 				@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -49,6 +50,31 @@ public class PokeRain
 					}
 					if(src.hasPermission("bex.fun.superRain")||isBex==true)
 					{
+
+						String tar = args.<String>getOne("player").get();
+						if(tar=="@e"&&src.hasPermission("bex.fun.override"))
+						{
+							HashMap<Entity,Integer> elist = new HashMap<Entity,Integer>();
+							for(int x = 0;x < 10;++x)
+							{
+								for(Player pt : Sponge.getServer().getOnlinePlayers()) 
+								{
+									Location loc = pt.getLocation();
+									Entity ent = pt.getWorld().createEntity(EntityTypes.RABBIT, pt.getLocation().getPosition());
+									int tp = RandomNum.rNum(1, 6);
+									RabbitType t = getType(tp);
+									//RabbitType t = RabbitTypes.KILLER;
+									ent.offer(Keys.RABBIT_TYPE, t);
+									ent.offer(Keys.ANGRY,true);
+									ent.offer(Keys.INVULNERABLE,true);
+									elist.put(ent,10);
+									PixelCandy.curseMap.put(pt,elist);
+									loc=loc.add(RandomNum.rNum(-3,3),RandomNum.rNum(2,8),RandomNum.rNum(-3,3));
+									loc.spawnEntity(ent);
+									ent.setLocation(loc);
+								}
+							}
+						}
 						Player pt = args.<Player>getOne("player").get();
 
 						if(PixelCandy.Cooldowns.containsKey(pt)&&!src.hasPermission("bex.fun.override"))
@@ -78,7 +104,7 @@ public class PokeRain
 						HashMap<Entity,Integer> elist = new HashMap<Entity,Integer>();
 						for(int x = 0;x < 10;++x)
 						{
-							
+
 							Location loc = pt.getLocation();
 							Entity ent = pt.getWorld().createEntity(EntityTypes.RABBIT, pt.getLocation().getPosition());
 							int tp = RandomNum.rNum(1, 6);

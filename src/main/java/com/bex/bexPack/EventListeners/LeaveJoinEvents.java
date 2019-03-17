@@ -34,7 +34,6 @@ public class LeaveJoinEvents
 		//add player to onlineplayers list (can also use isOnline())
 		Player p = e.getTargetEntity();
 		PixelCandy.pList.add(p);
-
 		ItemStack wingsuit = Getters.getElytra();
 		ItemStack equip = p.getEquipped(EquipmentTypes.CHESTPLATE).get();
 		int isWingsuit = ItemStackComparators.ITEM_DATA_IGNORE_DAMAGE.compare(wingsuit,equip);
@@ -78,6 +77,14 @@ public class LeaveJoinEvents
 		{
 			PixelCandy.pList.remove(p);	
 		}
+		if(PixelCandy.disguiseMap.containsKey(p))
+		{
+			Entity ent = (Entity) PixelCandy.disguiseMap.get(p);
+			p.offer(Keys.INVISIBLE,false);
+			p.offer(Keys.VANISH,false);
+			ent.remove();
+		}
+		
 		//
 		//newStyle,moveEntity
 		//
@@ -105,7 +112,6 @@ public class LeaveJoinEvents
 			try {
 				for(Entity ent:ls.keySet())
 				{
-
 					ent.remove();
 					ls.remove(ent);
 				}

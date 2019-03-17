@@ -15,6 +15,7 @@ import org.spongepowered.api.item.inventory.Inventory;
 import org.spongepowered.api.item.inventory.InventoryArchetypes;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
+import org.spongepowered.api.util.Direction;
 import org.spongepowered.api.world.Location;
 
 import com.bex.bexPack.main.PixelCandy;
@@ -69,6 +70,7 @@ public class EnchantTableCommand
 							tmp.put(loc.add(1, x, 2), loc.add(1, x, 2).getBlockType());
 
 						}
+						
 						for(Location l : tmp.keySet())
 						{
 							if(!tmp.get(l).equals(BlockTypes.AIR))

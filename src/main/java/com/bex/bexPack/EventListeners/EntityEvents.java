@@ -1,13 +1,10 @@
 package com.bex.bexPack.EventListeners;
 
-import java.util.List;
-
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.type.HandTypes;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.entity.CollideEntityEvent;
 import org.spongepowered.api.event.entity.InteractEntityEvent;
 import org.spongepowered.api.event.entity.MoveEntityEvent;
 import org.spongepowered.api.event.filter.cause.Root;
@@ -19,6 +16,7 @@ import org.spongepowered.api.world.Location;
 
 import com.bex.bexPack.main.PixelCandy;
 import com.bex.bexPack.util.Getters;
+import com.flowpowered.math.vector.Vector3d;
 import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
 import com.pixelmonmod.pixelmon.entities.pixelmon.stats.Level;
 
@@ -122,34 +120,33 @@ public class EntityEvents
 
 		}
 	}
-
-
-	@Listener
-	public void entityCollide(CollideEntityEvent.Impact e, @Root Player p)
-	{
-		List<Entity> en = e.getEntities();
-		Entity ent = PixelCandy.bunnyMap2.get(p);
-		if(en.contains(ent))
-		{
-			e.setCancelled(true);
-		}
-	}
 	/**
 	 * this is for updating the location of the entityHat 
 	 * @param e moveEvent
 	 * @param p Player (only calls moveEvent if source is a player)
 	 */
+	//TODO add the Disguise stuff
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Listener
 	public void moveEvent(MoveEntityEvent e, @Root Player p)
 	{
-		if(PixelCandy.ride==true)
+		if(PixelCandy.disguiseMap.containsKey(p))
 		{
-			return;
+			Entity ent = (Entity)PixelCandy.disguiseMap.get(p);
+			if(!ent.isLoaded())
+			{
+				PixelCandy.disguiseMap.remove(p);
+				return;
+			}
+			Location loc = p.getLocation();
+			Vector3d rot = p.getRotation();
+			ent.setRotation(rot);
+			ent.setLocation(loc);
 		}
-		if(PixelCandy.bunnyMap2.containsKey(p)) 
+		if(PixelCandy.bunnyMap2.containsKey(p))
 		{
 			Entity ent = PixelCandy.bunnyMap2.get(p);
+			//This is so you cant try and wear something your sitting on (would send you to space)
 			if(ent.getPassengers().contains(p))
 			{
 				ent.offer(Keys.HAS_GRAVITY,true);
@@ -159,9 +156,11 @@ public class EntityEvents
 			}
 
 			Location loc = p.getLocation();
+			Vector3d rot = p.getHeadRotation();
 			loc=loc.add(0,2,0);
 			//ent.offer(Keys.HAS_GRAVITY,false);
 			//ent.offer(Keys.INVULNERABLE,true);
+			ent.setRotation(rot);
 			ent.setLocation(loc);
 		}
 	}

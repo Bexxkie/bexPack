@@ -38,8 +38,11 @@ import com.bex.bexPack.EventListeners.*;
 import com.bex.bexPack.commands.BaseCommand;
 import com.bex.bexPack.util.Messenger;
 import com.bex.bexPack.util.RandomNum;
+import com.bex.bexPack.util.Schedulars;
 import com.flowpowered.math.vector.Vector3d;
 import com.google.inject.Inject;
+import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
+import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
 
 
 @Plugin (name = PixelCandy.NAME,
@@ -51,7 +54,7 @@ dependencies = {@Dependency(id = "pixelmon")})
 public class PixelCandy 
 {
 	public static final String NAME = "pixelCandy";
-	public static final String VERSION = "1.2.4c";
+	public static final String VERSION = "1.2.4d";
 	public static final String AUTHOR = "Bexxkie, Dr. Stupid";
 	public static final String DESC = "This does a bunch of shit...";
 	@Inject
@@ -67,6 +70,7 @@ public class PixelCandy
 	/* player, entity,time     */		public static HashMap<Player,HashMap<Entity,Integer>> curseMap = new HashMap<Player,HashMap<Entity,Integer>>();
 	/* Player, itemToRain      */		public static HashMap<Player,ItemStack> ItemRainMap = new HashMap<Player,ItemStack>();
 	/* cooldown by player	   */		public static HashMap<Player,Integer> Cooldowns = new HashMap<Player, Integer>();
+	public static HashMap<Player, EntityPixelmon> disguiseMap= new HashMap<Player, EntityPixelmon>();
 	public static HashMap<Player,Integer> gameGuesses = new HashMap<Player,Integer>();
 	public static HashMap<String,Integer> gameTargetWordAndTime = new HashMap<String,Integer>();
 	@SuppressWarnings("rawtypes")
@@ -75,7 +79,7 @@ public class PixelCandy
 	public static HashMap<Player,Location> rulerMap = new HashMap<Player, Location>();
 	public static Boolean ride = false;
 	public static UUID bex = UUID.fromString("7c4958de-7a27-4b58-ac97-947142459d76");
-	Task.Builder tb = Task.builder();
+	public static Task.Builder tb = Task.builder();
 
 	/**
 	 * SERVER INIT EVENTS
@@ -98,7 +102,7 @@ public class PixelCandy
 	@Listener
 	public void onServerStarted(GameStartedServerEvent e) 
 	{
-		run();
+		Schedulars.run();
 	}
 	public PluginContainer getPluginContainer() 
 	{
@@ -143,191 +147,6 @@ public class PixelCandy
 			blockMap.add(ent);
 			loc.spawnEntity(ent);
 		}
-	}
-	public void run()
-	{
-		//ITEMRAIN/CURSE/COOLDOWN MANAGEMENT (1s)
-		tb.interval(1, TimeUnit.SECONDS);
-		tb.execute(new Runnable()
-		{
-			@SuppressWarnings({ "unchecked", "rawtypes" })
-			public void run() 
-			{
-				//ItemRain
-				if(PixelCandy.rainTime.isEmpty()==false)
-				{
-
-					for(Player p:PixelCandy.rainTime.keySet())
-					{
-						int t = PixelCandy.rainTime.get(p); 
-						t--;
-						if(t <1)
-						{
-							PixelCandy.rainTime.remove(p);
-						}
-						PixelCandy.rainTime.replace(p, t);
-						PixelCandy.spawnItem(p);
-						//spawnItem(p);
-						//spawnItem(p);
-					}
-				}
-				//curseControl+Cleanup
-				if(PixelCandy.curseMap.isEmpty()==false)
-				{
-					try {
-						for(Player p:PixelCandy.curseMap.keySet())
-						{
-							HashMap<Entity, Integer> emp = PixelCandy.curseMap.get(p);
-							if(emp.isEmpty()==true)
-							{
-								PixelCandy.curseMap.remove(p);
-							}
-							for(Entity e: emp.keySet())
-							{
-								int t = emp.get(e);
-								t=t-1;
-								if(t<1)
-								{
-									e.remove();
-									emp.remove(e);
-								}
-								Location loc = p.getLocation();
-								loc=loc.add(RandomNum.rNum(-3,3),RandomNum.rNum(2,8),RandomNum.rNum(-3,3));
-								e.setLocation(loc);
-								emp.replace(e, t);
-							}
-						}
-					}
-					catch(ConcurrentModificationException e)
-					{}
-				}
-				//ItemRainCleanup
-				if(PixelCandy.blockMap.isEmpty()==false&&PixelCandy.rainTime.isEmpty())
-				{
-					try
-					{
-						for(Entity b:PixelCandy.blockMap)
-						{
-							b.remove();
-							PixelCandy.blockMap.remove(b);
-						}
-					}
-					catch(ConcurrentModificationException e)
-					{}
-				}
-				//Cooldowns
-				for(Player p:PixelCandy.Cooldowns.keySet())
-				{
-					int remT = PixelCandy.Cooldowns.get(p);
-					if(remT<1)
-					{
-						PixelCandy.Cooldowns.remove(p);
-					}
-					remT=remT-1;
-					PixelCandy.Cooldowns.replace(p, remT);
-				}
-				//GameTimer
-				if(PixelCandy.gameTargetWordAndTime.isEmpty()==false)
-				{
-					for(String _s : PixelCandy.gameTargetWordAndTime.keySet())
-					{
-						int _t = PixelCandy.gameTargetWordAndTime.get(_s);
-						//System.out.println(_t);
-						if(_t<=0)
-						{
-							//gameOver
-							Messenger.broadcastComplexMessage("Bad luck, no one guessed the word. It was ", TextColors.RED, _s.toString(), TextColors.YELLOW);
-							PixelCandy.gameTargetWordAndTime.clear();
-							PixelCandy.gameGuesses.clear();
-						}
-						else 
-						{
-							_t = _t-1;
-							PixelCandy.gameTargetWordAndTime.replace(_s, _t);
-						}
-					}
-
-				}
-			}
-
-		}).name("bp-itemRain_t.1s").submit(this);
-		//flight drain 0.5xp/s (4s)
-		tb.interval(4, TimeUnit.SECONDS);
-		tb.execute(new Runnable()
-		{
-			public void run()
-			{
-				if(PixelCandy.pFly.isEmpty()==false)
-				{
-					for(Player p:PixelCandy.pFly.keySet())
-					{
-						GameModeData data = p.getGameModeData();
-						GameMode gm = data.get(Keys.GAME_MODE).get();
-						if(gm.equals(GameModes.SURVIVAL))
-						{
-							int xp = p.get(Keys.TOTAL_EXPERIENCE).get();
-							if(p.get(Keys.IS_FLYING).get())
-							{
-								xp=xp-2;
-								p.offer(Keys.TOTAL_EXPERIENCE,xp);
-							}
-						}
-					}
-				}
-			}
-		}).name("bp-elytraExpHandler_t.4s").submit(this);
-
-		//flight (.5s)
-		tb.interval(500, TimeUnit.MILLISECONDS);
-		tb.execute(new Runnable()
-		{
-			public void run()
-			{
-				//FlightDetections
-				if(PixelCandy.pFly.isEmpty()==false)
-				{
-					for(Player p:PixelCandy.pFly.keySet())
-					{
-						GameModeData data = p.getGameModeData();
-						GameMode gm = data.get(Keys.GAME_MODE).get();
-						if(gm.equals(GameModes.SURVIVAL))
-						{
-
-							int xp = p.get(Keys.TOTAL_EXPERIENCE).get();
-							if(p.get(Keys.IS_FLYING).get())
-							{
-								if(xp<1 || PixelCandy.pFly.get(p)==false)
-								{
-									p.offer(Keys.IS_FLYING, false);
-								}
-							}
-						}
-					}
-				}
-			}
-		}).name("bp-elytraFlightHandler_t.500ms").submit(this);
-		//playerListenHelper (5s)
-		tb.interval(250, TimeUnit.MILLISECONDS);
-		tb.execute(new Runnable()
-		{
-			@SuppressWarnings("rawtypes")
-			public void run()
-			{
-				if(!rulerMap.isEmpty())
-				{
-					for(Player p: PixelCandy.rulerMap.keySet())
-					{
-						Location loc = rulerMap.get(p);
-						ParticleEffect effect = ParticleEffect.builder()
-								.type(ParticleTypes.PORTAL)
-								.quantity(10)
-								.velocity(Vector3d.from(.5,1.5,.5))
-								.build();
-						p.getLocation().getExtent().spawnParticles(effect, loc.getPosition().add(.5,.5,.5),2);
-					}
-				}
-			}
-		}).name("bp-particleHelper_t.500ms").submit(this);
 	}
 }
 

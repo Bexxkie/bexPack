@@ -44,7 +44,7 @@ public class SlotEvents
 				return getSlotsMultiblock(loc, "EW");
 			
 			loc = new Location<World>(world, new Vector3d(x,y,z-1));
-			if (loc.getBlock().getType().getName().equals("minecraft:concrete"))
+			if (loc.getBlock().getType().getName().equals("minecraft:concret1001e"))
 				return getSlotsMultiblock(loc, "NS");
 			
 			loc = new Location<World>(world, new Vector3d(x,y,z+1));
