@@ -17,6 +17,7 @@ import org.spongepowered.api.world.Location;
 import com.bex.bexPack.main.PixelCandy;
 import com.bex.bexPack.util.Getters;
 import com.flowpowered.math.vector.Vector3d;
+import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
 import com.pixelmonmod.pixelmon.entities.pixelmon.stats.Level;
 
@@ -39,6 +40,7 @@ public class EntityEvents
 		{
 
 			EntityPixelmon	ep = ((EntityPixelmon) ent);
+			Pokemon pk = (Pokemon) ep.getPokemonData();
 			if(!ep.hasOwner())
 			{return;}
 
@@ -49,7 +51,11 @@ public class EntityEvents
 			{
 				Level lv = ep.getLvl();
 				int _x = lv.getLevel()-2;
-
+				if(!pk.doesLevel())
+				{
+					//System.out.println("cannotLevel");
+					return;
+				}
 				if(ep.getLvl().getLevel() <= 1)
 				{
 					_x = lv.getLevel()-1;

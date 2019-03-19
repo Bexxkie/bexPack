@@ -8,6 +8,8 @@ import com.flowpowered.math.vector.Vector3d;
 
 public class FxHandler 
 {
+	
+	//Gonna need config stuff, probably something like <player, effect, vel, radius>
 	/**
 	 * spawn particle effect at players location
 	 * 
