@@ -84,7 +84,7 @@ public class Getters
 		List<Text> lore = new ArrayList<Text>();
 		lore.add(Text.of("Flight"));
 		/*1.7*/	//lore.add(Text.of("Walk a few steps to finish up the hatching process"));
-
+		elytra.offer(Keys.UNBREAKABLE,true);
 		elytra.offer(Keys.DISPLAY_NAME,Text.of(TextColors.BLUE,"Wings"));
 		elytra.offer(Keys.ITEM_LORE,lore);
 		return elytra;

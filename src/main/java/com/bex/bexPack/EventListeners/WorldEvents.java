@@ -63,7 +63,7 @@ public class WorldEvents
 		}
 		//get targetBlock location
 		Location loc = e.getTargetBlock().getLocation().get();
-		if(PixelCandy.rulerMap.containsKey(p)) 
+		if(PixelCandy.rulerMap.containsKey(p))
 		{
 			//doshit
 			//the player already has a location stored, so this SHOULD be the second click, 
@@ -71,13 +71,13 @@ public class WorldEvents
 			Location _b = loc;
 			Double _d = _a.getPosition().distance(_b.getPosition());
 			//convert to int for block count
-			int d = _d.intValue()+1;
+			Double d = _d+1;
 
 			//send distance to player
 			Text msg = Text.builder("[bPack] ").color(TextColors.LIGHT_PURPLE)
 					.append(Text.builder("Distance ").color(TextColors.BLUE)
 							.append(Text.builder(d+" ").color(TextColors.YELLOW)
-									.append(Text.builder("blocks.").color(TextColors.RED)
+									.append(Text.builder("meters.").color(TextColors.BLUE)
 											.build()).build()).build()).build();
 			//send the message remove the player from rulerMap and return
 			p.sendMessage(msg);
@@ -117,6 +117,8 @@ public class WorldEvents
 			BlockSnapshot bs = e.getTransactions().get(0).getOriginal();
 			BlockType h = Sponge.getGame().getRegistry().getType(BlockType.class,"pixelmon:healer").get();
 			BlockType c = BlockTypes.CAKE;
+			BlockType m = Sponge.getGame().getRegistry().getType(BlockType.class, "pixelmon:moss_rock").get();
+			BlockType i = Sponge.getGame().getRegistry().getType(BlockType.class, "pixelmon:ice_rock").get();
 			BlockType b = bs.getState().getType();
 			//System.out.println(b);
 			if(b==h)
@@ -131,6 +133,19 @@ public class WorldEvents
 				im.setQuantity(1);
 				p.getInventory().offer(im);
 			}
+			if(b==m)
+			{
+				ItemStack im = ItemStack.of(Sponge.getGame().getRegistry().getType(ItemType.class, "pixelmon:moss_rock").get());
+				im.setQuantity(1);
+				p.getInventory().offer(im);
+			}
+			if(b==i)
+			{
+				ItemStack im = ItemStack.of(Sponge.getGame().getRegistry().getType(ItemType.class, "pixelmon:ice_rock").get());
+				im.setQuantity(1);
+				p.getInventory().offer(im);
+			}
+			
 			if(!PixelCandy.enchantingBlockMap.isEmpty())
 			{
 				Location l = bs.getLocation().get();

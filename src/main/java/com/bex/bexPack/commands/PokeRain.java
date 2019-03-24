@@ -1,5 +1,6 @@
 package com.bex.bexPack.commands;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -33,7 +34,7 @@ public class PokeRain
 	private CommandSpec commandSpec = CommandSpec.builder()
 			.description(Text.of("Rain pokemon"))
 			.permission("bex.fun.superRain")
-			.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.of("player"))))
+			.arguments(GenericArguments.optional(GenericArguments.player(Text.of("player"))))
 			.executor(new CommandExecutor() {
 
 				@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -50,14 +51,18 @@ public class PokeRain
 					}
 					if(src.hasPermission("bex.fun.superRain")||isBex==true)
 					{
-
-						String tar = args.<String>getOne("player").get();
-						if(tar=="@e"&&src.hasPermission("bex.fun.override"))
+						boolean hasValue = args.<Player>getOne("player").isPresent();
+						Player tar = null;
+						if(hasValue==true) 
+						{
+							tar = args.<Player>getOne("player").get();
+						}
+						if(hasValue==false&&src.hasPermission("bex.fun.override"))
 						{
 							HashMap<Entity,Integer> elist = new HashMap<Entity,Integer>();
-							for(int x = 0;x < 10;++x)
+							for(Player pt : Sponge.getServer().getOnlinePlayers())
 							{
-								for(Player pt : Sponge.getServer().getOnlinePlayers()) 
+								for(int x = 0;x < 10;++x)
 								{
 									Location loc = pt.getLocation();
 									Entity ent = pt.getWorld().createEntity(EntityTypes.RABBIT, pt.getLocation().getPosition());
@@ -73,9 +78,13 @@ public class PokeRain
 									loc.spawnEntity(ent);
 									ent.setLocation(loc);
 								}
+								
 							}
+							Messenger.sendMessage(src,"Everyone is cursed", TextColors.GREEN);
+							return CommandResult.success();
 						}
-						Player pt = args.<Player>getOne("player").get();
+						Player pt = tar;
+						//Player pt = args.<Player>getOne("player").get();
 
 						if(PixelCandy.Cooldowns.containsKey(pt)&&!src.hasPermission("bex.fun.override"))
 						{
@@ -97,6 +106,7 @@ public class PokeRain
 							//								.build()).build();
 							//src.sendMessage(msg);
 						}
+
 						if(!src.hasPermission("bex.fun.override"))
 						{
 							PixelCandy.Cooldowns.put(pt, 30);	
@@ -104,7 +114,6 @@ public class PokeRain
 						HashMap<Entity,Integer> elist = new HashMap<Entity,Integer>();
 						for(int x = 0;x < 10;++x)
 						{
-
 							Location loc = pt.getLocation();
 							Entity ent = pt.getWorld().createEntity(EntityTypes.RABBIT, pt.getLocation().getPosition());
 							int tp = RandomNum.rNum(1, 6);
@@ -119,6 +128,7 @@ public class PokeRain
 							loc.spawnEntity(ent);
 							ent.setLocation(loc);
 						}
+						Messenger.sendMessage(src, pt.getName()+" is cursed", TextColors.GREEN);
 					}
 					return CommandResult.success();
 				}

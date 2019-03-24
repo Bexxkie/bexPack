@@ -94,6 +94,10 @@ public class InventoryEvents
 		//System.out.println("changeInventoryEvent");
 		if(isWingsuit!=0)
 		{
+			if(p.hasPermission("bex.wings.ignore"))
+			{
+				return;
+			}
 			//System.out.println("notWingSuit");
 			if(PixelCandy.pFly.containsKey(p)) 
 			{
@@ -129,7 +133,7 @@ public class InventoryEvents
 				}
 				PixelCandy.enchantingBlockMap.remove(p);
 			}
-			
+
 		}
 	}
 
