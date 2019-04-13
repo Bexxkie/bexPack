@@ -62,6 +62,11 @@ public class PokeRain
 							HashMap<Entity,Integer> elist = new HashMap<Entity,Integer>();
 							for(Player pt : Sponge.getServer().getOnlinePlayers())
 							{
+								if(PixelCandy.curseMap.containsKey(pt))
+								{
+									Messenger.sendMessage(src,pt.getName()+" is already cursed", TextColors.GREEN);
+								}
+								else
 								for(int x = 0;x < 10;++x)
 								{
 									Location loc = pt.getLocation();

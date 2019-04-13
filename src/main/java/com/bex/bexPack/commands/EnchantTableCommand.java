@@ -52,9 +52,14 @@ public class EnchantTableCommand
 								.build(PixelCandy.INSTANCE);
 
 						
-						Location loc = p.getLocation();
+						//Location loc = p.getLocation().getBlockRelative(Direction.DOWN).add(0,1,0);
+						Location la = p.getLocation().getBlockRelative(Direction.DOWN);
+						int lax = la.getBlockX();
+						int lay = la.getBlockY()+1;
+						int laz = la.getBlockZ();
+						Location loc = new Location(p.getWorld(), lax,lay,laz);
 						HashMap<Location,BlockType> tmp = new HashMap<Location,BlockType>();
-						for(int x = 0;x<2;x++)
+						for(int x = -1;x<3;x++)
 						{
 							tmp.put(loc.add(2, x, 0), loc.add(2, x, 0).getBlockType());
 							tmp.put(loc.add(2, x, 1), loc.add(2, x, 1).getBlockType());
@@ -68,6 +73,19 @@ public class EnchantTableCommand
 							tmp.put(loc.add(0, x, 2), loc.add(0, x, 2).getBlockType());
 							tmp.put(loc.add(-1, x, 2), loc.add(-1, x, 2).getBlockType());
 							tmp.put(loc.add(1, x, 2), loc.add(1, x, 2).getBlockType());
+							
+							tmp.put(loc.add(3, x, 0), loc.add(3, x, 0).getBlockType());
+							tmp.put(loc.add(3, x, 1), loc.add(3, x, 1).getBlockType());
+							tmp.put(loc.add(3, x, -1), loc.add(3, x, -1).getBlockType());
+							tmp.put(loc.add(-3, x, 0), loc.add(-3, x, 0).getBlockType());
+							tmp.put(loc.add(-3, x, 1), loc.add(-3, x, 1).getBlockType());
+							tmp.put(loc.add(-3, x, -1), loc.add(-3, x, -1).getBlockType());
+							tmp.put(loc.add(0, x, -3), loc.add(0, x, -3).getBlockType());
+							tmp.put(loc.add(-1, x, -3), loc.add(-1, x, -3).getBlockType());
+							tmp.put(loc.add(1, x, -3), loc.add(1, x, -3).getBlockType());
+							tmp.put(loc.add(0, x, 3), loc.add(0, x, 3).getBlockType());
+							tmp.put(loc.add(-1, x, 3), loc.add(-1, x, 3).getBlockType());
+							tmp.put(loc.add(1, x, 3), loc.add(1, x, 3).getBlockType());
 
 						}
 						
@@ -103,8 +121,48 @@ public class EnchantTableCommand
 							loc.add(1, x, -2).setBlockType(BlockTypes.BOOKSHELF);
 							loc.add(0, x, 2).setBlockType(BlockTypes.BOOKSHELF);
 							loc.add(-1, x, 2).setBlockType(BlockTypes.BOOKSHELF);
+							
+							loc.add(1, x, 3).setBlockType(BlockTypes.OBSIDIAN);
+							loc.add(3, x, 0).setBlockType(BlockTypes.OBSIDIAN);
+							loc.add(3, x, 1).setBlockType(BlockTypes.OBSIDIAN);
+							loc.add(3, x, -1).setBlockType(BlockTypes.OBSIDIAN);
+							loc.add(-3, x, 0).setBlockType(BlockTypes.OBSIDIAN);
+							loc.add(-3, x, 1).setBlockType(BlockTypes.OBSIDIAN);
+							loc.add(-3, x, -1).setBlockType(BlockTypes.OBSIDIAN);
+							loc.add(0, x, -3).setBlockType(BlockTypes.OBSIDIAN);
+							loc.add(-1, x, -3).setBlockType(BlockTypes.OBSIDIAN);
+							loc.add(1, x, -3).setBlockType(BlockTypes.OBSIDIAN);
+							loc.add(0, x, 3).setBlockType(BlockTypes.OBSIDIAN);
+							loc.add(-1, x, 3).setBlockType(BlockTypes.OBSIDIAN);
+							
 						}
-
+						
+						loc.add(1, -1, 2).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(2, -1, 0).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(2, -1, 1).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(2, -1, -1).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(-2, -1, 0).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(-2, -1, 1).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(-2, -1, -1).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(0, -1, -2).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(-1, -1, -2).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(1, -1, -2).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(0, -1, 2).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(-1, -1, 2).setBlockType(BlockTypes.OBSIDIAN);
+						
+						loc.add(1, 2, 2).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(2, 2, 0).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(2, 2, 1).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(2, 2, -1).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(-2, 2, 0).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(-2, 2, 1).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(-2, 2, -1).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(0, 2, -2).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(-1, 2, -2).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(1, 2, -2).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(0, 2, 2).setBlockType(BlockTypes.OBSIDIAN);
+						loc.add(-1, 2, 2).setBlockType(BlockTypes.OBSIDIAN);
+						
 						if(PixelCandy.enchantingBlockMap.containsKey(p))
 						{
 							PixelCandy.enchantingBlockMap.remove(p);

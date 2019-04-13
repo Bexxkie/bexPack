@@ -1,5 +1,7 @@
 package com.bex.bexPack.EventListeners;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -7,11 +9,16 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.block.BlockSnapshot;
 import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.block.BlockTypes;
+import org.spongepowered.api.block.tileentity.Piston;
+import org.spongepowered.api.data.Transaction;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.manipulator.mutable.PotionEffectData;
 import org.spongepowered.api.data.manipulator.mutable.entity.GameModeData;
 import org.spongepowered.api.data.type.HandTypes;
 import org.spongepowered.api.effect.particle.ParticleEffect;
 import org.spongepowered.api.effect.particle.ParticleTypes;
+import org.spongepowered.api.effect.potion.PotionEffect;
+import org.spongepowered.api.effect.potion.PotionEffectTypes;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.gamemode.GameMode;
 import org.spongepowered.api.entity.living.player.gamemode.GameModes;
@@ -19,6 +26,7 @@ import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.block.ChangeBlockEvent;
 import org.spongepowered.api.event.block.InteractBlockEvent;
 import org.spongepowered.api.event.cause.EventContextKeys;
+import org.spongepowered.api.event.filter.cause.First;
 import org.spongepowered.api.event.filter.cause.Root;
 import org.spongepowered.api.event.item.inventory.DropItemEvent;
 import org.spongepowered.api.item.ItemType;
@@ -27,10 +35,12 @@ import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.item.inventory.ItemStackComparators;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
+import org.spongepowered.api.world.BlockChangeFlags;
 import org.spongepowered.api.world.Location;
 
 import com.bex.bexPack.main.PixelCandy;
 import com.bex.bexPack.util.Getters;
+import com.bex.bexPack.util.Messenger;
 import com.flowpowered.math.vector.Vector3d;
 
 import net.minecraft.entity.passive.EntityAnimal;
@@ -99,17 +109,46 @@ public class WorldEvents
 		p.sendMessage(msg);
 		PixelCandy.rulerMap.put(p,loc);
 	}
-
+	@SuppressWarnings("rawtypes")
+	@Listener
+	public void pistonMoveEvent(ChangeBlockEvent.Post e, @First Piston piston)
+	{
+		List<Transaction<BlockSnapshot>> bs = e.getTransactions();
+		if(!PixelCandy.enchantingBlockMap.isEmpty())
+		{
+			if(bs.contains(BlockTypes.BOOKSHELF))
+			{
+				e.setCancelled(true);
+			}
+			for(Player pt : PixelCandy.enchantingBlockMap.keySet())
+			{
+				//System.out.println("getPlayer = "+pt.getName());
+				HashMap<Location,BlockType> tMap = PixelCandy.enchantingBlockMap.get(pt); 
+				//System.out.println(tMap);
+				for(Transaction<BlockSnapshot> b : bs)
+				{
+					Location l = b.getOriginal().getLocation().get();
+					//System.out.println("getLocation = "+l);
+					if(tMap.containsKey(l))
+					{
+						//System.out.println("LocationExists");
+						Messenger.sendMessage(pt, "Cheaters never prosper", TextColors.RED);
+						//l.setBlockType(BlockTypes.AIR,BlockChangeFlags.NONE);
+						e.setCancelled(true);
+					}
+				}
+			}
+		}
+	}
 	/**
 	 * this is to make cake and healers drop when broken
 	 * @param e blockBreak
 	 * @param p Player (only calls if the source is a player)
 	 */
-	@SuppressWarnings({ "rawtypes", "unlikely-arg-type" })
+	@SuppressWarnings("rawtypes")
 	@Listener
 	public void blockBreakEvent(ChangeBlockEvent.Break e, @Root Player p)
 	{
-		
 		GameModeData data = p.getGameModeData();
 		GameMode gm = data.get(Keys.GAME_MODE).get();
 		if(!gm.equals(GameModes.CREATIVE))
@@ -145,19 +184,34 @@ public class WorldEvents
 				im.setQuantity(1);
 				p.getInventory().offer(im);
 			}
-			
+
 			if(!PixelCandy.enchantingBlockMap.isEmpty())
 			{
 				Location l = bs.getLocation().get();
-				if(PixelCandy.enchantingBlockMap.containsKey(l))
+				for(Player pt : PixelCandy.enchantingBlockMap.keySet())
 				{
-					e.setCancelled(true);
+					HashMap<Location,BlockType> tMap = PixelCandy.enchantingBlockMap.get(pt); 
+					if(tMap.containsKey(l))
+					{
+						int dur = 10*20; //tick *20 = seconds
+						Messenger.sendMessage(pt, "Cheaters never prosper", TextColors.RED);
+						PotionEffect fuckyou = PotionEffect.builder()
+								.potionType(PotionEffectTypes.NAUSEA)
+								.duration(dur)
+								.amplifier(69)
+								.build();
+						PotionEffectData bitch = pt.getOrCreate(PotionEffectData.class).get();
+						bitch.addElement(fuckyou);
+						pt.offer(bitch);
+						pt.getHealthData().set(Keys.HEALTH,0.0);
+						e.setCancelled(true);
+					}
 				}
 			}
 
 		}
 	}
-	
+
 	//From mob drops and block break
 	@Listener
 	public void itemDropEvent(DropItemEvent.Destruct e)

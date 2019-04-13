@@ -9,14 +9,17 @@ import org.spongepowered.api.data.manipulator.mutable.entity.GameModeData;
 import org.spongepowered.api.effect.particle.ParticleEffect;
 import org.spongepowered.api.effect.particle.ParticleTypes;
 import org.spongepowered.api.entity.Entity;
+import org.spongepowered.api.entity.EntityTypes;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.living.player.gamemode.GameMode;
 import org.spongepowered.api.entity.living.player.gamemode.GameModes;
+import org.spongepowered.api.entity.weather.Lightning;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.Location;
 
 import com.bex.bexPack.main.PixelCandy;
 import com.flowpowered.math.vector.Vector3d;
+
 
 public class Schedulars 
 {
@@ -62,15 +65,19 @@ public class Schedulars
 							{
 								int t = emp.get(e);
 								t=t-1;
-								if(t<1)
-								{
-									e.remove();
-									emp.remove(e);
-								}
 								Location loc = p.getLocation();
 								loc=loc.add(RandomNum.rNum(-3,3),RandomNum.rNum(2,8),RandomNum.rNum(-3,3));
 								e.setLocation(loc);
 								emp.replace(e, t);
+								if(t<1)
+								{
+									Entity enl = p.getWorld().createEntity(EntityTypes.LIGHTNING,e.getLocation().getPosition());
+									Lightning lt = (Lightning) enl;
+									e.getWorld().spawnEntity(lt);
+
+									e.remove();
+									emp.remove(e);
+								}
 							}
 						}
 					}
@@ -172,9 +179,10 @@ public class Schedulars
 							int xp = p.get(Keys.TOTAL_EXPERIENCE).get();
 							if(p.get(Keys.IS_FLYING).get())
 							{
-								if(xp<1 || PixelCandy.pFly.get(p)==false)
+								if(xp<=1 || PixelCandy.pFly.get(p)==false)
 								{
 									p.offer(Keys.IS_FLYING, false);
+									p.offer(Keys.CAN_FLY, false);
 								}
 							}
 						}
