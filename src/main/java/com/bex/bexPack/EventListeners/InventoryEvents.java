@@ -114,11 +114,7 @@ public class InventoryEvents
 	{
 		GameModeData data = p.getGameModeData();
 		GameMode gm = data.get(Keys.GAME_MODE).get();
-		if(p.hasPermission("bex.wings.ignore"))
-		{
-			return;
-		}
-		if(!gm.equals(GameModes.SURVIVAL))
+		if(!gm.equals(GameModes.SURVIVAL)||!gm.equals(GameModes.ADVENTURE))
 		{
 			return;
 		}
@@ -128,6 +124,10 @@ public class InventoryEvents
 		//System.out.println("changeInventoryEvent");
 		if(equip.isEmpty())
 		{
+			if(p.hasPermission("bex.wings.ignore"))
+			{
+				return;
+			}
 			p.offer(Keys.CAN_FLY,false);
 			p.offer(Keys.IS_FLYING,false);
 		}
