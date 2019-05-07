@@ -171,18 +171,21 @@ public class Schedulars
 				{
 					for(Player p:PixelCandy.pFly.keySet())
 					{
-						GameModeData data = p.getGameModeData();
-						GameMode gm = data.get(Keys.GAME_MODE).get();
-						if(gm.equals(GameModes.SURVIVAL))
+						if(!p.hasPermission("bex.wings.ignore"))
 						{
-
-							int xp = p.get(Keys.TOTAL_EXPERIENCE).get();
-							if(p.get(Keys.IS_FLYING).get())
+							GameModeData data = p.getGameModeData();
+							GameMode gm = data.get(Keys.GAME_MODE).get();
+							if(gm.equals(GameModes.SURVIVAL))
 							{
-								if(xp<=1 || PixelCandy.pFly.get(p)==false)
+
+								int xp = p.get(Keys.TOTAL_EXPERIENCE).get();
+								if(p.get(Keys.IS_FLYING).get())
 								{
-									p.offer(Keys.IS_FLYING, false);
-									p.offer(Keys.CAN_FLY, false);
+									if(xp<=1 || PixelCandy.pFly.get(p)==false)
+									{
+										p.offer(Keys.IS_FLYING, false);
+										p.offer(Keys.CAN_FLY, false);
+									}
 								}
 							}
 						}

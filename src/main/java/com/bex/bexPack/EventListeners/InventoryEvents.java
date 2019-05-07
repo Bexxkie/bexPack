@@ -114,6 +114,10 @@ public class InventoryEvents
 	{
 		GameModeData data = p.getGameModeData();
 		GameMode gm = data.get(Keys.GAME_MODE).get();
+		if(p.hasPermission("bex.wings.ignore"))
+		{
+			return;
+		}
 		if(!gm.equals(GameModes.SURVIVAL))
 		{
 			return;
@@ -129,10 +133,6 @@ public class InventoryEvents
 		}
 		if(isWingsuit!=0)
 		{
-			if(p.hasPermission("bex.wings.ignore"))
-			{
-				return;
-			}
 			//System.out.println("notWingSuit");
 			if(PixelCandy.pFly.containsKey(p)) 
 			{
