@@ -175,7 +175,7 @@ public class Schedulars
 						{
 							GameModeData data = p.getGameModeData();
 							GameMode gm = data.get(Keys.GAME_MODE).get();
-							if(gm.equals(GameModes.SURVIVAL))
+							if(gm.equals(GameModes.SURVIVAL)||gm.equals(GameModes.ADVENTURE))
 							{
 
 								int xp = p.get(Keys.TOTAL_EXPERIENCE).get();
