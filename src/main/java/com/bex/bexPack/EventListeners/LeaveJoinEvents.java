@@ -39,7 +39,7 @@ public class LeaveJoinEvents
 		//System.out.println("changeInventoryEvent");
 		GameModeData data = p.getGameModeData();
 		GameMode gm = data.get(Keys.GAME_MODE).get();
-		if(gm.equals(GameModes.CREATIVE))
+		if(gm.equals(GameModes.CREATIVE)||gm.equals(GameModes.SPECTATOR))
 		{
 			return;
 		}

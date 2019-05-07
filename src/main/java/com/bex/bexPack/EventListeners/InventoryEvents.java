@@ -23,11 +23,13 @@ import org.spongepowered.api.item.inventory.Slot;
 import org.spongepowered.api.item.inventory.equipment.EquipmentTypes;
 import org.spongepowered.api.item.inventory.transaction.SlotTransaction;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.world.BlockChangeFlags;
 import org.spongepowered.api.world.Location;
 
 import com.bex.bexPack.main.PixelCandy;
 import com.bex.bexPack.util.Getters;
+import com.bex.bexPack.util.Messenger;
 
 
 
@@ -114,7 +116,7 @@ public class InventoryEvents
 	{
 		GameModeData data = p.getGameModeData();
 		GameMode gm = data.get(Keys.GAME_MODE).get();
-		if(!gm.equals(GameModes.SURVIVAL)||!gm.equals(GameModes.ADVENTURE))
+		if(gm.equals(GameModes.CREATIVE)||gm.equals(GameModes.SPECTATOR))
 		{
 			return;
 		}
@@ -126,17 +128,19 @@ public class InventoryEvents
 		{
 			if(p.hasPermission("bex.wings.ignore"))
 			{
+				p.offer(Keys.CAN_FLY,true);
 				return;
 			}
 			p.offer(Keys.CAN_FLY,false);
 			p.offer(Keys.IS_FLYING,false);
+			return;
 		}
 		if(isWingsuit!=0)
 		{
 			//System.out.println("notWingSuit");
 			if(PixelCandy.pFly.containsKey(p)) 
 			{
-				PixelCandy.pFly.put(p, true);
+				PixelCandy.pFly.remove(p);
 			}
 			p.offer(Keys.CAN_FLY, false);
 			p.offer(Keys.IS_FLYING, false);
