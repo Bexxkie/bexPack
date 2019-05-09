@@ -71,9 +71,9 @@ public class Schedulars
 								emp.replace(e, t);
 								if(t<1)
 								{
-									Entity enl = p.getWorld().createEntity(EntityTypes.LIGHTNING,e.getLocation().getPosition());
-									Lightning lt = (Lightning) enl;
-									e.getWorld().spawnEntity(lt);
+									//Entity enl = p.getWorld().createEntity(EntityTypes.LIGHTNING,e.getLocation().getPosition());
+									//Lightning lt = (Lightning) enl;
+									//e.getWorld().spawnEntity(lt);
 
 									e.remove();
 									emp.remove(e);

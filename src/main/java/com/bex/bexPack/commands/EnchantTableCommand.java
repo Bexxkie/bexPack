@@ -59,7 +59,7 @@ public class EnchantTableCommand
 						int laz = la.getBlockZ();
 						Location loc = new Location(p.getWorld(), lax,lay,laz);
 						HashMap<Location,BlockType> tmp = new HashMap<Location,BlockType>();
-						for(int x = -1;x<3;x++)
+						for(int x = 0;x<3;x++)
 						{
 							tmp.put(loc.add(2, x, 0), loc.add(2, x, 0).getBlockType());
 							tmp.put(loc.add(2, x, 1), loc.add(2, x, 1).getBlockType());
@@ -137,7 +137,7 @@ public class EnchantTableCommand
 							
 						}
 						
-						loc.add(1, -1, 2).setBlockType(BlockTypes.OBSIDIAN);
+						/*loc.add(1, -1, 2).setBlockType(BlockTypes.OBSIDIAN);
 						loc.add(2, -1, 0).setBlockType(BlockTypes.OBSIDIAN);
 						loc.add(2, -1, 1).setBlockType(BlockTypes.OBSIDIAN);
 						loc.add(2, -1, -1).setBlockType(BlockTypes.OBSIDIAN);
@@ -149,7 +149,7 @@ public class EnchantTableCommand
 						loc.add(1, -1, -2).setBlockType(BlockTypes.OBSIDIAN);
 						loc.add(0, -1, 2).setBlockType(BlockTypes.OBSIDIAN);
 						loc.add(-1, -1, 2).setBlockType(BlockTypes.OBSIDIAN);
-						
+						*/
 						loc.add(1, 2, 2).setBlockType(BlockTypes.OBSIDIAN);
 						loc.add(2, 2, 0).setBlockType(BlockTypes.OBSIDIAN);
 						loc.add(2, 2, 1).setBlockType(BlockTypes.OBSIDIAN);
