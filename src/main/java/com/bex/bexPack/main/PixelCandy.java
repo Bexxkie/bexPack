@@ -1,5 +1,7 @@
 package com.bex.bexPack.main;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +10,7 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.block.BlockTypes;
+import org.spongepowered.api.config.DefaultConfig;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntityTypes;
@@ -15,6 +18,7 @@ import org.spongepowered.api.entity.FallingBlock;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
+import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.plugin.Dependency;
@@ -27,9 +31,14 @@ import org.spongepowered.api.world.extent.Extent;
 
 import com.bex.bexPack.EventListeners.*;
 import com.bex.bexPack.commands.BaseCommand;
+import com.bex.bexPack.util.FxHandler;
 import com.bex.bexPack.util.Schedulars;
 import com.google.inject.Inject;
 import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
+
+import ninja.leaping.configurate.commented.CommentedConfigurationNode;
+import ninja.leaping.configurate.loader.ConfigurationLoader;
+import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 
 
 @Plugin (name = PixelCandy.NAME,
@@ -64,10 +73,36 @@ public class PixelCandy
 	public static HashMap<Player,HashMap<Location,BlockType>> enchantingBlockMap = new HashMap<Player, HashMap<Location,BlockType>>();
 	@SuppressWarnings("rawtypes")
 	public static HashMap<Player,Location> rulerMap = new HashMap<Player, Location>();
+	//public static ArrayList<Player> particleList = new ArrayList<Player>();
+	public static HashMap<Player, ArrayList<Object>> particleMap = new HashMap<Player, ArrayList<Object>>();
 	public static Boolean ride = false;
 	public static UUID bex = UUID.fromString("7c4958de-7a27-4b58-ac97-947142459d76");
 	public static Task.Builder tb = Task.builder();
 
+	@Inject
+	@DefaultConfig(sharedRoot = false)
+	public File configuration = null;
+	
+	@Inject
+	@DefaultConfig(sharedRoot = false)
+	public static ConfigurationLoader<CommentedConfigurationNode> configurationLoader = null;
+	
+	public static CommentedConfigurationNode configurationNode = null;
+	
+	@Listener
+	public void preInit(GamePreInitializationEvent e) throws IOException, ObjectMappingException
+	{
+		try {
+			if (!configuration.exists()) {
+				configuration.createNewFile();
+				configurationNode = configurationLoader.load();
+				configurationLoader.save(configurationNode);
+			}
+			configurationNode = configurationLoader.load();
+		}catch (IOException exc) {
+			exc.printStackTrace();
+		}
+	}
 	/**
 	 * SERVER INIT EVENTS
 	 */
@@ -83,6 +118,7 @@ public class PixelCandy
 		Sponge.getEventManager().registerListeners(this, new WorldEvents());
 		Sponge.getEventManager().registerListeners(this, new AlcoholEvents());
 		Sponge.getEventManager().registerListeners(this, new SlotEvents());
+		FxHandler.initMap();
 	}
 
 

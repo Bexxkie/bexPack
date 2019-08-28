@@ -1,5 +1,6 @@
 package com.bex.bexPack.util;
 
+import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
@@ -7,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.mutable.entity.GameModeData;
 import org.spongepowered.api.effect.particle.ParticleEffect;
+import org.spongepowered.api.effect.particle.ParticleType;
 import org.spongepowered.api.effect.particle.ParticleTypes;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntityTypes;
@@ -213,8 +215,47 @@ public class Schedulars
 						p.getLocation().getExtent().spawnParticles(effect, loc.getPosition().add(.5,.5,.5),2);
 					}
 				}
+				if(!PixelCandy.particleMap.isEmpty())
+				{
+					for(Player p : PixelCandy.particleMap.keySet())
+					{
+						FxHandler.buildFX(p);
+					}
+				}
+
 			}
 		}).name("bp-particleHelper_t.500ms").submit(PixelCandy.INSTANCE);
+		//Autosave (30m)
+		PixelCandy.tb.interval(30, TimeUnit.MINUTES);
+		PixelCandy.tb.execute(new Runnable()
+		{
+
+			public void run()
+			{
+				for(Player p : PixelCandy.particleMap.keySet())
+				{
+					ArrayList<Object> o = PixelCandy.particleMap.get(p);
+					ParticleType effect = (ParticleType) o.get(0);
+					Vector3d vel = (Vector3d) o.get(1);
+					int rad = (int)o.get(2);
+					double vx = vel.getX();
+					double vy = vel.getZ();
+					double vz = vel.getY();
+					HashMap<String,Object> ls = new HashMap<String,Object>();
+					ls.put("vx", vx);
+					ls.put("vy", vy);
+					ls.put("vz", vz);
+					ls.put("rad",rad);
+					ls.put("effect",effect);
+					for(String s :ls.keySet())
+					{
+						String path = p.getUniqueId().toString()+".particle"+s;
+						ConfigMk.save(path, ls.get(s));
+					}
+				}
+
+			}
+		}).name("bp-autoSave_t.500ms").submit(PixelCandy.INSTANCE);
 	}
 
 }

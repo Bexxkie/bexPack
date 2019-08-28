@@ -19,6 +19,7 @@ import org.spongepowered.api.world.BlockChangeFlags;
 import org.spongepowered.api.world.Location;
 
 import com.bex.bexPack.main.PixelCandy;
+import com.bex.bexPack.util.ConfigMk;
 import com.bex.bexPack.util.Getters;
 import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
 
@@ -33,6 +34,14 @@ public class LeaveJoinEvents
 		//add player to onlineplayers list (can also use isOnline())
 		Player p = e.getTargetEntity();
 		PixelCandy.pList.add(p);
+		Boolean pPart = ConfigMk.getBool(p.getUniqueId().toString(), "particle", "enabled");
+		if(pPart)
+		{
+			if(!PixelCandy.particleMap.containsKey(p)) 
+			{
+				PixelCandy.particleMap.put(p,null);	
+			}
+		}
 		ItemStack wingsuit = Getters.getElytra();
 		ItemStack equip = p.getEquipped(EquipmentTypes.CHESTPLATE).get();
 		int isWingsuit = ItemStackComparators.ITEM_DATA_IGNORE_DAMAGE.compare(wingsuit,equip);
@@ -61,7 +70,6 @@ public class LeaveJoinEvents
 				PixelCandy.pFly.put(p, true);
 			}
 		}
-
 	}
 	/**
 	 * PLAYER LEAVE EVENT
@@ -72,6 +80,10 @@ public class LeaveJoinEvents
 	{
 		//Cleanup anything that needs to be. remove players from list, clean up entities and shit
 		Player p = e.getTargetEntity();
+		if(PixelCandy.particleMap.containsKey(p))
+		{
+			PixelCandy.particleMap.remove(p);
+		}
 		if(PixelCandy.pList.contains(p)) 
 		{
 			PixelCandy.pList.remove(p);	
