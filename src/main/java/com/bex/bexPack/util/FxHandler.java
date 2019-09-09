@@ -15,8 +15,9 @@ import com.flowpowered.math.vector.Vector3d;
 public class FxHandler 
 {
 	private final static HashMap<String,ParticleType> ParticleList= new HashMap<String,ParticleType>();
-
-	public static void initMap()
+	private ConfigMk config = new ConfigMk();
+	
+	public void initMap()
 	{
 		ParticleList.put("AMBIENT_MOB_SPELL", ParticleTypes.AMBIENT_MOB_SPELL);
 		ParticleList.put("ANGRY_VILLAGER", ParticleTypes.ANGRY_VILLAGER);
@@ -74,7 +75,7 @@ public class FxHandler
 		ParticleList.put("WITCH_SPELL", ParticleTypes.WITCH_SPELL);
 
 	}
-
+	
 
 	//Gonna need config stuff, probably something like <player, effect, vel, radius>
 	/**
@@ -85,7 +86,7 @@ public class FxHandler
 	 * @param vel
 	 * @param rad
 	 */
-	public static void sendFxToPlayer(Player p, ParticleType effect, Vector3d vel,int rad)
+	public void sendFxToPlayer(Player p, ParticleType effect, Vector3d vel,int rad)
 	{
 
 		ParticleEffect fx = ParticleEffect.builder()
@@ -97,7 +98,7 @@ public class FxHandler
 		((Viewer)p).spawnParticles(fx, loc, rad);
 	}
 	//
-	public static void buildFX(Player p)
+	public void buildFX(Player p)
 	{
 		checkVal(p);
 
@@ -108,7 +109,7 @@ public class FxHandler
 		sendFxToPlayer(p, effect, vel, rad);
 	}
 	// Check if the particle map is valid
-	public static void checkVal(Player p)
+	public void checkVal(Player p)
 	{
 		ArrayList<Object> o = PixelCandy.particleMap.get(p);
 		if(o.isEmpty())
@@ -128,7 +129,7 @@ public class FxHandler
 
 	}
 	// Populate player particle map
-	public static void buildMap(Player p, ArrayList<Object> o)
+	public void buildMap(Player p, ArrayList<Object> o)
 	{
 		o.add(0,getEffectType(p));
 		o.add(1,getVel(p));
@@ -138,26 +139,26 @@ public class FxHandler
 		
 	}
 	// get particle rad (how far should the particles spawn)
-	public static int getRad(Player p)
+	public int getRad(Player p)
 	{
-		int rad = ConfigMk.getInt(p.getUniqueId().toString(), "particle", "radius");
+		int rad = config.getInt(p.getUniqueId().toString(), "particle", "radius");
 		return rad;
 	}
 	// get velocity of particles (how much should the particles move)
-	public static Vector3d getVel(Player p)
+	public Vector3d getVel(Player p)
 	{
-		Double velx = ConfigMk.getDouble(p.getUniqueId().toString(), "particle", "vx");
-		Double vely = ConfigMk.getDouble(p.getUniqueId().toString(), "particle", "vy");
-		Double velz = ConfigMk.getDouble(p.getUniqueId().toString(), "particle", "vz");
+		Double velx = config.getDouble(p.getUniqueId().toString(), "particle", "vx");
+		Double vely = config.getDouble(p.getUniqueId().toString(), "particle", "vy");
+		Double velz = config.getDouble(p.getUniqueId().toString(), "particle", "vz");
 		Vector3d vel = new Vector3d(velx,vely,velz);
 		return vel;
 	}
 	// get particle type (what particle are we spawning)
-	public static ParticleType getEffectType(Player p)
+	public ParticleType getEffectType(Player p)
 	{
 		//ParticleType fx;
 
-		String particleName = ConfigMk.getString(p.getUniqueId().toString(), "particle", "effect");
+		String particleName = config.getString(p.getUniqueId().toString(), "particle", "effect");
 		if(ParticleList.containsKey(particleName.toUpperCase()))
 		{
 			ParticleType fx = ParticleList.get(particleName.toUpperCase());

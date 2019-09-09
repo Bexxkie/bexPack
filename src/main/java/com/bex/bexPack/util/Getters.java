@@ -96,7 +96,7 @@ public class Getters
 	 * @param p player
 	 * @return bool is the player sneaking
 	 */
-	public static boolean isSneaking(Player p) 
+	public boolean isSneaking(Player p) 
 	{
 		return p.get(Keys.IS_SNEAKING).orElse(false);
 	}

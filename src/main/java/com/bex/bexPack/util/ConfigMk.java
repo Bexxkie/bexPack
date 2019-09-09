@@ -7,22 +7,22 @@ import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 
 public class ConfigMk 
 {
-	public static CommentedConfigurationNode getRoot() {
+	public CommentedConfigurationNode getRoot() {
 		return PixelCandy.configurationNode;
 	}
 	
-	public static String getString(String node, String id, String s) {
+	public String getString(String node, String id, String s) {
 		CommentedConfigurationNode root = getRoot();
 		return root.getNode(node, id, s).getString();
 	}
 	
 	
-	public static int getInt(String node, String id, String s) {
+	public int getInt(String node, String id, String s) {
 		CommentedConfigurationNode root = getRoot();
 		return root.getNode(node, id, s).getInt();
 	}
 	
-	public static Boolean getBool(String node, String id, String s) {
+	public Boolean getBool(String node, String id, String s) {
 		CommentedConfigurationNode root = getRoot();
 		return root.getNode(node, id, s).getBoolean();
 	}
@@ -31,7 +31,7 @@ public class ConfigMk
 	 * @param path node.id.s
 	 * @param value whatever you want to apply
 	 */
-	public static void save(String path,Object value)
+	public void save(String path,Object value)
 	{
 		CommentedConfigurationNode root = getRoot();
 		root.getNode(path).setValue(true);
@@ -43,7 +43,7 @@ public class ConfigMk
 		}
 	}
 	
-	public static Double getDouble(String node, String id, String s) {
+	public Double getDouble(String node, String id, String s) {
 		CommentedConfigurationNode root = getRoot();
 		return root.getNode(node, id, s).getDouble();
 	}

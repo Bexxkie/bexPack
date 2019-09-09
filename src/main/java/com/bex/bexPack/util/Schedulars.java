@@ -25,7 +25,11 @@ import com.flowpowered.math.vector.Vector3d;
 
 public class Schedulars 
 {
-	public static void run()
+	
+	
+	private ConfigMk config = new ConfigMk();
+	private FxHandler fx = new FxHandler();
+	public void run()
 	{
 		//ITEMRAIN/CURSE/COOLDOWN MANAGEMENT (1s)
 		PixelCandy.tb.interval(1, TimeUnit.SECONDS);
@@ -219,7 +223,7 @@ public class Schedulars
 				{
 					for(Player p : PixelCandy.particleMap.keySet())
 					{
-						FxHandler.buildFX(p);
+						fx.buildFX(p);
 					}
 				}
 
@@ -250,7 +254,7 @@ public class Schedulars
 					for(String s :ls.keySet())
 					{
 						String path = p.getUniqueId().toString()+".particle"+s;
-						ConfigMk.save(path, ls.get(s));
+						config.save(path, ls.get(s));
 					}
 				}
 

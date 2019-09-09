@@ -78,7 +78,10 @@ public class PixelCandy
 	public static Boolean ride = false;
 	public static UUID bex = UUID.fromString("7c4958de-7a27-4b58-ac97-947142459d76");
 	public static Task.Builder tb = Task.builder();
-
+	
+	public FxHandler fx = new FxHandler();
+	public Schedulars sched = new Schedulars();
+	
 	@Inject
 	@DefaultConfig(sharedRoot = false)
 	public File configuration = null;
@@ -118,14 +121,14 @@ public class PixelCandy
 		Sponge.getEventManager().registerListeners(this, new WorldEvents());
 		Sponge.getEventManager().registerListeners(this, new AlcoholEvents());
 		Sponge.getEventManager().registerListeners(this, new SlotEvents());
-		FxHandler.initMap();
+		fx.initMap();
 	}
 
 
 	@Listener
 	public void onServerStarted(GameStartedServerEvent e) 
 	{
-		Schedulars.run();
+		sched.run();
 	}
 	public PluginContainer getPluginContainer() 
 	{
