@@ -79,7 +79,7 @@ public class IncubateCommand
 										//if(epix.eggCycles<=2)
 										if(pk.getEggCycles()<=2)
 										{
-											Messenger.sendMessage(p, "Incubation would have almost no affect on this egg, show it some love", TextColors.GREEN);
+											Messenger.sendMessage(p, "Incubation would have almost no affect on this egg, show it some love");
 											//Text msg = Text.builder(Getters.getPrefix().toString()).
 											//		append(Text.builder("Incubation would have almost no affect on this egg, show it some love").color(TextColors.GREEN).build()).build();
 											//p.sendMessage(msg);
@@ -99,7 +99,7 @@ public class IncubateCommand
 												i.setQuantity(i.getQuantity()-1);
 												p.setItemInHand(HandTypes.MAIN_HAND, i);
 											}
-											Messenger.sendMessage(p, "Pokemon successfully incubated", TextColors.RED);
+											Messenger.sendMessage(p, "Pokemon successfully incubated");
 											//Text msg = Text.builder(Getters.getPrefix().toString())
 													//		.append(Text.builder("Pokemon successfully incubated, go for a short walk to finish the process").color(TextColors.GREEN).build()).build();
 													/*1.7 */					//.append(Text.builder("Pokemon successfully incubated").color(TextColors.GREEN).build()).build();
@@ -108,7 +108,7 @@ public class IncubateCommand
 									}
 									else	//not an egg
 									{
-										Messenger.sendMessage(p, "There is no egg in this slot", TextColors.RED);
+										Messenger.sendMessage(p, "There is no egg in this slot");
 										//Text msg = Text.builder(Getters.getPrefix().toString())
 										//		.append(Text.builder("There is no egg in this slot").color(TextColors.RED).build()).build();
 										//p.sendMessage(msg);
@@ -117,7 +117,7 @@ public class IncubateCommand
 								}
 								catch(NullPointerException ex)
 								{
-									Messenger.sendMessage(p, "There is no egg in this slot", TextColors.RED);
+									Messenger.sendMessage(p, "There is no egg in this slot");
 									//Text msg = Text.builder(Getters.getPrefix().toString())
 									//		.append(Text.builder("There is no egg in this slot").color(TextColors.RED).build()).build();
 									//p.sendMessage(msg);
@@ -126,7 +126,7 @@ public class IncubateCommand
 							}
 							else //no incubator 
 							{
-								Messenger.sendMessage(p, "There is no egg in this slot", TextColors.RED);
+								Messenger.sendMessage(p, "There is no egg in this slot");
 								//Text msg = Text.builder(Getters.getPrefix().toString())
 								//		.append(Text.builder("You must be holding an incubator to do this").color(TextColors.RED).build()).build();
 								//p.sendMessage(msg);

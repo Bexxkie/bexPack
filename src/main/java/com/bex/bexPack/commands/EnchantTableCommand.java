@@ -93,7 +93,7 @@ public class EnchantTableCommand
 						{
 							if(!tmp.get(l).equals(BlockTypes.AIR))
 							{
-								Messenger.sendMessage(src, "Not enough room", TextColors.RED);
+								Messenger.sendMessage(src, "Not enough room");
 								//src.sendMessage(Text.of("[bPack] Not enough room"));
 								return CommandResult.success();
 							}
@@ -102,7 +102,7 @@ public class EnchantTableCommand
 							boolean isTrust = claim.isTrusted(p.getUniqueId());
 							if(!claim.isWilderness()&&!isOwner&&!isTrust)
 							{
-								Messenger.sendMessage(src, "Cannot use inside someone elses claim", TextColors.RED);
+								Messenger.sendMessage(src, "Cannot use inside someone elses claim");
 								return CommandResult.success();
 							}
 							

@@ -36,27 +36,27 @@ public class GameStartCommand
 					int timeLimit = args.<Integer>getOne("timeLimit").get();
 					if(!PixelCandy.gameTargetWordAndTime.isEmpty())
 					{
-						Messenger.sendMessage(src, "There is already a game in progress", TextColors.RED);
+						Messenger.sendMessage(src, "There is already a game in progress");
 						return CommandResult.success();
 					}
 					if(timeLimit < 10)
 					{
-						Messenger.sendMessage(src, "Minumum time limit is 10s, set to 10s", TextColors.RED);
+						Messenger.sendMessage(src, "Minumum time limit is 10s, set to 10s");
 						timeLimit = 10;
 					}
 					if(timeLimit > 1200)
 					{
-						Messenger.sendMessage(src, "Maximum time limit is 120s, set to 1200s", TextColors.RED);
+						Messenger.sendMessage(src, "Maximum time limit is 120s, set to 1200s");
 						timeLimit = 1200;
 					}
 					if(guesses < 1)
 					{
-						Messenger.sendMessage(src, "Minumum guess is 1, set to 1", TextColors.RED);
+						Messenger.sendMessage(src, "Minumum guess is 1, set to 1");
 						guesses=1;
 					}
 					if(guesses > 10)
 					{
-						Messenger.sendMessage(src, "Maximum guess is 10, set to 10", TextColors.RED);
+						Messenger.sendMessage(src, "Maximum guess is 10, set to 10");
 						guesses=1;
 					}
 					//PixelCandy.gameTime=timeLimit;

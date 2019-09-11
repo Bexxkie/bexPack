@@ -60,7 +60,7 @@ public class HatCommand
 								parrotHat(rt,p);
 								return CommandResult.success();
 							default:
-								Messenger.sendMessage(src, "Must choose a type and skin, [bunny,parrot] [1-(6,5)]", TextColors.RED);
+								Messenger.sendMessage(src, "Must choose a type and skin, [bunny,parrot] [1-(6,5)]");
 								//src.sendMessage(Text.of(Getters.getPrefix()+"Must choose a type and skin, [bunny,parrot] [1-5]"));
 								return CommandResult.success();
 							}
@@ -102,7 +102,7 @@ public class HatCommand
 		}
 		if(rt<1||rt>6)
 		{
-			Messenger.sendMessage(p, "Type must be between 1-6", TextColors.RED);
+			Messenger.sendMessage(p, "Type must be between 1-6");
 			//Text msg = Text.builder(Getters.getPrefix().toString()).
 			//		append(Text.builder("Type must be between 1-6").color(TextColors.RED).build()).build();
 			//p.sendMessage(msg);
@@ -160,7 +160,7 @@ public class HatCommand
 		}
 		if(rt<1||rt>5)
 		{
-			Messenger.sendMessage(p, "Type must be between 1-5", TextColors.RED);
+			Messenger.sendMessage(p, "Type must be between 1-5");
 			//Text msg = Text.builder(Getters.getPrefix().toString()).
 			//		append(Text.builder("Type must be between 1-5").color(TextColors.RED).build()).build();
 			//p.sendMessage(msg);

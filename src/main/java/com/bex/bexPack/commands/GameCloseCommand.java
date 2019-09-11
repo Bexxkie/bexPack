@@ -27,10 +27,10 @@ public class GameCloseCommand
 					{
 						PixelCandy.gameTargetWordAndTime.clear();
 						PixelCandy.gameGuesses.clear();
-						Messenger.sendMessage(src, "Stopped the game in progress", TextColors.RED);
+						Messenger.sendMessage(src, "Stopped the game in progress");
 						Messenger.broadcastMessage("Game was cancelled by "+((Player)src).getName(), TextColors.RED);
 					}
-					Messenger.sendMessage(src, "No game in progress", TextColors.RED);
+					Messenger.sendMessage(src, "No game in progress");
 					return CommandResult.success();
 				}
 			})

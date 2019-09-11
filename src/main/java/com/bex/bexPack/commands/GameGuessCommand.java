@@ -31,12 +31,12 @@ public class GameGuessCommand
 					}
 					if(PixelCandy.gameTargetWordAndTime.isEmpty()||PixelCandy.gameGuesses.isEmpty())
 					{
-						Messenger.sendMessage(src, "No game in progress", TextColors.RED);
+						Messenger.sendMessage(src, "No game in progress");
 						return CommandResult.success();
 					}
 					if(!PixelCandy.gameGuesses.containsKey((Player)src))
 					{
-						Messenger.sendMessage(src, "You are out of guesses", TextColors.RED);
+						Messenger.sendMessage(src, "You are out of guesses");
 						return CommandResult.success();
 					}
 
@@ -64,12 +64,12 @@ public class GameGuessCommand
 						PixelCandy.gameGuesses.replace(p, remainingGuesses);
 						if(remainingGuesses <=0)
 						{
-							Messenger.sendMessage(src, "That was your last guess, thanks for playing ", TextColors.RED);
+							Messenger.sendMessage(src, "That was your last guess, thanks for playing ");
 							PixelCandy.gameGuesses.remove(p);
 						}
 						else
 						{
-							Messenger.sendComplexMessage(src, "Incorrect guess, remaining ", TextColors.RED, remainingGuesses+"", TextColors.YELLOW);
+							Messenger.sendMessage(src, "Incorrect guess, remaining "+ remainingGuesses+"");
 						}
 
 					}

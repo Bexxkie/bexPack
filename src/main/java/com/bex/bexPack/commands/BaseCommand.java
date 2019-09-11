@@ -26,6 +26,7 @@ public class BaseCommand
 			.child(new GameStartCommand().getCommandSpec(), "startGame")
 			.child(new GameGuessCommand().getCommandSpec(), "g")
 			.child(new GameCloseCommand().getCommandSpec(), "stopGame")
+			.child(new FxBaseCommand().getCommandSpec(), "FX")
 			//.child(new DisguiseCommand().getCommandSpec(), "disguise")
 			.build();
 

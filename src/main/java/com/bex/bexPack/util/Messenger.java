@@ -46,13 +46,11 @@ public class Messenger
 	/**
 	 * Construct a message and send it to the player
 	 * @param src command source, usually a player
-	 * @param message message in full
-	 * @param color message color TextColors.<color>
+	 * @param message message in full #[0-9,a-f] color codes
 	 */
-	public static void sendMessage(CommandSource src, String message,TextColor color)
+	public static void sendMessage(CommandSource src, String message)
 	{
-		Text msg = Text.builder("[pcan] ").color(TextColors.LIGHT_PURPLE).
-				append(Text.builder(message).color(color).build()).build();
+		Text msg = decodeString(message);
 		src.sendMessage(msg);
 	}
 	/**
@@ -63,13 +61,7 @@ public class Messenger
 	 * @param message2 = second part of message, colored by color2
 	 * @param color2 = TextColors.<color>
 	 */
-	public static void sendComplexMessage(CommandSource src,String message1,TextColor color1,String message2,TextColor color2)
-	{
-		Text msg = Text.builder("[pcan] ").color(TextColors.LIGHT_PURPLE).
-				append(Text.builder(message1).color(color1).append(Text.builder(message2).color(color2)
-						.build()).build()).build();
-		src.sendMessage(msg);
-	}
+
 	/**
 	 * returns "You must be a player to run this command"
 	 * @param src command source
@@ -80,8 +72,6 @@ public class Messenger
 				append(Text.builder("You must be a player to run this command").color(TextColors.RED).build()).build();
 		src.sendMessage(msg);
 	}
-
-
 
 	//Create color split by #[hex]
 	public static Text decodeString(String s)

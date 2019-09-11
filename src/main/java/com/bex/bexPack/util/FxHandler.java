@@ -14,7 +14,7 @@ import com.flowpowered.math.vector.Vector3d;
 
 public class FxHandler 
 {
-	private final static HashMap<String,ParticleType> ParticleList= new HashMap<String,ParticleType>();
+	public final static HashMap<String,ParticleType> ParticleList= new HashMap<String,ParticleType>();
 	private ConfigMk config = new ConfigMk();
 	
 	public void initMap()
@@ -100,8 +100,11 @@ public class FxHandler
 	//
 	public void buildFX(Player p)
 	{
-		checkVal(p);
-
+		boolean b = checkVal(p);
+		if(b==false)
+		{
+			messenger.
+		}
 		ArrayList<Object> o = PixelCandy.particleMap.get(p);
 		ParticleType effect = (ParticleType) o.get(0);
 		Vector3d vel = (Vector3d) o.get(1);
@@ -109,33 +112,38 @@ public class FxHandler
 		sendFxToPlayer(p, effect, vel, rad);
 	}
 	// Check if the particle map is valid
-	public void checkVal(Player p)
+	public boolean checkVal(Player p)
 	{
 		ArrayList<Object> o = PixelCandy.particleMap.get(p);
 		if(o.isEmpty())
 		{
-			buildMap(p,o);
-			return;
+			return buildMap(p,o);
+			
 		}
 		// this block checks if the particle has been changed, in which case update the map
 		if (o.get(0) instanceof ParticleType)
 		{
 			if((ParticleType) o.get(0) != getEffectType(p)) 
 			{
-				buildMap(p, o);
-				return;
+				return buildMap(p, o);
+				
 			}
 		}
-
+		return true;
 	}
 	// Populate player particle map
-	public void buildMap(Player p, ArrayList<Object> o)
+	public boolean buildMap(Player p, ArrayList<Object> o)
 	{
 		o.add(0,getEffectType(p));
+		if(o.get(0)==null)
+		{
+			return false;
+		}
 		o.add(1,getVel(p));
 		o.add(2,getRad(p));
 		//save the particle map
 		PixelCandy.particleMap.replace(p, o);
+		return true;
 		
 	}
 	// get particle rad (how far should the particles spawn)
