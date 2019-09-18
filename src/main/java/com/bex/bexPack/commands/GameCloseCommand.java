@@ -8,7 +8,6 @@ import org.spongepowered.api.command.spec.CommandExecutor;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.format.TextColors;
 
 import com.bex.bexPack.main.PixelCandy;
 import com.bex.bexPack.util.Messenger;
@@ -28,7 +27,7 @@ public class GameCloseCommand
 						PixelCandy.gameTargetWordAndTime.clear();
 						PixelCandy.gameGuesses.clear();
 						Messenger.sendMessage(src, "Stopped the game in progress");
-						Messenger.broadcastMessage("Game was cancelled by "+((Player)src).getName(), TextColors.RED);
+						Messenger.broadcastMessage("Game was cancelled by "+((Player)src).getName());
 					}
 					Messenger.sendMessage(src, "No game in progress");
 					return CommandResult.success();

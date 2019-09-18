@@ -125,7 +125,7 @@ public class Schedulars
 						if(_t<=0)
 						{
 							//gameOver
-							Messenger.broadcastComplexMessage("Bad luck, no one guessed the word. It was ", TextColors.RED, _s.toString(), TextColors.YELLOW);
+							Messenger.broadcastMessage("Bad luck, no one guessed the word. It was " +_s.toString());
 							PixelCandy.gameTargetWordAndTime.clear();
 							PixelCandy.gameGuesses.clear();
 						}

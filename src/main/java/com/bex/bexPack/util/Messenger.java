@@ -1,6 +1,7 @@
 package com.bex.bexPack.util;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandSource;
@@ -16,37 +17,52 @@ public class Messenger
 
 
 	/**
-	 * Construct a message and send it to the entire server
-	 * @param src command source, usually a player
-	 * @param message message in full
-	 * @param color message color TextColors.<color>
+	 * Construct a message and broadcast it to the server
+	 * @param message message in full #[0-9,a-f] as color code
+	 * @color_codes
+	 * [#0 = black]
+	 * [#1 = dark blue]
+	 * [#2 = dark green]
+	 * [#3 = dark aqua]
+	 * [#4 = dark red]
+	 * [#5 = dark purple]
+	 * [#6 = gold]
+	 * [#7 = gray]
+	 * [#8 = dark gray]
+	 * [#9 = blue]
+	 * [#a = green]
+	 * [#b = aqua]
+	 * [#c = red]
+	 * [#f = light purple]
+	 * [#e = yellow]
+	 * [#f = white]
 	 */
-	public static void broadcastMessage(String message,TextColor color)
+	public static void broadcastMessage(String message)
 	{
-		Text msg = Text.builder("[pcan] ").color(TextColors.LIGHT_PURPLE).
-				append(Text.builder(message).color(color).build()).build();
-
-		Sponge.getServer().getBroadcastChannel().send(msg);
-	}
-	/**
-	 * Construct a 2 part message and send it to the entire server
-	 * @param src = command source, usually a player
-	 * @param message1 = first part of message, colored by color1 
-	 * @param color1 = TextColors.<color>
-	 * @param message2 = second part of message, colored by color2
-	 * @param color2 = TextColors.<color>
-	 */
-	public static void broadcastComplexMessage(String message1,TextColor color1,String message2,TextColor color2)
-	{
-		Text msg = Text.builder("[pcan] ").color(TextColors.LIGHT_PURPLE).
-				append(Text.builder(message1).color(color1).append(Text.builder(message2).color(color2)
-						.build()).build()).build();
+		Text msg = decodeString(message);
 		Sponge.getServer().getBroadcastChannel().send(msg);
 	}
 	/**
 	 * Construct a message and send it to the player
 	 * @param src command source, usually a player
-	 * @param message message in full #[0-9,a-f] color codes
+	 * @param message message in full #[0-9,a-f] as color code
+	 * @color_codes
+	 * [#0 = black]
+	 * [#1 = dark blue]
+	 * [#2 = dark green]
+	 * [#3 = dark aqua]
+	 * [#4 = dark red]
+	 * [#5 = dark purple]
+	 * [#6 = gold]
+	 * [#7 = gray]
+	 * [#8 = dark gray]
+	 * [#9 = blue]
+	 * [#a = green]
+	 * [#b = aqua]
+	 * [#c = red]
+	 * [#f = light purple]
+	 * [#e = yellow]
+	 * [#f = white]
 	 */
 	public static void sendMessage(CommandSource src, String message)
 	{
@@ -72,12 +88,12 @@ public class Messenger
 				append(Text.builder("You must be a player to run this command").color(TextColors.RED).build()).build();
 		src.sendMessage(msg);
 	}
-
+	
 	//Create color split by #[hex]
 	public static Text decodeString(String s)
 	{
-		String[] a = s.split("#[a-f,0-1]");
-		HashMap<String,TextColor> stringMap = new HashMap<String,TextColor>();
+		String[] a = s.split("(?=#[a-f,0-1])");
+		LinkedHashMap<String,TextColor> stringMap = new LinkedHashMap<String,TextColor>();
 
 		for(String b:a)
 		{
@@ -121,8 +137,8 @@ public class Messenger
 		}
 		return rebuildString(stringMap);
 	}
-	
-	public static Text rebuildString(HashMap<String,TextColor> stringMap)
+	//Create a colourized string
+	public static Text rebuildString(LinkedHashMap<String,TextColor> stringMap)
 	{
 		Builder msg = Text.builder("[pcan] ").color(TextColors.LIGHT_PURPLE);
 		for(String a :stringMap.keySet())

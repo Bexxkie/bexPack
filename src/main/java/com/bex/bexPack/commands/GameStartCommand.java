@@ -67,8 +67,8 @@ public class GameStartCommand
 					{
 						PixelCandy.gameGuesses.put(p, guesses);
 					}
-					Messenger.broadcastMessage(((Player)src).getName()+" Started a game. Allowed guesses: "+guesses+". Time limit: "+timeLimit+" seconds", TextColors.GOLD);
-					Messenger.broadcastMessage("use /pcan g <yourGuess> to play", TextColors.GOLD);
+					Messenger.broadcastMessage("#6"+((Player)src).getName()+" Started a game. Allowed guesses: "+guesses+". Time limit: "+timeLimit+" seconds");
+					Messenger.broadcastMessage("#6use /pcan g <yourGuess> to play");
 
 					return CommandResult.success();
 				}

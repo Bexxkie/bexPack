@@ -54,7 +54,7 @@ public class GameGuessCommand
 						{
 							gMess = " Won on their last guess with ";
 						}
-						Messenger.broadcastComplexMessage(p.getName()+ gMess, TextColors.GOLD, guessWord, TextColors.GREEN);
+						Messenger.broadcastMessage(p.getName()+ gMess + guessWord);
 						PixelCandy.gameGuesses.clear();
 						PixelCandy.gameTargetWordAndTime.clear();
 					}
